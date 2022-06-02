@@ -12,8 +12,13 @@ const navConfig = [
     icon: getIcon('eva:pie-chart-2-fill'),
   },
   {
-    title: 'user',
-    path: '/dashboard/user',
+    title: 'Tailors Register',
+    path: '/dashboard/tailors-register',
+    icon: getIcon('eva:person-add-fill'),
+  },
+  {
+    title: 'tailor list',
+    path: '/dashboard/tailor-list',
     icon: getIcon('eva:people-fill'),
   },
   {
@@ -34,11 +39,6 @@ const navConfig = [
   {
     title: 'register',
     path: '/register',
-    icon: getIcon('eva:person-add-fill'),
-  },
-  {
-    title: 'TailorsRegister',
-    path: '/dashboard/tailors-register',
     icon: getIcon('eva:person-add-fill'),
   },
   {
