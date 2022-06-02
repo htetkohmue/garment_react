@@ -17,7 +17,6 @@ const RootStyle = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('md')]: {
     display: 'flex',
   },
-  backgroundColor:'#baf7f7'
  
 }));
 
@@ -45,7 +44,6 @@ const SectionStyle = styled(Card)(({ theme }) => ({
   flexDirection: 'column',
   justifyContent: 'center',
   margin: theme.spacing(2, 0, 2, 2),
-  backgroundColor:'#18d8d8'
 }));
 
 const ContentStyle = styled('div')(({ theme }) => ({

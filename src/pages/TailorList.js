@@ -25,9 +25,8 @@ import Label from '../components/Label';
 import Scrollbar from '../components/Scrollbar';
 import Iconify from '../components/Iconify';
 import SearchNotFound from '../components/SearchNotFound';
-import { UserListHead, UserListToolbar, UserMoreMenu , TailorIDSearch} from '../sections/@dashboard/user';
+import { TailorListHead, TailorListToolbar, TailorMoreMenu , TailorIDSearch} from '../sections/@dashboard/TailorList';
 // mock
-import USERLIST from '../_mock/user';
 
 // ----------------------------------------------------------------------
 
@@ -187,12 +186,12 @@ export default function User() {
         <Typography style={{backgroundColor:"green",borderRadius:'10px'}}><h3 style={{color:"white"}}>{successMsg}</h3></Typography>
         <Typography align="right">Total Row : {totalRow} row(s)</Typography>
         <Card>
-        <UserListToolbar posts={post} IdTailor={selected}  deleteTailor={deleteTailor} numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName}/>
+        <TailorListToolbar posts={post} IdTailor={selected}  deleteTailor={deleteTailor} numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName}/>
         {/* <TailorIDSearch posts={post}/> */}
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>
-                <UserListHead
+                <TailorListHead
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
@@ -232,7 +231,7 @@ export default function User() {
                         <TableCell align="left">{nrcNO}</TableCell>
                         <TableCell align="left">{address}</TableCell> 
                         <TableCell align="center">
-                          <UserMoreMenu IdTailor={id} deleteTailor={deleteTailor} />
+                          <TailorMoreMenu IdTailor={id} deleteTailor={deleteTailor} />
                         </TableCell>
                         <TableCell align="left">{description}</TableCell> 
                       </TableRow>
