@@ -36,8 +36,8 @@ export default function TailorsRegister() {
   useEffect(() => {
     axios.get(`${path}/api/edit-tailor/${id}`).then((response) => {
       if (response.data.status==='OK' && response.data.data!=null) {
-        setTailorsID(response.data.data.tailorID); setTailorsEngName(response.data.data.nameMM); setTailorsMyanmarName(response.data.data.nameEN);
-        setPhone(response.data.data.phoneNO); setNrcNo(response.data.data.nrcNO); setAddress(response.data.data.address); setDescription(response.data.data.description);
+        setTailorsID(response.data.data.tailorId); setTailorsEngName(response.data.data.nameMm); setTailorsMyanmarName(response.data.data.nameEn);
+        setPhone(response.data.data.phoneNo); setNrcNo(response.data.data.nrcNo); setAddress(response.data.data.address); setDescription(response.data.data.description);
       }
     });
   }, []);

@@ -67,7 +67,7 @@ function applySortFilter(array, comparator, query) {
     return a[1] - b[1];
   });
   if (query) {
-    return filter(array, (_user) => _user.nameMM.toLowerCase().indexOf(query.toLowerCase()) !== -1);
+    return filter(array, (_user) => _user.nameMm.toLowerCase().indexOf(query.toLowerCase()) !== -1);
   }
   return stabilizedThis.map((el) => el[0]);
 }
@@ -201,8 +201,8 @@ export default function User() {
                   onSelectAllClick={handleSelectAllClick}
                 />
                 <TableBody>
-                  {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row,key) => {
-                    const { id,tailorID,nameMM,nameEN,phoneNO,nrcNO,address,description} = row;
+                  {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                    const {key,id,tailorId,nameMm,nameEn,phoneNo,nrcNo,address,description} = row;
                     const isItemSelected = selected.indexOf(id) !== -1;
                     return (
                       <TableRow
@@ -212,23 +212,22 @@ export default function User() {
                         role="checkbox"
                         selected={isItemSelected}
                         aria-checked={isItemSelected}
-                        
-                      >
+                       >
                          <TableCell padding="checkbox">
                           <Checkbox checked={isItemSelected} onChange={(event) => handleClick(event, id)} />
                         </TableCell>
-                        <TableCell align="left">{key+1}</TableCell>
-                        <TableCell align="left">{tailorID}</TableCell>
+                        <TableCell align="left">{key}</TableCell>
+                        <TableCell align="left">{tailorId}</TableCell>
                          <TableCell component="th" scope="row" padding="none">
                           <Stack direction="row" alignItems="center" spacing={2}>
-                            <Avatar alt={nameMM}  />
+                            <Avatar alt={nameMm}  />
                             <Typography variant="subtitle2" noWrap>
-                              {nameMM}
+                              {nameMm}
                             </Typography>
                           </Stack>
                         </TableCell>
-                        <TableCell align="left">{phoneNO}</TableCell>
-                        <TableCell align="left">{nrcNO}</TableCell>
+                        <TableCell align="left">{phoneNo}</TableCell>
+                        <TableCell align="left">{nrcNo}</TableCell>
                         <TableCell align="left">{address}</TableCell> 
                         <TableCell align="center">
                           <TailorMoreMenu IdTailor={id} deleteTailor={deleteTailor} />
