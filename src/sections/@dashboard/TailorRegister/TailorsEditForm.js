@@ -11,7 +11,7 @@ import Iconify from '../../../components/Iconify';
 
 // ----------------------------------------------------------------------
 
-export default function TailorsRegisterForm(props) {
+export default function TailorsEditForm(props) {
   const navigate = useNavigate();
   const RegisterSchema = Yup.object().shape({
     englishName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('English name required'),
@@ -22,13 +22,13 @@ export default function TailorsRegisterForm(props) {
   });
   const formik = useFormik({
     initialValues: {
-      tailors_id :'',
-      englishName:'',
-      myanmarName:'',
-      phone:'',
-      nrcNo:'',
-      address:'',
-      description:''
+      tailors_id :props.values.tailors_id,
+      englishName:props.values.englishName,
+      myanmarName:props.values.myanmarName,
+      phone:props.values.phone,
+      nrcNo:props.values.nrcNo,
+      address:props.values.address,
+      description:props.values.description
     },
     validationSchema: RegisterSchema,
     onSubmit: (values,{resetForm}) => {
@@ -76,7 +76,7 @@ export default function TailorsRegisterForm(props) {
             error={Boolean(touched.phone && errors.phone)}
             helperText={touched.phone && errors.phone}
           />
-          <Typography  style={{color:'red',width:'100%'}} >
+          <Typography style={{color:'red',width:'100%'}} >
           * get more than one comma ','
           </Typography>
            </Stack>
@@ -105,8 +105,8 @@ export default function TailorsRegisterForm(props) {
             {...getFieldProps('description')}
           
           />
-          <LoadingButton  size="large" type="submit" variant="contained" loading={isSubmitting} onClick={(e) => props.register(formik.values)} >
-            Register
+          <LoadingButton  size="large" type="submit" variant="contained" loading={isSubmitting} onClick={(e) => props.update(formik.values)} >
+            Update
           </LoadingButton>
         </Stack>
       </Form>

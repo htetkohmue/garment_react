@@ -5,6 +5,7 @@ import { Toolbar, Tooltip, IconButton, Typography, OutlinedInput, Autocomplete, 
 // component
 import Iconify from '../../../components/Iconify';
 
+
 // ----------------------------------------------------------------------
 
 const PopperStyle = styled((props) => <Popper placement="bottom-start" {...props} />)({
@@ -31,6 +32,7 @@ const SearchStyle = styled(OutlinedInput)(({ theme }) => ({
     easing: theme.transitions.easing.easeInOut,
     duration: theme.transitions.duration.shorter,
   }),
+  '&.Mui-focused': { width: 320, boxShadow: theme.customShadows.z8 },
   '& fieldset': {
     borderWidth: `1px !important`,
     borderColor: `${theme.palette.grey[600_70]} !important`,
@@ -39,15 +41,16 @@ const SearchStyle = styled(OutlinedInput)(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
+
+
 UserListToolbar.propTypes = {
   numSelected: PropTypes.number,
   filterName: PropTypes.string,
   onFilterName: PropTypes.func,
 };
-function sayHello() {
-  alert('Hello!');
-}
-export default function UserListToolbar({ numSelected, filterName, onFilterName,IdTailor,deleteTailor,posts}) {
+
+export default function UserListToolbar({ numSelected, filterName, onFilterName,IdTailor,deleteTailor,
+  posts,handleChange}) {
 
   return (
     <RootStyle
@@ -64,31 +67,16 @@ export default function UserListToolbar({ numSelected, filterName, onFilterName,
           {numSelected} selected
         </Typography>
       ) : (
-       <Autocomplete
-      sx={{ width: 260 }}
-      autoHighlight
-      popupIcon={null}
-      PopperComponent={PopperStyle}
-      options={posts}
-      getOptionLabel={(post) => post.nameMm}
-      isOptionEqualToValue={(option, value) => option.id === value.id}
-      renderInput={(params) => (
-        <TextField
-        {...params}
+        <SearchStyle
           value={filterName}
           onChange={onFilterName}
           placeholder="Search Tailor Name..."
-          InputProps={{
-                ...params.InputProps,
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Iconify icon={'eva:search-fill'} sx={{ ml: 1, width: 20, height: 20, color: 'red' }} />
-                  </InputAdornment>
-                ),
-              }}
+          startAdornment={
+            <InputAdornment position="start">
+              <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled', width: 20, height: 20 }} />
+            </InputAdornment>
+          }
         />
-      )}
-      />
       )}
 
       {numSelected > 0 ? (
@@ -99,17 +87,15 @@ export default function UserListToolbar({ numSelected, filterName, onFilterName,
        <Autocomplete
       sx={{ width: 260 }}
       autoHighlight
-      onClick={sayHello}
       popupIcon={null}
       PopperComponent={PopperStyle}
       options={posts}
       getOptionLabel={(post) => post.tailorId}
+      onChange={handleChange}
       isOptionEqualToValue={(option, value) => option.id === value.id}
       renderInput={(params) => (
         <TextField
         {...params}
-          value={filterName}
-          onChange={onFilterName}
           placeholder="Search Tailor ID..."
           InputProps={{
                 ...params.InputProps,

@@ -1,7 +1,7 @@
 // ----------------------------------------------------------------------
 
 const account = {
-  displayName: 'Htet Ko Hmue',
+  displayName: 'User',
   email: 'htetkohmue786@gmail.com',
   photoURL: '/static/mock-images/avatars/avatar_default.jpg',
 };
