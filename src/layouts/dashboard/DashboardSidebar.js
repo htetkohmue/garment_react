@@ -57,7 +57,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
     <Scrollbar
       sx={{
         height: 1,
-        '& .simplebar-content': { height: 1, display: 'flex', flexDirection: 'column',backgroundColor: 'black' },
+        '& .simplebar-content': { height: 1, display: 'flex', flexDirection: 'column'},
       }}
     >
       <Box sx={{ px: 2.5, py: 3, display: 'inline-flex' }}>
@@ -67,7 +67,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
       <Box sx={{ mb: 5, mx: 1.5 }}>
         <Link underline="none" component={RouterLink} to="#">
           <AccountStyle>
-            <Avatar style={{width:'100px',height:'100px'}} src={account.photoURL} alt="photoURL" />
+            <Avatar style={{width:'60px',height:'60px'}} src={account.photoURL} alt="photoURL" />
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" >
                 {account.displayName}
@@ -101,7 +101,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
             </Typography>
           </Box> */}
           {/* target="_blank" */}
-          <Button href="http://localhost:3000/login"  variant="contained">
+          <Button component={RouterLink} to={`/login`}  variant="contained">
            Logout
           </Button>
         {/* </Stack> */}

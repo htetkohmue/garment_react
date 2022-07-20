@@ -11,17 +11,12 @@ const LANGS = [
   {
     value: 'en',
     label: 'English',
-    icon: '/static/icons/ic_flag_en.svg',
+    icon: '/static/icons/gb.svg',
   },
   {
-    value: 'de',
-    label: 'German',
-    icon: '/static/icons/ic_flag_de.svg',
-  },
-  {
-    value: 'fr',
-    label: 'French',
-    icon: '/static/icons/ic_flag_fr.svg',
+    value: 'my',
+    label: 'Myanmar',
+    icon: '/static/icons/Myanmar-19.svg',
   },
 ];
 
@@ -30,12 +25,14 @@ const LANGS = [
 export default function LanguagePopover() {
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(0);
 
   const handleOpen = () => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleClose = (key) => {
+    setSelectedOption(key);
     setOpen(false);
   };
 
@@ -46,14 +43,14 @@ export default function LanguagePopover() {
         onClick={handleOpen}
         sx={{
           padding: 0,
-          width: 44,
-          height: 44,
+          width: 50,
+          height: 50,
           ...(open && {
             bgcolor: (theme) => alpha(theme.palette.primary.main, theme.palette.action.focusOpacity),
           }),
         }}
       >
-        <img src={LANGS[0].icon} alt={LANGS[0].label} />
+        <img src={LANGS[selectedOption].icon} alt={LANGS[selectedOption].label} />
       </IconButton>
 
       <MenuPopover
@@ -68,10 +65,9 @@ export default function LanguagePopover() {
         }}
       >
         <Stack spacing={0.75}>
-          {LANGS.map((option) => (
-            <MenuItem key={option.value} selected={option.value === LANGS[0].value} onClick={() => handleClose()}>
+          {LANGS.map((option,key) => (
+            <MenuItem key={option.value} selected={option.value === LANGS[0].value} onClick={() => handleClose(key)}>
               <Box component="img" alt={option.label} src={option.icon} sx={{ width: 28, mr: 2 }} />
-
               {option.label}
             </MenuItem>
           ))}

@@ -12,14 +12,22 @@ const navConfig = [
     icon: getIcon('eva:pie-chart-2-fill'),
   },
   {
-    title: 'Tailors Register',
-    path: '/dashboard/tailors-register',
-    icon: getIcon('eva:person-add-fill'),
-  },
-  {
-    title: 'tailor list',
-    path: '/dashboard/tailor-list',
+    title: 'Tailor',
+    path : null,
     icon: getIcon('eva:people-fill'),
+    children: [
+          {
+            title: "Tailors Register",
+            path: "/dashboard/tailors-register",
+            icon: getIcon('eva:person-add-fill'),
+          },
+          {
+            title: "Tailors List",
+            path: "/dashboard/tailors-list",
+            icon: getIcon('eva:people-fill'),
+          }
+
+    ],
   },
   {
     title: 'product',
@@ -31,21 +39,21 @@ const navConfig = [
     path: '/dashboard/blog',
     icon: getIcon('eva:file-text-fill'),
   },
-  {
-    title: 'login',
-    path: '/login',
-    icon: getIcon('eva:lock-fill'),
-  },
-  {
-    title: 'register',
-    path: '/register',
-    icon: getIcon('eva:person-add-fill'),
-  },
-  {
-    title: 'Not found',
-    path: '/404',
-    icon: getIcon('eva:alert-triangle-fill'),
-  },
+  // {
+  //   title: 'login',
+  //   path: '/login',
+  //   icon: getIcon('eva:lock-fill'),
+  // },
+  // {
+  //   title: 'register',
+  //   path: '/register',
+  //   icon: getIcon('eva:person-add-fill'),
+  // },
+  // {
+  //   title: 'Not found',
+  //   path: '/404',
+  //   icon: getIcon('eva:alert-triangle-fill'),
+  // },
 ];
 
 export default navConfig;

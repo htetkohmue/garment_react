@@ -21,7 +21,7 @@ export default function Router() {
       element: <DashboardLayout />,
       children: [
         { path: 'app', element: <DashboardApp /> },
-        { path: 'tailor-list', element: <TailorList /> },
+        { path: 'tailors-list', element: <TailorList /> },
         { path: 'products', element: <Products /> },
         { path: 'blog', element: <Blog /> },
         { path: 'tailors-register', element: <TailorsRegister /> },
