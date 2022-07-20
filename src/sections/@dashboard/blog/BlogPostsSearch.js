@@ -19,7 +19,6 @@ BlogPostsSearch.propTypes = {
 };
 
 export default function BlogPostsSearch({ posts }) {
-  console.log(posts);
   return (
     <Autocomplete
       sx={{ width: 280 }}
