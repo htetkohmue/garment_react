@@ -26,9 +26,11 @@ import axios from 'axios';
 import { filter } from 'lodash';
 // import DeleteIcon from '@mui/icons-material/Delete';
 // import EditIcon from '@mui/icons-material/Edit';
-import { toast, ToastContainer } from 'react-toastify';
+// import { toast, ToastContainer } from 'react-toastify';
+import ApiPath from '../common/common-api/api-path/ApiPath';
+import { ApiRequest } from '../common/common-api/api-request/ApiRequest';
+
 import SearchNotFound from '../components/SearchNotFound';
-import 'react-toastify/dist/ReactToastify.css';
 
 // components
 import Scrollbar from '../components/Scrollbar';
@@ -87,9 +89,11 @@ export default function RawMaterial() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [totalRow, setTotalRow] = useState();
   const [successMsg, setSuccessMsg] = useState('');
-  const [errorMsg, setErrorMsg] = useState([]);
+  const [errorMsg, setErrorMsg] = useState('');
   const [insertMode, setInsertMode] = useState('');
   const [rawIDs, setRawIDs] = useState([]);
+  const [validatorErrorMsg, setValidatorErrorMsg] = useState([]);
+  const [loadingOpen, setloadingOpen] = useState(false);
 
   const TABLE_HEAD = [
     { id: 'id', label: 'No', alignRight: false },
@@ -114,7 +118,6 @@ export default function RawMaterial() {
       setRawDataAPI(response.data.data);
       setTotalRow(response.data.row_count);
     });
- 
   };
 
   const nameOnChange = (e) => {
@@ -140,7 +143,7 @@ export default function RawMaterial() {
       return;
     }
     setSelected([]);
-    console.log(selected)
+    console.log(selected);
   };
 
   const handleClick = (event, name) => {
@@ -167,52 +170,76 @@ export default function RawMaterial() {
     setPage(0);
   };
 
-  const clickRegister = () => {// console.log(rawID)
+  const clickRegister = () => {
+    // console.log(rawID)
     if (isEmpty(name)) {
       setNameError(true);
       setNameHelperText('Raw Material Name is required!');
     } else if (!!rawID === true) {
-      axios
-        .put(`${path}/api/update-raws/${rawID}`, {
-          name,
-          type,
-          description,
-          login_id: 2001,
-        })
-        .then((response) => {
-          if (response.data.status === 'NG') {
-            clickCancel();
-          }
-          if (response.data.status === 'OK') {
-            loadRawData();
-            toast.success(response.data.message, { position: toast.POSITION.TOP_RIGHT });
-            clickCancel();
-            setSuccessMsg(response.data.message);
-          }
-        })
-        .catch((error) => {});
+      // axios
+      //   .put(`${path}/api/update-raws/${rawID}`, {
+      //     name,
+      //     type,
+      //     description,
+      //     login_id: 2001,
+      //   })
+      //   .then((response) => {
+      //     if (response.data.status === 'NG') {
+      //       clickCancel();
+      //     }
+      //     if (response.data.status === 'OK') {
+      //       loadRawData();
+      //       toast.success(response.data.message, { position: toast.POSITION.TOP_RIGHT });
+      //       clickCancel();
+      //       setSuccessMsg(response.data.message);
+      //     }
+      //   })
+      //   .catch((error) => {});
     } else {
-      axios
-        .post(`${path}/api/raw-register`, {
-          id: rawID,
-          name,
-          type,
-          description,
-          login_id: 2001,
-        })
-        .then((response) => {
-          if (response.data.status === 'NG') {
-            clickCancel();
-          }
-          if (response.data.status === 'OK') {console.log(response.data.message)
-            // loadRawData();
-            // toast.success(response.data.message, { position: toast.POSITION.TOP_RIGHT });
-            toast.success(response.data.message);
-            clickCancel();
-            setSuccessMsg(response.data.message);
-          }
-        })
-        .catch((error) => {});
+      // axios
+      //   .post(`${path}/api/raw-register`, {
+      //     id: rawID,
+      //     name,
+      //     type,
+      //     description,
+      //     login_id: 2001,
+      //   })
+      //   .then((response) => {
+      //     if (response.data.status === 'NG') {
+      //       clickCancel();
+      //     }
+      //     if (response.data.status === 'OK') {console.log(response.data.message)
+      //       // loadRawData();
+      //       // toast.success(response.data.message, { position: toast.POSITION.TOP_RIGHT });
+      //       // toast.success(response.data.message);
+      //        clickCancel();
+      //       // setSuccessMsg(response.data.message);
+
+      //     }
+      //   })
+      //   .catch((error) => {});
+
+      (async () => {
+        setloadingOpen(true);
+        const data = { id: rawID, name, type, description, login_id: 2001 };
+
+        const obj = { url: ApiPath.storeRaws, method: 'post', params: data };
+        const response = await ApiRequest(obj);
+
+        if (response.flag === true) {
+          setSuccessMsg(response.response_data.message);
+          setValidatorErrorMsg([]);
+          setErrorMsg('');
+          setloadingOpen(false);
+        }
+        if (response.flag === false) {
+          setValidatorErrorMsg(response.message);
+          setErrorMsg('');
+          setSuccessMsg('');
+          setloadingOpen(false);
+        }
+        clickCancel();
+      })();
     }
   };
 
@@ -221,7 +248,7 @@ export default function RawMaterial() {
     setType('');
     setDescription('');
     setRawID('');
-    setSelected([])
+    setSelected([]);
   };
 
   // const editRaws = (e, id) => {
@@ -252,7 +279,7 @@ export default function RawMaterial() {
   //       id,
   //     })
   //     .then((response) => {
-      
+
   //       if (response.data.status === 'NG') {
   //         setErrorMsg(response.data.message);
   //       }
@@ -270,6 +297,16 @@ export default function RawMaterial() {
   return (
     <Page title="Dashboard: RawMaterial">
       <Container>
+        {successMsg && (
+          <Alert variant="filled" severity="info">
+            <b>{successMsg}</b>
+          </Alert>
+        )}
+        {errorMsg && (
+          <Alert variant="filled" severity="error">
+            <b>{errorMsg}</b>
+          </Alert>
+        )}
         <Typography variant="h3" mb={5}>
           Raw Material
         </Typography>
@@ -287,7 +324,7 @@ export default function RawMaterial() {
           clickCancel={clickCancel}
           insertMode={insertMode}
         />
-         <ToastContainer />
+        {/* <ToastContainer /> */}
 
         {/* <Card>
           <RawListToolbar
