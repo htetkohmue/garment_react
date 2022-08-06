@@ -1,5 +1,4 @@
 export default {
-  deviceFlag: 1,
   defaultPerPage: 20,
   getTailorData: "api/tailor-list/search-tailor",
   deleteTailorData: "api/tailor-list/delete-tailor",

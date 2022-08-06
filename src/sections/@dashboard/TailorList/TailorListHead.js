@@ -41,7 +41,7 @@ export default function UserListHead({
   };
 
   return (
-    <TableHead>
+    <TableHead style={{border:1,backgroundColor:'#80ccff',borderRadius:'10px'}}>
       <TableRow>
        {!isUserNotFound &&
         <TableCell padding="checkbox">
