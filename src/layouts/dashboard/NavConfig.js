@@ -33,6 +33,12 @@ const navConfig = [
     title: 'Raw Material',
     path: '/dashboard/raws',
     icon: getIcon('eva:shopping-bag-fill'),
+    
+  },  
+  {
+    title: 'product',
+    path: '/dashboard/products',
+    icon: getIcon('eva:shopping-bag-fill'),
     children: [
       {
         title: "Product Register",
@@ -46,13 +52,6 @@ const navConfig = [
       }
     ],
   },
-
-  
-  // {
-  //   title: 'product',
-  //   path: '/dashboard/products',
-  //   icon: getIcon('eva:shopping-bag-fill'),
-  // },
   // {
   //   title: 'blog',
   //   path: '/dashboard/blog',
