@@ -33,6 +33,18 @@ const navConfig = [
     title: 'product',
     path: '/dashboard/products',
     icon: getIcon('eva:shopping-bag-fill'),
+    children: [
+      {
+        title: "Product Register",
+        path: "/dashboard/product-register",
+        icon: getIcon('eva:shopping-bag-fill'),
+      },
+      {
+        title: "Product List",
+        path: "/dashboard/product-list",
+        icon: getIcon('eva:shopping-bag-fill'),
+      }
+    ],
   },
   {
     title: 'blog',
