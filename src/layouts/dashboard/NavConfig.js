@@ -33,14 +33,25 @@ const navConfig = [
     title: 'Raw Material',
     path: '/dashboard/raws',
     icon: getIcon('eva:shopping-bag-fill'),
+    
+  },  
+  {
+    title: 'product',
+    path: '/dashboard/products',
+    icon: getIcon('eva:shopping-bag-fill'),
+    children: [
+      {
+        title: "Product Register",
+        path: "/dashboard/product-register",
+        icon: getIcon('eva:shopping-bag-fill'),
+      },
+      {
+        title: "Product List",
+        path: "/dashboard/product-list",
+        icon: getIcon('eva:shopping-bag-fill'),
+      }
+    ],
   },
-
-  
-  // {
-  //   title: 'product',
-  //   path: '/dashboard/products',
-  //   icon: getIcon('eva:shopping-bag-fill'),
-  // },
   // {
   //   title: 'blog',
   //   path: '/dashboard/blog',
