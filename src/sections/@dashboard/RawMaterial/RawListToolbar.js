@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types';
 // material
 import { styled } from '@mui/material/styles';
-import { Toolbar, Tooltip, IconButton,FilledInput, Typography,FormControl,InputLabel, OutlinedInput, Autocomplete, InputAdornment, Popper,Box ,TextField  } from '@mui/material';
+import { Toolbar, Tooltip, IconButton, Typography, OutlinedInput, Autocomplete, InputAdornment, Popper, TextField  } from '@mui/material';
 // component
 import Iconify from '../../../components/Iconify';
-
 
 // ----------------------------------------------------------------------
 
@@ -14,13 +13,14 @@ const PopperStyle = styled((props) => <Popper placement="bottom-start" {...props
 
 // ----------------------------------------------------------------------
 
-UserListToolbar.propTypes = {
+RawListToolbar.propTypes = {
   posts: PropTypes.array.isRequired,
 };
 
 
+
 const RootStyle = styled(Toolbar)(({ theme }) => ({
-  height: 100,
+  height: 96,
   display: 'flex',
   justifyContent: 'space-between',
   padding: theme.spacing(0, 1, 0, 3),
@@ -28,7 +28,6 @@ const RootStyle = styled(Toolbar)(({ theme }) => ({
 
 const SearchStyle = styled(OutlinedInput)(({ theme }) => ({
   width: 260,
-  marginLeft:`150px !important`,
   transition: theme.transitions.create(['box-shadow', 'width'], {
     easing: theme.transitions.easing.easeInOut,
     duration: theme.transitions.duration.shorter,
@@ -41,16 +40,15 @@ const SearchStyle = styled(OutlinedInput)(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-
-
-UserListToolbar.propTypes = {
+RawListToolbar.propTypes = {
   numSelected: PropTypes.number,
   filterName: PropTypes.string,
   onFilterName: PropTypes.func,
 };
-
-export default function UserListToolbar({ numSelected, filterName, onFilterName,IdTailor,deleteTailor,
-  posts,handleChange}) {
+function sayHello() {
+  alert('Hello!');
+}
+export default function RawListToolbar({ numSelected, filterName, onFilterName,rawIDs,deleteRaws,posts}) {
 
   return (
     <RootStyle
@@ -61,23 +59,8 @@ export default function UserListToolbar({ numSelected, filterName, onFilterName,
         }),
       }}
     >
+
     {numSelected > 0 ? (
-        <Typography component="div" variant="subtitle1">
-          {numSelected} selected
-        </Typography>
-      ) : (
-        <SearchStyle
-          value={filterName}
-          onChange={onFilterName}
-          placeholder="Search Tailor Name..."
-          startAdornment={
-            <InputAdornment position="start">
-              <Iconify icon="eva:search-fill" sx={{ ml: 1, width: 20, height: 20, color: 'red' }} />
-            </InputAdornment>
-          }
-        />
-      )}
-      {numSelected > 0 ? (
         <Typography component="div" variant="subtitle1">
           {numSelected} selected
         </Typography>
@@ -88,13 +71,14 @@ export default function UserListToolbar({ numSelected, filterName, onFilterName,
       popupIcon={null}
       PopperComponent={PopperStyle}
       options={posts}
-      getOptionLabel={(post) => post.tailorId}
-      onChange={handleChange}
-      isOptionEqualToValue={(option, value) => option.id === value.id}
+      getOptionLabel={(post) => post.name}
+      isOptionEqualToValue={(option, value) => option.name === value.name}
       renderInput={(params) => (
         <TextField
         {...params}
-          placeholder="Search Tailor ID..."
+          value={filterName}
+          onChange={onFilterName}
+          placeholder="Search Raw Name..."
           InputProps={{
                 ...params.InputProps,
                 startAdornment: (
@@ -107,10 +91,43 @@ export default function UserListToolbar({ numSelected, filterName, onFilterName,
       )}
       />
       )}
+
+      {/* {numSelected > 0 ? (
+        <Typography component="div" variant="subtitle1">
+          {numSelected} selected
+        </Typography>
+      ) : (
+       <Autocomplete
+      sx={{ width: 260 }}
+      autoHighlight
+      onClick={sayHello}
+      popupIcon={null}
+      PopperComponent={PopperStyle}
+      options={posts}
+      getOptionLabel={(post) => post.id}
+      isOptionEqualToValue={(option, value) => option.id === value.id}
+      renderInput={(params) => (
+        <TextField
+        {...params}
+          value={filterName}
+          onChange={onFilterName}
+          placeholder="Search Raw ID..."
+          InputProps={{
+                ...params.InputProps,
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Iconify icon={'eva:search-fill'} sx={{ ml: 1, width: 20, height: 20, color: 'red' }} />
+                  </InputAdornment>
+                ),
+              }}
+        />
+      )}
+      />
+      )} */}
       
       {numSelected > 0 ? (
         <Tooltip title="Delete">
-          <IconButton  onClick={(e) => deleteTailor(IdTailor)}>
+          <IconButton  onClick={(e) => deleteRaws(rawIDs)}>
             <Iconify icon="eva:trash-2-fill" />
           </IconButton>
         </Tooltip>

@@ -19,6 +19,7 @@ import {
   TableContainer,
   TablePagination,
   CircularProgress,
+  Alert
 } from '@mui/material';
 // components
 import Page from '../components/Page';
@@ -26,7 +27,7 @@ import Label from '../components/Label';
 import Scrollbar from '../components/Scrollbar';
 import Iconify from '../components/Iconify';
 import SearchNotFound from '../components/SearchNotFound';
-import { TailorListHead, TailorListToolbar, TailorMoreMenu , TailorIDSearch,AlertDialogSlide} from '../sections/@dashboard/TailorList';
+import { TailorListHead, TailorListToolbar, TailorMoreMenu ,AlertDialogSlide,Loading} from '../sections/@dashboard/TailorList';
 import ApiPath from '../common/common-api/api-path/ApiPath';
 import {ApiRequest} from '../common/common-api/api-request/ApiRequest';
 
@@ -35,14 +36,14 @@ import {ApiRequest} from '../common/common-api/api-request/ApiRequest';
 
 // ----------------------------------------------------------------------
 const TABLE_HEAD = [
-  { id: 'id', label: 'No', alignRight: false },
-  { id: 'tailorID', label: 'ID', alignRight: false },
-  { id: 'nameMM', label: 'Name', alignRight: false },
-  { id: 'phoneNO', label: 'Phone No', alignRight: false },
-  { id: 'nrcNO', label: 'NRC No', alignRight: false },
+  { id: 'no', label: 'No', alignRight: false },
+  { id: 'tailorId', label: 'ID', alignRight: false },
+  { id: 'nameMm', label: 'Name', alignRight: false },
+  { id: 'phoneNo', label: 'Phone No', alignRight: false },
+  { id: 'nrcNo', label: 'NRC No', alignRight: false },
   { id: 'address', label: 'Address', alignRight: false },
   { id: 'action', label: 'Action', alignRight: false },
-  { id: 'note', label: 'Note', alignRight: false },
+  { id: 'description', label: 'Note', alignRight: false },
 ];
 
 // ----------------------------------------------------------------------
@@ -83,18 +84,19 @@ export default function User() {
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState('asc');
   const [selected, setSelected] = useState([]);
-  const [orderBy, setOrderBy] = useState('name');
+  const [orderBy, setOrderBy] = useState('id');
   const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [post, setPost] = useState([]);
   const [totalRow, setTotalRow] = useState();
   const [IdTailor, setIdTailor] = useState();
   const [successMsg, setSuccessMsg] = useState(""); // for success msg
-  const [errorMsg, setErrorMsg] = useState([]); // for success msg
+  const [errorMsg, setErrorMsg] = useState(); // for success msg
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [tailorData, setTailorData] = useState([]);
   const [open, setOpen] = useState(false);
   const [deleteTailorId, setDeleteTailorId] = useState([]);
+  const [loadingOpen, setloadingOpen] = useState(false); // for values
 
   /* Formload get tailor data */
   useEffect(() => {(async () => {
@@ -190,6 +192,7 @@ export default function User() {
    /** to Delete Tailor Data */
    const Agree = (deleteTailorId) => {
     setOpen(false);
+    setloadingOpen(true);
     (async () => {
       const data = {"tailor_id": deleteTailorId}
       const obj = {url: ApiPath.deleteTailorData, method: 'post', params:data};
@@ -199,10 +202,12 @@ export default function User() {
         setPost(post.filter(item => !deleteTailorId.includes(item.id)));
         setSelected([]);
         setErrorMsg("");
+        setloadingOpen(false);
       }
       if (response.flag===false) {
         setErrorMsg(response.message);
         setSuccessMsg("");
+        setloadingOpen(false);
       } 
     })();
   };
@@ -210,6 +215,7 @@ export default function User() {
   return (
     <Page title="User">
       <Container>
+      {loadingOpen && (<Loading loadingOpen={loadingOpen} />)}
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h3" gutterBottom>
           List of Tailors
@@ -218,8 +224,16 @@ export default function User() {
             New Tailor
           </Button>
         </Stack>
-        <Typography style={{backgroundColor:"green",borderRadius:'10px'}}><h3 style={{color:"white"}}>{successMsg}</h3></Typography>
-        <Typography style={{backgroundColor:"red",borderRadius:'10px'}}><h3 style={{color:"white"}}>{errorMsg}</h3></Typography>
+        {successMsg && (
+            <Alert variant="filled" severity="success">
+              <b>{successMsg}</b>
+            </Alert>
+          )}
+          {errorMsg && (
+            <Alert variant="filled" severity="error">
+            <b>{errorMsg}</b>
+          </Alert>
+          )}
         <Typography align="right">Total Row : {post.length} row(s)</Typography>
         <Card>
         <TailorListToolbar  handleChange={handleChange}  posts={post} IdTailor={selected}  deleteTailor={deleteTailor} numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName}/>
@@ -239,7 +253,7 @@ export default function User() {
                 />
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row,key) => {
-                    const {id,tailorId,nameMm,nameEn,phoneNo,nrcNo,address,description} = row;
+                    const {no,id,tailorId,nameMm,nameEn,phoneNo,nrcNo,address,description} = row;
                     const isItemSelected = selected.indexOf(id) !== -1;
                     return (
                       <TableRow
@@ -253,7 +267,7 @@ export default function User() {
                         <TableCell padding="checkbox">
                           <Checkbox checked={isItemSelected} onChange={(event) => handleClick(event, id)} />
                         </TableCell>
-                        <TableCell align="left">{key+1}</TableCell>
+                        <TableCell align="left">{no}</TableCell>
                         <TableCell align="left">{tailorId}</TableCell>
                          <TableCell component="th" scope="row" padding="none">
                           <Stack direction="row" alignItems="center" spacing={2}>

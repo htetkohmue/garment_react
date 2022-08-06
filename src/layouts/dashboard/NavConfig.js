@@ -30,8 +30,8 @@ const navConfig = [
     ],
   },
   {
-    title: 'product',
-    path: '/dashboard/products',
+    title: 'Raw Material',
+    path: '/dashboard/raws',
     icon: getIcon('eva:shopping-bag-fill'),
     children: [
       {
@@ -46,11 +46,18 @@ const navConfig = [
       }
     ],
   },
-  {
-    title: 'blog',
-    path: '/dashboard/blog',
-    icon: getIcon('eva:file-text-fill'),
-  },
+
+  
+  // {
+  //   title: 'product',
+  //   path: '/dashboard/products',
+  //   icon: getIcon('eva:shopping-bag-fill'),
+  // },
+  // {
+  //   title: 'blog',
+  //   path: '/dashboard/blog',
+  //   icon: getIcon('eva:file-text-fill'),
+  // },
   // {
   //   title: 'login',
   //   path: '/login',

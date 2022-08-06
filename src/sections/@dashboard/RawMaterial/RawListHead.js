@@ -34,31 +34,29 @@ export default function UserListHead({
   numSelected,
   onRequestSort,
   onSelectAllClick,
-  isUserNotFound
 }) {
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
-
   return (
-    <TableHead style={{border:1,backgroundColor:'#80ccff',borderRadius:'10px'}}>
-      <TableRow>
-       {!isUserNotFound &&
+    <TableHead>
+      <TableRow style={{ background: '#2065D1'}}>
         <TableCell padding="checkbox">
-          <Checkbox
+          <Checkbox style={{ color: '#fff'}}
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
           />
         </TableCell>
-        }
-        {!isUserNotFound && headLabel.map((headCell) => (
-          <TableCell
+        {headLabel.map((headCell) => (
+          <TableCell 
+            style={{ color: '#fff'}}
             key={headCell.id}
             align={headCell.alignRight ? 'right' : 'left'}
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
+              style={{ color: '#fff'}}
               hideSortIcon
               active={orderBy === headCell.id}
               direction={orderBy === headCell.id ? order : 'asc'}
