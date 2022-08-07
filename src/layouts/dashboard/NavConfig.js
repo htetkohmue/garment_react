@@ -41,12 +41,12 @@ const navConfig = [
     icon: getIcon('eva:shopping-bag-fill'),
     children: [
       {
-        title: "Product Register",
+        title: "Product In Register",
         path: "/dashboard/product-register",
         icon: getIcon('eva:shopping-bag-fill'),
       },
       {
-        title: "Product List",
+        title: "Product In List",
         path: "/dashboard/product-list",
         icon: getIcon('eva:shopping-bag-fill'),
       }
