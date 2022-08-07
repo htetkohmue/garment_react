@@ -12,6 +12,11 @@ const navConfig = [
     icon: getIcon('eva:pie-chart-2-fill'),
   },
   {
+    title: 'Suppliers',
+    path: '/dashboard/',
+    icon: getIcon('eva:shopping-bag-fill'), 
+  },
+  {
     title: 'Tailor',
     path : null,
     icon: getIcon('eva:people-fill'),
@@ -36,10 +41,15 @@ const navConfig = [
     
   },  
   {
-    title: 'product',
+    title: 'Product',
     path: '/dashboard/products',
     icon: getIcon('eva:shopping-bag-fill'),
     children: [
+      {
+        title: "Tailor-Raw Transaction",
+        path: "",
+        icon: getIcon('eva:shopping-bag-fill'),
+      },
       {
         title: "Product In Register",
         path: "/dashboard/product-register",
@@ -51,6 +61,29 @@ const navConfig = [
         icon: getIcon('eva:shopping-bag-fill'),
       }
     ],
+  },
+  {
+    title: 'Fabric',
+    path: '/dashboard/',
+    icon: getIcon('eva:shopping-bag-fill'),
+    children: [
+      {
+        title: "Fabric Register",
+        path: "/dashboard/",
+        icon: getIcon('eva:shopping-bag-fill'),
+      },
+      {
+        title: "Fabric List",
+        path: "/dashboard/",
+        icon: getIcon('eva:shopping-bag-fill'),
+      }
+    ],
+  },
+  {
+    title: 'Home Page',
+    path: '/dashboard/',
+    icon: getIcon('eva:shopping-bag-fill'),
+    
   },
   // {
   //   title: 'blog',
