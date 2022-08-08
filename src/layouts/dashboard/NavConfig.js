@@ -25,6 +25,11 @@ const navConfig = [
             title: "Tailors List",
             path: "/dashboard/tailors-list",
             icon: getIcon('eva:people-fill'),
+          },
+          {
+            title: "Supplier",
+            path: "/dashboard/supplier",
+            icon: getIcon('eva:people-fill'),
           }
 
     ],

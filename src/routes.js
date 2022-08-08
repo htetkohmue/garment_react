@@ -11,6 +11,7 @@ import Register from './pages/Register';
 import Products from './pages/Products';
 import DashboardApp from './pages/DashboardApp';
 import TailorsRegister from './pages/TailorsRegister';
+import Supplier from './pages/Supplier';
 
 // ----------------------------------------------------------------------
 
@@ -25,6 +26,7 @@ export default function Router() {
         { path: 'products', element: <Products /> },
         { path: 'blog', element: <Blog /> },
         { path: 'tailors-register', element: <TailorsRegister /> },
+        { path: 'supplier', element: <Supplier /> },
         { path: 'tailors-register/:id', element: <TailorsRegister /> },
       ],
     },
