@@ -111,13 +111,26 @@ export default function RawMaterial() {
 
   useEffect(() => {
     setInsertMode('Register');
-    // loadRawData();
+    loadRawData();
   }, []);
   const loadRawData = () => {
-    axios.get(`${path}/api/search-raws`).then((response) => {
-      setRawDataAPI(response.data.data);
-      setTotalRow(response.data.row_count);
-    });
+    (async () => {
+      setloadingOpen(true);
+      const obj = { url: ApiPath.searchRaws, method: 'get' };
+      const response = await ApiRequest(obj);
+
+      if (response.flag === true) {
+        setRawDataAPI(response.response_data.data);
+        setTotalRow(response.response_data.row_count);
+      }
+      if (response.flag === false) {
+        setValidatorErrorMsg(response.message);
+        setErrorMsg('');
+        setSuccessMsg('');
+        setloadingOpen(false);
+      }
+      clickCancel();
+    })();
   };
 
   const nameOnChange = (e) => {
@@ -171,61 +184,17 @@ export default function RawMaterial() {
   };
 
   const clickRegister = () => {
-    // console.log(rawID)
     if (isEmpty(name)) {
       setNameError(true);
       setNameHelperText('Raw Material Name is required!');
     } else if (!!rawID === true) {
-      // axios
-      //   .put(`${path}/api/update-raws/${rawID}`, {
-      //     name,
-      //     type,
-      //     description,
-      //     login_id: 2001,
-      //   })
-      //   .then((response) => {
-      //     if (response.data.status === 'NG') {
-      //       clickCancel();
-      //     }
-      //     if (response.data.status === 'OK') {
-      //       loadRawData();
-      //       toast.success(response.data.message, { position: toast.POSITION.TOP_RIGHT });
-      //       clickCancel();
-      //       setSuccessMsg(response.data.message);
-      //     }
-      //   })
-      //   .catch((error) => {});
-    } else {
-      // axios
-      //   .post(`${path}/api/raw-register`, {
-      //     id: rawID,
-      //     name,
-      //     type,
-      //     description,
-      //     login_id: 2001,
-      //   })
-      //   .then((response) => {
-      //     if (response.data.status === 'NG') {
-      //       clickCancel();
-      //     }
-      //     if (response.data.status === 'OK') {console.log(response.data.message)
-      //       // loadRawData();
-      //       // toast.success(response.data.message, { position: toast.POSITION.TOP_RIGHT });
-      //       // toast.success(response.data.message);
-      //        clickCancel();
-      //       // setSuccessMsg(response.data.message);
-
-      //     }
-      //   })
-      //   .catch((error) => {});
-
       (async () => {
         setloadingOpen(true);
-        const data = { id: rawID, name, type, description, login_id: 2001 };
+        const data = { id: rawID, name, type, description, login_id: 20001 };
 
-        const obj = { url: ApiPath.storeRaws, method: 'post', params: data };
+        const obj = { url: `${ApiPath.UpdateRaws}/${rawID}`, method: 'put', params: data };
         const response = await ApiRequest(obj);
-
+        loadRawData();
         if (response.flag === true) {
           setSuccessMsg(response.response_data.message);
           setValidatorErrorMsg([]);
@@ -238,9 +207,33 @@ export default function RawMaterial() {
           setSuccessMsg('');
           setloadingOpen(false);
         }
-        clickCancel();
+        setInsertMode('Register');
+      })();
+    } else {
+      (async () => {
+        setloadingOpen(true);
+        const data = { id: rawID, name, type, description, login_id: 20001 };
+
+        const obj = { url: ApiPath.storeRaws, method: 'post', params: data };
+        const response = await ApiRequest(obj);
+        loadRawData();
+        if (response.flag === true) {
+          setSuccessMsg(response.response_data.message);
+          setValidatorErrorMsg([]);
+          setErrorMsg('');
+          setloadingOpen(false);
+        }
+        if (response.flag === false) {
+          setValidatorErrorMsg(response.message);
+          setErrorMsg('');
+          setSuccessMsg('');
+          setloadingOpen(false);
+        }
       })();
     }
+    clickCancel();
+    
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   };
 
   const clickCancel = () => {
@@ -251,48 +244,56 @@ export default function RawMaterial() {
     setSelected([]);
   };
 
-  // const editRaws = (e, id) => {
-  //   axios
-  //     .get(`${path}/api/edit-raws/${id}`, {
-  //       id,
-  //     })
-  //     .then((response) => {
-  //       if (response.data.status === 'NG') {
-  //         setErrorMsg(response.data.message);
-  //       }
-  //       if (response.data.status === 'OK') {
-  //         // console.log(response.data.data)
-  //         setName(response.data.data.name);
-  //         setType(response.data.data.type);
-  //         setDescription(response.data.data.description);
-  //         setInsertMode('Update');
-  //         setRawID(response.data.data.id);
-  //         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-  //       }
-  //     })
-  //     .catch((error) => {});
-  // };
+  const editRaws = (e, id) => {
+    (async () => {
+      setloadingOpen(true);
 
-  // const deleteRaws = (id) => {
-  //   axios
-  //     .post(`${path}/api/delete-raws`, {
-  //       id,
-  //     })
-  //     .then((response) => {
+      const obj = { url: `${ApiPath.EditRaws}/${id}`, method: 'post' };
 
-  //       if (response.data.status === 'NG') {
-  //         setErrorMsg(response.data.message);
-  //       }
-  //       if (response.data.status === 'OK') {
-  //         loadRawData();
-  //         toast.success(response.data.message, { position: toast.POSITION.TOP_RIGHT });
-  //         clickCancel();
-  //         setSuccessMsg(response.data.message);
-  //         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-  //       }
-  //     })
-  //     .catch((error) => {});
-  // };
+      const response = await ApiRequest(obj);
+
+      if (response.flag === true) {
+        setName(response.response_data.data.name);
+        setType(response.response_data.data.type);
+        setDescription(response.response_data.data.description);
+        setInsertMode('Update');
+        setRawID(response.response_data.data.id);
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+      }
+      if (response.flag === false) {
+        setValidatorErrorMsg(response.message);
+        setErrorMsg('');
+        setSuccessMsg('');
+        setloadingOpen(false);
+      }
+    })();
+  };
+
+  const deleteRaws = (id) => {
+    (async () => {
+      setloadingOpen(true);
+      const data = { id, login_id: 20001 };
+
+      const obj = { url: ApiPath.DeleteRaws, method: 'post', params: data };
+      const response = await ApiRequest(obj);
+
+      if (response.flag === true) {
+        setSuccessMsg(response.response_data.message);
+        setValidatorErrorMsg([]);
+        setErrorMsg('');
+        setloadingOpen(false);
+      }
+      if (response.flag === false) {
+        setValidatorErrorMsg(response.message);
+        setErrorMsg('');
+        setSuccessMsg('');
+        setloadingOpen(false);
+      }
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+      clickCancel();
+      loadRawData();
+    })();
+  };
 
   return (
     <Page title="Dashboard: RawMaterial">
@@ -325,94 +326,93 @@ export default function RawMaterial() {
           insertMode={insertMode}
         />
         {/* <ToastContainer /> */}
+        {rawDataAPI.length > 0 && (
+          <Card>
+            <RawListToolbar
+              posts={rawDataAPI}
+              rawIDs={selected}
+              deleteRaws={deleteRaws}
+              numSelected={selected.length}
+              filterName={filterName}
+              onFilterName={handleFilterByName}
+            />
 
-        {/* <Card>
-          <RawListToolbar
-            posts={rawDataAPI}
-            rawIDs={selected}
-            deleteRaws={deleteRaws}
-            numSelected={selected.length}
-            filterName={filterName}
-            onFilterName={handleFilterByName}
-          />
-
-          <Scrollbar>
-            <TableContainer sx={{ minWidth: 800 }}>
-              <Table>
-                <RawListHead
-                  order={order}
-                  orderBy={orderBy}
-                  headLabel={TABLE_HEAD}
-                  rowCount={rawDataAPI.length}
-                  numSelected={selected.length}
-                  onRequestSort={handleRequestSort}
-                  onSelectAllClick={handleSelectAllClick}
-                />
-                <TableBody>
-                  {filteredRaws.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { key, id, name, type, edit, del, description } = row;
-                    const isItemSelected = selected.indexOf(id) !== -1;
-                    return (
-                      <TableRow
-                        hover
-                        key={id}
-                        tabIndex={-1}
-                        role="checkbox"
-                        selected={isItemSelected}
-                        aria-checked={isItemSelected}
-                      >
-                        <TableCell padding="checkbox">
-                          <Checkbox checked={isItemSelected} onChange={(event) => handleClick(event, id)} />
-                        </TableCell>
-                        <TableCell align="left">{key}</TableCell>
-                        <TableCell align="left">{name}</TableCell>
-                        <TableCell align="left">{type}</TableCell>
-                        <TableCell align="left">
-                          <Tooltip title="edit">
-                            <IconButton aria-label="edit" onClick={(e) => editRaws(e, id)}>
-                           
-                              <Iconify icon="akar-icons:edit" />
-                            </IconButton>
-                          </Tooltip>
-                        </TableCell>
-                
-                        <TableCell align="left">{description}</TableCell>
-                      </TableRow>
-                    );
-                  })}
-                  {emptyRows > 0 && (
-                    <TableRow style={{ height: 53 * emptyRows }}>
-                      <TableCell colSpan={8} />
-                    </TableRow>
-                  )}
-                </TableBody>
-
-                {isDataNotFound && (
+            <Scrollbar>
+              <TableContainer sx={{ minWidth: 800 }}>
+                <Table>
+                  <RawListHead
+                    order={order}
+                    orderBy={orderBy}
+                    headLabel={TABLE_HEAD}
+                    rowCount={rawDataAPI.length}
+                    numSelected={selected.length}
+                    onRequestSort={handleRequestSort}
+                    onSelectAllClick={handleSelectAllClick}
+                  />
                   <TableBody>
-                    <TableRow>
-                      <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
-                        <SearchNotFound searchQuery={filterName} />
-                      </TableCell>
-                    </TableRow>
+                    {filteredRaws.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                      const { key, id, name, type, edit, del, description } = row;
+                      const isItemSelected = selected.indexOf(id) !== -1;
+                      return (
+                        <TableRow
+                          hover
+                          key={id}
+                          tabIndex={-1}
+                          role="checkbox"
+                          selected={isItemSelected}
+                          aria-checked={isItemSelected}
+                        >
+                          <TableCell padding="checkbox">
+                            <Checkbox checked={isItemSelected} onChange={(event) => handleClick(event, id)} />
+                          </TableCell>
+                          <TableCell align="left">{key}</TableCell>
+                          <TableCell align="left">{name}</TableCell>
+                          <TableCell align="left">{type}</TableCell>
+                          <TableCell align="left">
+                            <Tooltip title="edit">
+                              <IconButton aria-label="edit" onClick={(e) => editRaws(e, id)}>
+                                <Iconify icon="akar-icons:edit" />
+                              </IconButton>
+                            </Tooltip>
+                          </TableCell>
+
+                          <TableCell align="left">{description}</TableCell>
+                        </TableRow>
+                      );
+                    })}
+                    {emptyRows > 0 && (
+                      <TableRow style={{ height: 53 * emptyRows }}>
+                        <TableCell colSpan={8} />
+                      </TableRow>
+                    )}
                   </TableBody>
-                )}
 
-              </Table>
-            </TableContainer>
-          </Scrollbar>
+                  {isDataNotFound && (
+                    <TableBody>
+                      <TableRow>
+                        <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
+                          <SearchNotFound searchQuery={filterName} />
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  )}
+                </Table>
+              </TableContainer>
+            </Scrollbar>
 
-          <ToastContainer className="toast-position" />
+            {/* <ToastContainer className="toast-position" /> */}
 
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component="div"
-            count={rawDataAPI.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </Card> */}
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={rawDataAPI.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </Card>
+        )}
       </Container>
     </Page>
   );

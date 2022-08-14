@@ -8,5 +8,9 @@ export default {
 
 
   // Raws
-  storeRaws: "api/raw-register",
+  storeRaws: "api/raws/raw-register",
+  searchRaws: "api/raws/raw-search",
+  DeleteRaws: "api/raws/raw-delete",
+  EditRaws: `api/raws/raw-edit`,
+  UpdateRaws: `api/raws/raw-update`,
 }
