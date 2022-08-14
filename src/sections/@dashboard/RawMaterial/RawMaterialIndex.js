@@ -5,7 +5,7 @@ function RawMaterialIndex(props) {
   return (
     <>
       <Container>
-        <Stack spacing={3} style={{ width: 600,marginBottom:'20px' }}>
+        <Stack spacing={3} style={{ marginBottom: '20px' }}>
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
             <TextField
               fullWidth
@@ -24,7 +24,9 @@ function RawMaterialIndex(props) {
             value={props.description}
             onChange={(e) => props.setDescription(e.target.value)}
           />
+        </Stack>
 
+        <Stack spacing={3} style={{ marginBottom: '20px' }} justifyContent="center" alignItems="center">
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
             <Button fullWidth size="large" variant="contained" onClick={props.clickRegister}>
               {props.insertMode}
