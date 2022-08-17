@@ -1,44 +1,14 @@
-// // import * as yup from 'yup';
-// import { useState } from 'react';
-// // import { useFormik, Form, FormikProvider } from 'formik';
-// import { useNavigate, Link as RouterLink, useParams } from 'react-router-dom';
-
-// import React from 'react';
-// import ReactDOM from 'react-dom';
-// import { useFormik, Form, FormikProvider } from 'formik';
-// import * as yup from 'yup';
-// import { Stack, Button, TextField } from '@mui/material';
-
-// material
-// import { Stack, TextField,  Button } from '@mui/material';
-// import { LoadingButton } from '@mui/lab';
-// component
-// import Iconify from '../../../components/Iconify';
-
 /* import css */
 import * as yup from 'yup';
-import { useState } from 'react';
-import { useFormik, Form, FormikProvider } from 'formik';
-import { useNavigate, Link as RouterLink, useParams } from 'react-router-dom';
+import { useFormik, Form, FormikProvider, useFormikContext } from 'formik';
+import { useNavigate } from 'react-router-dom';
 
 // material
-import { Stack, Button, TextField, IconButton, InputAdornment, Typography, label } from '@mui/material';
-import { LoadingButton } from '@mui/lab';
-// component
-import Iconify from '../../../components/Iconify';
+import { Stack, Button, TextField } from '@mui/material';
 import '../../../css/common.css';
-
-// ----------------------------------------------------------------------
 
 export default function RegisterForm(props) {
   const navigate = useNavigate();
-  // const RegisterSchema = Yup.object().shape({
-  //   englishName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('English name required'),
-  //   myanmarName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Myanmar name required'),
-  //   phone: Yup.string().required('Phone no is required'),
-  //   nrcNo: Yup.string().required('NRC no is required'),
-  //   address: Yup.string().required('Address is required'),
-  // });
   const RegisterSchema = yup.object().shape({
     nameMm: yup.string().min(2, 'Too short').max(50, 'Too long').required('Enter your name in Myanmar'),
     nameEn: yup.string().min(2, 'Too short').max(50, 'Too long').required('Enter your name in English'),
@@ -47,24 +17,41 @@ export default function RegisterForm(props) {
     address: yup.string().required('Enter your address'),
   });
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      nameMm: '',
-      nameEn: '',
-      phoneNo: '',
-      email: '',
-      company: '',
-      address: '',
-      comment: '',
+      nameMm: props.editSupplier.name_mm || '',
+      nameEn: props.editSupplier.name_en || '',
+      phoneNo: props.editSupplier.phone_no || '',
+      email: props.editSupplier.email || '',
+      company: props.editSupplier.company || '',
+      address: props.editSupplier.address || '',
+      comment: props.editSupplier.comment || '',
     },
     validationSchema: RegisterSchema,
     onSubmit: (values, { resetForm }) => {
       resetForm({ values: '' });
-      navigate('/dashboard/supplier-register', { replace: true });
+      navigate('/dashboard/supplier', { replace: true });
     },
   });
 
-  const { errors, touched, handleSubmit, isSubmitting, getFieldProps, handleChange, handleBlur } = formik;
+  // const onChange = (e) => {
+  //   // console.log(e.target.name);
+  //   const name = e.target.name;
+  //   const val = e.target.value;
+  //   props.setEditSupplier((prevState) => {
+  //     return {
+  //       ...prevState,
+  //       [name]: val,
+  //     };
+  //   });
+  // };
 
+  const { errors, touched, handleSubmit, getFieldProps, handleChange } = formik;
+
+  // const { setFieldValue } = useFormikContext();
+  // const handleChange = (option) => {
+  //   setFieldValue(props.name, option);
+  // };
   return (
     <FormikProvider value={formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
@@ -81,7 +68,7 @@ export default function RegisterForm(props) {
             label="အမည် (English)"
             {...getFieldProps('nameEn')}
             error={Boolean(touched.nameEn && errors.nameEn)}
-            helperText={touched.nameEn && errors.nameMm}
+            helperText={touched.nameEn && errors.nameEn}
           />
 
           <TextField
@@ -101,96 +88,30 @@ export default function RegisterForm(props) {
             helperText={touched.address && errors.address}
           />
           <TextField fullWidth label="မှတ်ချက်" {...getFieldProps('comment')} />
-          {/* <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-            <TextField
-              fullWidth
-              label="English Name"
-              // {...getFieldProps('englishName')}
-              error={Boolean(touched.englishName && errors.englishName)}
-              helperText={touched.englishName && errors.englishName}
-            />
-            <TextField
-            fullWidth
-              label="Myanmar Name"
-              {...getFieldProps('myanmarName')}
-              error={Boolean(touched.myanmarName && errors.myanmarName)}
-              helperText={touched.myanmarName && errors.myanmarName}
-            />
-          </Stack>
-          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-          <TextField
-            fullWidth
-            autoComplete="phone"
-            type="phone"
-            label="Phone No"
-            {...getFieldProps('phone')}
-            error={Boolean(touched.phone && errors.phone)}
-            helperText={touched.phone && errors.phone}
-          />
-          <Typography  style={{color:'red',width:'100%'}} >
-          * get more than one comma ','
-          </Typography>
-           </Stack>
-           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-           <TextField
-           fullWidth
-            autoComplete="nrc"
-            label="NRC No"
-            {...getFieldProps('nrcNo')}
-            error={Boolean(touched.nrcNo && errors.nrcNo)}
-            helperText={touched.nrcNo && errors.nrcNo}
-          />
-           <TextField
-           fullWidth
-            autoComplete="address"
-            label="Address"
-            {...getFieldProps('address')}
-            error={Boolean(touched.address && errors.address)}
-            helperText={touched.address && errors.address}
-          />
-          </Stack>
-          <TextField
-          fullWidth
-            autoComplete="Description"
-            label="Description"
-            {...getFieldProps('description')}
-          
-          /> */}
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} justifyContent="right">
-            <Button
-              size="large"
-              type="submit"
-              variant="contained"
-              className="button"
-              style={{ width: '100px', boxSizing: 'small' }}
-              onClick={(e) => props.register(formik.values)}
-            >
-              သိမ်းမည်
-            </Button>
-            {/* 
-            <Button
-              size="large"
-              type="submit"
-              variant="contained"
-              className="button"
-              style={{ width: '100px', boxSizing: 'small' }}
-            >
-              ပယ်ဖျက်မည်
-            </Button> */}
-            {/* <LoadingButton
-              size="large"
-              type="submit"
-              variant="contained"
-              loading={isSubmitting}
-              onClick={(e) => props.register(formik.values)}
-              className="button"
-              style={{ width: '100px' }}
-            >
-              သိမ်းမည်
-            </LoadingButton>
-            <LoadingButton  size="large" type="submit" variant="contained" loading={isSubmitting} onClick={(e) => props.register(formik.values)} className="button" style={{width:"100px"}}>
-            ပယ်ဖျက်မည်
-            </LoadingButton> */}
+            {props.editSupplier ? (
+              <Button
+                size="large"
+                type="submit"
+                variant="contained"
+                className="button"
+                style={{ width: '100px', boxSizing: 'small' }}
+                onClick={(e) => props.update(formik.values)}
+              >
+                ပြင်မည်
+              </Button>
+            ) : (
+              <Button
+                size="large"
+                type="submit"
+                variant="contained"
+                className="button"
+                style={{ width: '100px', boxSizing: 'small' }}
+                onClick={(e) => props.register(formik.values)}
+              >
+                သိမ်းမည်
+              </Button>
+            )}
           </Stack>
         </Stack>
       </Form>

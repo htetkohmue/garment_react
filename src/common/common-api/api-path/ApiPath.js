@@ -6,5 +6,8 @@ export default {
   storeTailorData: 'api/tailor-register/register-tailor',
   editTailorData: 'api/tailor-register/edit-tailor',
   updateTailorData: 'api/tailor-register/update-tailor',
-  storeSupplierData: 'api/supplier-register/register-supplier',
+  storeSupplierData: 'api/supplier/create',
+  getSupplierData: 'api/supplier/retrieve',
+  editSupplierData: 'api/supplier/update',
+  removeSupplierData: 'api/supplier/delete',
 };
