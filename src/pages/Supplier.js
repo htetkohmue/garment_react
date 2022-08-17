@@ -9,7 +9,7 @@ import useResponsive from '../hooks/useResponsive';
 // components
 import Page from '../components/Page';
 // sections
-import { TailorsRegisterForm, TailorsEditForm } from '../sections/@dashboard/TailorRegister';
+import { RegisterForm, DisplayForm } from '../sections/@dashboard/Supplier';
 import ApiPath from '../common/common-api/api-path/ApiPath';
 import { ApiRequest } from '../common/common-api/api-request/ApiRequest';
 
@@ -27,39 +27,21 @@ const path = process.env.REACT_APP_BACKEND_URL;
 
 // ----------------------------------------------------------------------
 
-export default function TailorsRegister() {
+export default function Supplier() {
   const defaultPerPage = ApiPath.defaultPerPage;
   const [successMsg, setSuccessMsg] = useState(''); // for success msg
   const [validatorErrorMsg, setValidatorErrorMsg] = useState([]); // for valid msg
   const [errorMsg, setErrorMsg] = useState(''); // for error msg
-  const [values, setValues] = useState([]); // for values
-  const [edit, setEdit] = useState(false); // for values
+  const [supplierData, setSupplierData] = useState([]); // for values
+  const [editSupplier, setEditSupplier] = useState(false); // for values
 
-  /** edit get data function */
-  const { id, setId } = useParams();
   useEffect(() => {
     (async () => {
       const data = {};
-      const apiPath = ApiPath.editTailorData;
-      const obj = { url: `${apiPath}/${id}`, method: 'get', params: data };
+      const obj = { url: ApiPath.getSupplierData, method: 'get' };
       const response = await ApiRequest(obj);
       if (response.flag === true) {
-        setValues({
-          tailors_id: response.response_data.data.tailor_id,
-          englishName: response.response_data.data.name_mm,
-          myanmarName: response.response_data.data.name_en,
-          phone: response.response_data.data.phone_no,
-          nrcNo: response.response_data.data.nrc_no,
-          address: response.response_data.data.address,
-          description: response.response_data.data.description,
-        });
-        setEdit(true);
-        setloadingOpen(false);
-      }
-      if (id != null && response.flag === false) {
-        setErrorMsg(response.message);
-        setSuccessMsg('');
-        setValidatorErrorMsg([]);
+        setSupplierData(response.response_data.data);
       }
     })();
   }, []);
@@ -68,19 +50,20 @@ export default function TailorsRegister() {
   const register = (values) => {
     (async () => {
       const data = {
-        tailor_id: values.tailors_id,
-        name_mm: values.englishName,
-        name_en: values.myanmarName,
-        phone_no: values.phone,
-        nrc_no: values.nrcNo,
+        name_mm: values.nameMm,
+        name_en: values.nameEn,
+        phone_no: values.phoneNo,
+        email: values.email,
+        company: values.company,
         address: values.address,
-        description: values.description,
-        login_id: 10001,
+        comment: values.comment,
+        login_id: 1000,
       };
-      const obj = { url: ApiPath.storeTailorData, method: 'post', params: data };
+      const obj = { url: ApiPath.storeSupplierData, method: 'post', params: data };
       const response = await ApiRequest(obj);
       if (response.flag === true) {
         setSuccessMsg(response.response_data.message);
+        supplierData.push(response.response_data.data);
         setValidatorErrorMsg([]);
         setErrorMsg('');
       }
@@ -95,55 +78,83 @@ export default function TailorsRegister() {
   const update = (values) => {
     (async () => {
       const data = {
-        tailor_id: values.tailors_id,
-        name_mm: values.englishName,
-        name_en: values.myanmarName,
-        phone_no: values.phone,
-        nrc_no: values.nrcNo,
+        id: editSupplier.id,
+        name_mm: values.nameMm,
+        name_en: values.nameEn,
+        phone_no: values.phoneNo,
+        email: values.email,
+        company: values.company,
         address: values.address,
-        description: values.description,
-        login_id: 10001,
+        comment: values.comment,
+        login_id: 1000,
       };
-      const apiPath = ApiPath.updateTailorData;
-      const obj = { url: `${apiPath}/${id}`, method: 'put', params: data };
+      const obj = { url: ApiPath.editSupplierData, method: 'post', params: data };
       const response = await ApiRequest(obj);
       if (response.flag === true) {
         setSuccessMsg(response.response_data.message);
+        response.response_data.data.no = editSupplier.no;
+        supplierData[editSupplier.no - 1] = response.response_data.data;
+        setEditSupplier(false);
         setValidatorErrorMsg([]);
         setErrorMsg('');
-        setEdit(false);
-        setloadingOpen(false);
       }
       if (response.flag === false) {
-        setErrorMsg(response.message);
-        setValidatorErrorMsg([]);
+        setValidatorErrorMsg(response.message);
+        setErrorMsg('');
         setSuccessMsg('');
       }
     })();
   };
+
+  /** remove function */
+  const remove = (value) => {
+    (async () => {
+      const data = {
+        id: value,
+      };
+      const obj = { url: ApiPath.removeSupplierData, method: 'post', params: data };
+      const response = await ApiRequest(obj);
+      if (response.flag === true) {
+        setSuccessMsg(response.response_data.message);
+        setSupplierData(
+          supplierData.filter((row) => {
+            return !(row.id === value);
+          })
+        );
+        setValidatorErrorMsg([]);
+        setErrorMsg('');
+      }
+      if (response.flag === false) {
+        setValidatorErrorMsg(response.response_data.message);
+        setErrorMsg('');
+        setSuccessMsg('');
+      }
+    })();
+  };
+
   return (
-    <Page title="Register">
+    <Page title="Supplier Register">
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between">
-          {!edit && (
+          {!editSupplier && (
             <Typography variant="h3" gutterBottom>
-              Tailor Registration
+              ပိတ်အုပ်သွင်းသူအမည် စာရင်းသွင်းခြင်း
             </Typography>
           )}
-          {edit && (
+          {editSupplier && (
             <Typography variant="h3" gutterBottom>
-              Tailor Updating
+              ပိတ်အုပ်သွင်းသူအမည် ပြင်ဆင်ခြင်း
             </Typography>
           )}
         </Stack>
         <div style={{ backgroundColor: 'red', borderRadius: '10px' }}>
-          {validatorErrorMsg.map((data, index) => {
+          {/* {validatorErrorMsg.map((data, index) => {
             return (
               <div key={index} style={{ color: 'white' }}>
                 {data}
               </div>
             );
-          })}
+          })} */}
         </div>
         <div style={{ backgroundColor: 'red', borderRadius: '10px' }}>
           <h3 style={{ color: 'white' }}>{errorMsg}</h3>
@@ -152,8 +163,14 @@ export default function TailorsRegister() {
           <h3 style={{ color: 'white' }}>{successMsg}</h3>
         </div>
         <ContentStyle>
-          {!edit && <TailorsRegisterForm register={register} />}
-          {edit && <TailorsEditForm update={update} values={values} />}
+          <RegisterForm register={register} update={update} editSupplier={editSupplier} />
+          <DisplayForm
+            supplierData={supplierData}
+            justifySelf="center"
+            setEditSupplier={setEditSupplier}
+            remove={remove}
+            errorMsg={errorMsg}
+          />
         </ContentStyle>
       </Container>
     </Page>

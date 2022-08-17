@@ -13,6 +13,7 @@ import Products from './pages/Products';
 import DashboardApp from './pages/DashboardApp';
 import TailorsRegister from './pages/TailorsRegister';
 import RawMaterial from './pages/RawMaterial';
+import Supplier from './pages/Supplier';
 
 // ----------------------------------------------------------------------
 
@@ -27,6 +28,7 @@ export default function Router() {
         { path: 'products', element: <Products /> },
         { path: 'blog', element: <Blog /> },
         { path: 'tailors-register', element: <TailorsRegister /> },
+        { path: 'supplier', element: <Supplier /> },
         { path: 'tailors-register/:id', element: <TailorsRegister /> },
         { path: 'product-list', element: <ProductList /> },
         { path: 'raws', element: <RawMaterial /> },
