@@ -3,13 +3,13 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Stack, Card, Link, Container, Typography } from '@mui/material';
+import { Stack, Card, Link, Container, Typography ,Alert} from '@mui/material';
 // hooks
 import useResponsive from '../hooks/useResponsive';
 // components
 import Page from '../components/Page';
 // sections
-import { TailorsRegisterForm, TailorsEditForm } from '../sections/@dashboard/TailorRegister';
+import { TailorsRegisterForm, TailorsEditForm,Loading } from '../sections/@dashboard/TailorRegister';
 import ApiPath from '../common/common-api/api-path/ApiPath';
 import { ApiRequest } from '../common/common-api/api-request/ApiRequest';
 
@@ -34,6 +34,7 @@ export default function TailorsRegister() {
   const [errorMsg, setErrorMsg] = useState(''); // for error msg
   const [values, setValues] = useState([]); // for values
   const [edit, setEdit] = useState(false); // for values
+  const [loadingOpen, setloadingOpen] = useState(false); // for values
 
   /** edit get data function */
   const { id, setId } = useParams();
@@ -124,6 +125,7 @@ export default function TailorsRegister() {
   return (
     <Page title="Register">
       <Container>
+      {loadingOpen && (<Loading loadingOpen={loadingOpen} />)}
         <Stack direction="row" alignItems="center" justifyContent="space-between">
           {!edit && (
             <Typography variant="h3" gutterBottom>
@@ -136,21 +138,27 @@ export default function TailorsRegister() {
             </Typography>
           )}
         </Stack>
-        <div style={{ backgroundColor: 'red', borderRadius: '10px' }}>
-          {validatorErrorMsg.map((data, index) => {
+        {successMsg && (
+            <Alert variant="filled" severity="success">
+              <b>{successMsg}</b>
+            </Alert>
+          )}
+          {errorMsg && (
+            <Alert variant="filled" severity="error">
+            <b>{errorMsg}</b>
+          </Alert>
+          )}
+          {validatorErrorMsg.length!==0 && (
+            <Alert variant="filled" severity="error">
+            <b> {validatorErrorMsg.map((data, index) => {
             return (
               <div key={index} style={{ color: 'white' }}>
                 {data}
               </div>
             );
-          })}
-        </div>
-        <div style={{ backgroundColor: 'red', borderRadius: '10px' }}>
-          <h3 style={{ color: 'white' }}>{errorMsg}</h3>
-        </div>
-        <div style={{ backgroundColor: 'green', borderRadius: '10px' }}>
-          <h3 style={{ color: 'white' }}>{successMsg}</h3>
-        </div>
+          })}</b>
+          </Alert>
+          )}
         <ContentStyle>
           {!edit && <TailorsRegisterForm register={register} />}
           {edit && <TailorsEditForm update={update} values={values} />}

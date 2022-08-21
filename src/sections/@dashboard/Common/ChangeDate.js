@@ -1,10 +1,10 @@
-import moment from "moment";
+// import moment from "moment";
 
 
- export const ChangeDate = (props) => {
-     if(props !== null){
-         return moment(props).format('YYYY-MM-DD');
-     }
- }
+//  export const ChangeDate = (props) => {
+//      if(props !== null){
+//          return moment(props).format('YYYY-MM-DD');
+//      }
+//  }
 
  
