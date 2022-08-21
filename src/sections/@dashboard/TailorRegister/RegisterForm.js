@@ -33,7 +33,7 @@ export default function TailorsRegisterForm(props) {
     // validationSchema: RegisterSchema,
     onSubmit: (values, { resetForm }) => {
       resetForm({ values: '' });
-      navigate('/dashboard/tailor-register', { replace: true });
+      navigate('/dashboard/tailors-register', { replace: true });
     },
   });
 
