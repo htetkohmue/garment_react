@@ -1,0 +1,28 @@
+.item-align{
+    align-self: center;
+}
+.button{
+    box-shadow: none;
+    text-transform: none;
+    font-size: 16;
+    padding: 6px 12px;
+    border: 1px solid;
+    line-height: 1.5;
+    background-color: #2065d1;
+    border-color: #0063cc;
+    color: #f6f9fd;
+}
+.button:hover {
+    text-decoration: none;
+    background-color: #103996;
+    border-color: #103995;
+}
+.delete-button{
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+.delete-button:hover {
+    text-decoration: none;
+    background-color: #c82333;
+    border-color: #bd2130;
+}
