@@ -37,7 +37,7 @@ import Scrollbar from '../components/Scrollbar';
 import Page from '../components/Page';
 import Iconify from '../components/Iconify';
 import { RawListToolbar, RawMaterialIndex, RawListHead } from '../sections/@dashboard/RawMaterial';
-import { isEmpty } from '../sections/common/Validation';
+import { isEmpty } from '../common/Validation/Validation';
 import '../sections/common/style.css';
 
 // mock
@@ -184,7 +184,7 @@ export default function RawMaterial() {
   };
 
   const clickRegister = () => {
-    if (isEmpty(name)) {
+    if (!!name === false) {
       setNameError(true);
       setNameHelperText('Raw Material Name is required!');
     } else if (!!rawID === true) {

@@ -64,7 +64,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
         <Logo />
       </Box>
 
-      <Box sx={{ mb: 5, mx: 1.5 }}>
+      {/* <Box sx={{ mb: 5, mx: 1.5 }}>
         <Link underline="none" component={RouterLink} to="#">
           <AccountStyle>
             <Avatar style={{width:'60px',height:'60px'}} src={account.photoURL} alt="photoURL" />
@@ -78,7 +78,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
             </Box>
           </AccountStyle>
         </Link>
-      </Box>
+      </Box> */}
 
       <NavSection navConfig={navConfig} />
 

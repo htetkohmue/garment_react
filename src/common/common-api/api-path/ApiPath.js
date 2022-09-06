@@ -17,4 +17,7 @@ export default {
   getSupplierData: 'api/supplier/retrieve',
   editSupplierData: 'api/supplier/update',
   removeSupplierData: 'api/supplier/delete',
+
+  // Supplier Transaction List
+  searchSupplierTransaction : 'api/supplier-transaction-list/search-supplier-transaction'
 };
