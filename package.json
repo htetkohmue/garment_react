@@ -55,6 +55,7 @@
     "i18next-browser-languagedetector": "^6.1.4",
     "lodash": "^4.17.21",
     "material-ui-phone-number": "^3.0.0",
+    "moment": "^2.29.4",
     "mui-tel-input": "^1.4.1",
     "numeral": "^2.0.6",
     "prop-types": "^15.8.1",
