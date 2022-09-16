@@ -17,14 +17,15 @@ import { Container
   , IconButton
   , Tooltip
   , Alert
-  ,Tab } from '@mui/material';
+  ,Tab 
+  ,TablePagination } from '@mui/material';
 import {LoadingButton } from '@mui/lab';
 import Iconify from '../components/Iconify';
 // components
 import Page from '../components/Page';
 import Scrollbar from '../components/Scrollbar';
 // sections
-import { ProductSearch,TailorListToolbar,ProductInHead } from '../sections/@dashboard/ProductInList';
+import { ProductSearch,TailorListToolbar,ProductInHead ,AlertDialogSlide,Loading } from '../sections/@dashboard/ProductInList';
 import ApiPath from '../common/common-api/api-path/ApiPath';
 import {ApiRequest} from '../common/common-api/api-request/ApiRequest';
 import { ChangeDate } from '../common/ChangeDate';
@@ -374,6 +375,17 @@ import { ChangeDate } from '../common/ChangeDate';
                     })}
               </TableContainer>
               </Scrollbar>
+              {open && (<AlertDialogSlide open={open} Agree={Agree} handleClose={handleClose}/>)}
+
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25]}
+                component="div"
+                count={post.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+              />
           </Card>
       )}
       </stack>
