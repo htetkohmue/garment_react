@@ -17,10 +17,4 @@ export default {
   getSupplierData: 'api/supplier/retrieve',
   editSupplierData: 'api/supplier/update',
   removeSupplierData: 'api/supplier/delete',
-
-  // ProductInList
-  searchTailor: 'api/product-in-list/searchTailor',
-  searchTailorByID: 'api/product-in-list/searchTailorByID',
-  searchProductIn: 'api/product-in-list/search-product',
-
 };
