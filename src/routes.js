@@ -14,6 +14,7 @@ import DashboardApp from './pages/DashboardApp';
 import TailorsRegister from './pages/TailorsRegister';
 import RawMaterial from './pages/RawMaterial';
 import Supplier from './pages/Supplier';
+import SupplierTransactionList from './pages/SupplierTransactionList';
 
 // ----------------------------------------------------------------------
 
@@ -32,6 +33,7 @@ export default function Router() {
         { path: 'tailors-register/:id', element: <TailorsRegister /> },
         { path: 'product-list', element: <ProductList /> },
         { path: 'raws', element: <RawMaterial /> },
+        { path: 'supplier-transaction-list', element: <SupplierTransactionList /> },
       ],
     },
     {
