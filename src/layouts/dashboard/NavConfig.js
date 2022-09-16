@@ -14,7 +14,14 @@ const navConfig = [
   {
     title: 'Suppliers',
     path: '/dashboard/',
-    icon: getIcon('eva:shopping-bag-fill'), 
+    icon: getIcon('eva:shopping-bag-fill'),
+    children: [
+      {
+        title: "Supplier",
+        path: "/dashboard/supplier",
+        icon: getIcon('eva:people-fill'),
+      }
+    ] 
   },
   {
     title: 'Tailor',
@@ -31,11 +38,6 @@ const navConfig = [
             path: "/dashboard/tailors-list",
             icon: getIcon('eva:people-fill'),
           },
-          {
-            title: "Supplier",
-            path: "/dashboard/supplier",
-            icon: getIcon('eva:people-fill'),
-          }
 
     ],
   },
