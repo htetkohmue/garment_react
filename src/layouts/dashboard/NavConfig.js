@@ -42,6 +42,29 @@ const navConfig = [
     ],
   },
   {
+    title: 'Customer',
+    path : null,
+    icon: getIcon('eva:people-fill'),
+    children: [
+          {
+            title: "Customer Register",
+            path: "/dashboard/customers-register",
+            icon: getIcon('eva:person-add-fill'),
+          },
+          {
+            title: "Customer list",
+            path: "/dashboard/customers-list",
+            icon: getIcon('eva:person-add-fill'),
+          },
+          {
+            title: "Customer Transaction",
+            path: "/dashboard/customers-transaction",
+            icon: getIcon('eva:people-fill'),
+          },
+
+    ],
+  },
+  {
     title: 'Raw Material',
     path: '/dashboard/raws',
     icon: getIcon('eva:shopping-bag-fill'),

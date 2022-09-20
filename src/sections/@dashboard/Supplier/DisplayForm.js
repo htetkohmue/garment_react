@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Table, TableBody, TableCell, TableHead, TableRow, Button } from '@mui/material';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+// import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+// import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 
 /* import css */
 import '../../../css/common.css';
@@ -34,7 +34,7 @@ export default function DisplayForm(props) {
             <TableCell align="center">
               <Button
                 variant="contained"
-                startIcon={<EditOutlinedIcon />}
+                // startIcon={<EditOutlinedIcon />}
                 className="button"
                 style={{ width: '100px', fontSize: 'small', boxSizing: 'small' }}
                 onClick={(e) => props.setEditSupplier(row)}
@@ -45,7 +45,7 @@ export default function DisplayForm(props) {
             <TableCell align="center">
               <Button
                 variant="contained"
-                startIcon={<DeleteOutlineIcon />}
+                // startIcon={<DeleteOutlineIcon />}
                 className="button delete-button"
                 style={{ width: '100px', fontSize: 'small', boxSizing: 'small' }}
                 onClick={(e) => props.remove(row.id)}

@@ -1,5 +1,5 @@
 export default {
-  defaultPerPage: 20,
+  defaultPerPage: 30,
   getTailorData: 'api/tailor-list/search-tailor',
   deleteTailorData: 'api/tailor-list/delete-tailor',
   storeTailorData: 'api/tailor-register/register-tailor',
@@ -25,4 +25,11 @@ export default {
   searchTailor: 'api/product-in-list/searchTailor',
   searchTailorByID: 'api/product-in-list/searchTailorByID',
   searchProductIn: 'api/product-in-list/search-product',
+
+  // Customer
+  getTownship:  'api/township/getTownship',
+
+  // Customer
+  storeCustomer: 'api/customer/storeCustomer',
+  getCustomerId:  'api/customer/getCustomerId'
 };
