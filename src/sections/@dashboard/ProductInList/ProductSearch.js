@@ -81,42 +81,6 @@ export default function SearchFilter({ end,start,selectedFromDate,selectedToDate
           </Stack>
         </Form>
         
-      </FormikProvider>
-
-
-          //     <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>     
-          //     <FormControl>
-          //       <InputLabel id="tailor_id_label">Tailor ID</InputLabel>
-          //       <Select
-          //         labelId="tailor_id_label"
-          //         id="tailorId"
-          //         value={tailorId}
-          //         label="Tailor ID"
-          //         onChange={handleChange}
-          //         {...getFieldProps('tailorId')}
-          //         >
-          //           {/* <MenuItem value={10}>2001</MenuItem>
-          //           <MenuItem value={20}>2002</MenuItem>
-          //           <MenuItem value={30}>2003</MenuItem> */}
-          //       </Select>
-          //     </FormControl>
-          //     <TextField id='tailorName'  value={tailorName}  label="Tailor Name"  {...getFieldProps('tailorName')} />              
-          //     </Stack>
-          //     <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-          //     <LoadingButton type="submit" variant="contained">
-          //     Search
-          //     </LoadingButton>
-          //     </Stack>
-          //     <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-          //     <LoadingButton type="submit" variant="contained" loading={isSubmitting} onClick={(e) => props.register(formik.values)} >
-          //     Search
-          //   </LoadingButton>
-          //   </Stack>
-          //   </Stack>
-          // </Form>
-          // </FormikProvider>
-
-
-   
+      </FormikProvider>   
   );
 }

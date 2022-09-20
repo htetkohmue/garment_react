@@ -85,7 +85,7 @@ import { ChangeDate } from '../common/ChangeDate';
 
     const [start, setStart] =useState(()=>ChangeDate(new Date()));
     const [end, setEnd] =useState(()=>ChangeDate(new Date()));
-    const [searchTailorId, setSearchTailorId] = useState();
+    const [searchTailorId, setSearchTailorId] = useState();   
 
 
     const TABLE_HEAD = [
@@ -244,6 +244,46 @@ import { ChangeDate } from '../common/ChangeDate';
         }
       })();
     }
+    
+    const editProductIn = (event, tailorId, EditDate) => {   
+      setOpen(false);
+      setloadingOpen(true);
+      (async () => {
+        const data = {tailor_id:tailorId, Date:EditDate, language:"en"};
+        const obj = { url: ApiPath.searchProductIn, method: 'post', params: data };
+        const response = await ApiRequest(obj);
+        if (response.flag === true) {
+          setSuccessMsg(response.response_data.message);
+          setErrorMsg("");
+          setloadingOpen(false);
+        }
+        if (response.flag === false) {
+          setErrorMsg(response.message);
+          setSuccessMsg("");
+          setloadingOpen(false);
+        }
+      })();
+    }
+
+    const deleteProductIn = (event, tailorId, deleteDate) => {   
+      setOpen(false);
+      setloadingOpen(true);
+      (async () => {
+        const data = {tailor_id:tailorId, Date:deleteDate, language:"en"};
+        const obj = { url: ApiPath.searchProductIn, method: 'post', params: data };
+        const response = await ApiRequest(obj);
+        if (response.flag === true) {
+          setSuccessMsg(response.response_data.message);
+          setErrorMsg("");
+          setloadingOpen(false);
+        }
+        if (response.flag === false) {
+          setErrorMsg(response.message);
+          setSuccessMsg("");
+          setloadingOpen(false);
+        }
+      })();
+    }
 
   return (
   <Page title="Product List">
@@ -292,7 +332,7 @@ import { ChangeDate } from '../common/ChangeDate';
           <Scrollbar>
               <TableContainer sx={{ minWidth: 800 }}>
                     {filteredProductIn.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                      const { key , id , Date , name , totalQty , totalAmt,allData} = row;
+                      const { key , id , Date , tailorId , name , totalQty , totalAmt,allData} = row;
                       const isItemSelected = selected.indexOf(id) !== -1;
                       return (
                         <Table style={{margin: "1%",border: "1px solid #919eab", width: "98%"}} id="main">
@@ -305,17 +345,17 @@ import { ChangeDate } from '../common/ChangeDate';
 
                           <TableCell align="left" rowSpan={4} width="2%">{key}</TableCell>
                           <TableCell align="left" rowSpan={4}  width="10%">{Date}</TableCell>
-                          <TableCell align="left">{name}</TableCell>
+                          <TableCell align="left">{tailorId} -  {name}</TableCell>
                           <TableCell align="right" width="4%">
                           <Tooltip title="edit">
-                              <IconButton aria-label="edit">
+                              <IconButton aria-label="edit" onClick={(event) => editProductIn(event, tailorId, Date)}>
                                 <Iconify icon="akar-icons:edit" />
                               </IconButton>
                             </Tooltip>
                           </TableCell>
                           <TableCell align="right" width="4%">
                           <Tooltip title="delete">
-                              <IconButton aria-label="delete" >
+                              <IconButton aria-label="delete" onClick={(event) => deleteProductIn(event, tailorId, Date)}>
                                 <Iconify icon="eva:trash-2-outline" />
                               </IconButton>
                             </Tooltip>
