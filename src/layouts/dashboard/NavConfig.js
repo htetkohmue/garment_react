@@ -61,6 +61,11 @@ const navConfig = [
             path: "/dashboard/customers-transaction",
             icon: getIcon('eva:people-fill'),
           },
+          {
+            title: "Customer Transaction List",
+            path: "/dashboard/customers-transaction-list",
+            icon: getIcon('eva:people-fill'),
+          },
 
     ],
   },

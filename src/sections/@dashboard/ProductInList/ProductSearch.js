@@ -1,22 +1,22 @@
 import * as Yup from 'yup';
-import { useState } from 'react';
+// import { useState } from 'react';
 import { useFormik, Form, FormikProvider } from 'formik';
-import { useNavigate,Link as RouterLink,useParams  } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 // material
 import PropTypes from 'prop-types';
-import { Stack, TextField,Select,InputLabel,MenuItem,FormControl,styled,Autocomplete,InputAdornment,Popper} from '@mui/material';
+import { Stack, TextField } from '@mui/material';
 import { DatePicker,LocalizationProvider} from '@mui/lab';
 import AdapterDateFns from '@mui/lab/modern/AdapterDateFns';
 // component
-import Iconify from '../../../components/Iconify';
-import { ChangeDate } from '../Common/ChangeDate';
+// import Iconify from '../../../components/Iconify';
+// import { ChangeDate } from '../Common/ChangeDate';
 
 //------------------------------------------------------------
 
-const PopperStyle = styled((props) => <Popper placement="bottom-start" {...props} />)({
-  width: '250px !important',
-});
+// const PopperStyle = styled((props) => <Popper placement="bottom-start" {...props} />)({
+//   width: '250px !important',
+// });
 
 // ----------------------------------------------------------------------
 
@@ -46,17 +46,17 @@ export default function SearchFilter({ end,start,selectedFromDate,selectedToDate
       tailorName:'',
       language: ''
     },
-   // validationSchema: RegisterSchema,
+    validationSchema: RegisterSchema,
     onSubmit: (values,{resetForm}) => {
       resetForm({values:''});
       navigate('dashboard/product-in-list', { replace: true });
     },
   });
 
-  const [Fromvalue, FromsetValue] = useState(()=>ChangeDate(new Date()));
-  const [Tovalue, TosetValue] = useState(()=>ChangeDate(new Date()));
+  // const [Fromvalue, FromsetValue] = useState(()=>ChangeDate(new Date()));
+  // const [Tovalue, TosetValue] = useState(()=>ChangeDate(new Date()));
 
-  const { errors, touched, handleSubmit, isSubmitting, getFieldProps,handleChange,handleBlur} = formik;
+  const { handleSubmit} = formik;
  
     return (
       <FormikProvider value={formik}>

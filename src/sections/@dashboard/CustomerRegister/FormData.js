@@ -8,12 +8,51 @@ import {
     , MenuItem
     , FormHelperText 
     ,TextField
+    ,Alert
 } from '@mui/material'
 
 import React, { useState } from 'react'
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import ApiPath from '../../../common/common-api/api-path/ApiPath';
+import { ApiRequest } from '../../../common/common-api/api-request/ApiRequest';
+
 import DatePicker from '../../../common/datepicker/DatePicker';
 
 function FormData(props) {
+    const [open, setOpen] = React.useState(false);
+    const [newTown, setnewTown] = useState("");
+    const [successMsg, setSuccessMsg] = useState(''); // for success msg
+    const [errorMsg, setErrorMsg] = useState(''); // for error msg
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    window.location.reload(false);
+  };
+
+  const addNewTownship = (event) => {
+    (async () => {
+    console.log(newTown);
+    const data = {name: newTown, login_id: 20001}
+    const obj = { url: ApiPath.storeTownship, method: 'post',params: data };
+    const response = await ApiRequest(obj);
+    if (response.flag === true) {
+        setSuccessMsg(response.response_data.message);
+        setErrorMsg('');
+    }
+    if (response.flag === false) {
+        setErrorMsg(response.message);
+        setSuccessMsg('');
+    }
+    setnewTown('');
+    })();
+  };
     
   return (
     <>
@@ -98,9 +137,44 @@ function FormData(props) {
                     </Select>
                     {/* <FormHelperText>Required</FormHelperText> */}
                 </FormControl>
-                <Button fullWidth size="large" variant="contained" onClick={props.clickCancel}>
+                
+                <Button fullWidth size="large" variant="contained" onClick={handleClickOpen}>
                     Add New Township
-                </Button>
+                </Button>                
+                <Dialog open={open} onClose={handleClose} >
+                    {successMsg && (
+                    <Alert variant="filled" severity="info">
+                        <b>{successMsg}</b>
+                    </Alert>
+                    )}
+                    {errorMsg && (
+                    <Alert variant="filled" severity="error">
+                        <b>{errorMsg}</b>
+                    </Alert>
+                    )}
+                    <DialogTitle>If Township name is not exist , add new one </DialogTitle>
+                    <DialogContent>
+                    <TextField
+                        required
+                        autoFocus
+                        margin="dense"
+                        id="newTownshipName"
+                        label="TownShip Name"
+                        type="text"
+                        fullWidth
+                        variant="standard"
+                        value={newTown}
+                        onChange={(e) => {
+                            setnewTown(e.target.value);
+                        }}
+                    />
+                    </DialogContent>
+                    <DialogActions>
+                    <Button onClick={addNewTownship}>Add</Button>
+                    <Button onClick={handleClose}>Close</Button>                    
+                    </DialogActions>
+                </Dialog>
+              
                 </Stack>
                 <FormControl fullWidth >
                     <InputLabel id="demo-simple-select-required-label">Status</InputLabel>

@@ -17,6 +17,8 @@ import Supplier from './pages/Supplier';
 import SupplierTransactionList from './pages/SupplierTransactionList';
 import CustomerRegister from './pages/CustomerRegister';
 import CustomerList from './pages/CustomerList';
+import CustomerTransaction from './pages/CustomerTransaction';
+import CustomerTransactionList from './pages/CustomerTransactionList';
 
 // ----------------------------------------------------------------------
 
@@ -38,6 +40,8 @@ export default function Router() {
         { path: 'supplier-transaction-list', element: <SupplierTransactionList /> },
         { path: 'customers-register', element: <CustomerRegister /> },
         { path: 'customers-list', element: <CustomerList /> },
+        { path: 'customers-transaction', element: <CustomerTransaction /> },
+        { path: 'customers-transaction-list', element: <CustomerTransactionList /> },
       ],
     },
     {
