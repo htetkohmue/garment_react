@@ -1,6 +1,7 @@
 import { Container, Typography ,Alert} from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { styled } from '@mui/material/styles';
+import { Link as RouterLink, useParams } from 'react-router-dom';
 import ApiPath from '../common/common-api/api-path/ApiPath';
 import { ApiRequest } from '../common/common-api/api-request/ApiRequest';
 import { ChangeDate } from '../common/change-date/ChangeDate';
@@ -69,6 +70,38 @@ function CustomerRegister() {
       })();
     }, []);
 
+    /** edit get data function */
+    const { id, setId } = useParams();
+    useEffect(() => {
+      (async () => {
+        const data = {};
+        const apiPath = ApiPath.editCustomerData;
+        const obj = { url: `${apiPath}/${id}`, method: 'get', params: data };
+        const response = await ApiRequest(obj);
+        if (response.flag === true) {
+          setValues({
+            customer_id: response.response_data.data.customer_id,
+            englishName: response.response_data.data.name_mm,
+            myanmarName: response.response_data.data.name_en,
+            phone: response.response_data.data.phone_no,
+            nrcNo: response.response_data.data.nrc_no,
+            address: response.response_data.data.address,
+            townshipName: response.response_data.data.township_id,
+            status: response.response_data.data.status,
+            joinDate: response.response_data.data.join_date,
+            description: response.response_data.data.description,
+          });
+          setEdit(true);
+          setloadingOpen(false);
+        }
+        if (id != null && response.flag === false) {
+          setErrorMsg(response.message);
+          setSuccessMsg('');
+          setValidatorErrorMsg([]);
+        }
+      })();
+    }, []);
+
     const saveCustomer = () =>{
       (async () => {            
         setloadingOpen(true);
@@ -96,6 +129,7 @@ function CustomerRegister() {
           setEdit(false);
           setloadingOpen(false);
           clickCancel();
+          window.location.reload(false);
         }
         if (response.flag === false) {
           setErrorMsg(response.message);

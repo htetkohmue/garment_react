@@ -28,8 +28,14 @@ export default {
 
   // Customer
   getTownship:  'api/township/getTownship',
+  storeTownship:  'api/township/storeTownship',
 
   // Customer
   storeCustomer: 'api/customer/storeCustomer',
-  getCustomerId:  'api/customer/getCustomerId'
+  getCustomerId:  'api/customer/getCustomerId',
+  getCustomerList: 'api/customer/getCustomerList',
+  getAllCustomerId: 'api/customer/getAllCustomerId',
+  editCustomerData: 'api/customer/editCustomer',
+  deleteCustomer: 'api/customer/deleteCustomer',
+
 };
