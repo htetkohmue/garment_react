@@ -215,6 +215,7 @@ export default function RawMaterial() {
         const data = { id: rawID, name, type, description, login_id: 20001 };
 
         const obj = { url: ApiPath.storeRaws, method: 'post', params: data };
+       //  console.log(obj);
         const response = await ApiRequest(obj);
         loadRawData();
         if (response.flag === true) {
@@ -297,7 +298,7 @@ export default function RawMaterial() {
   };
 
   return (
-    <Page title="Dashboard: RawMaterial">
+    <Page title="Dashboard: RawMaterials">
       <Container>
         {successMsg && (
           <Alert variant="filled" severity="info">

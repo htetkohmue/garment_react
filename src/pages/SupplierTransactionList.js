@@ -16,9 +16,11 @@ function SupplierTransactionList() {
     const [toDateErrorHelperText, setToDateErrorHelperText] = useState('');
     const [flag, setFlag]                   = useState(true);
     const [materialAPI, setMaterialAPI]     = useState(true);
+    const [supplierAPI, setSupplierAPI]     = useState(true);
     
     useEffect(() => {
       loadRawData();
+      loadSupplierData();
     }, []);
     const loadRawData = () => {
       (async () => {
@@ -26,14 +28,29 @@ function SupplierTransactionList() {
         const obj = { url: ApiPath.searchRaws, method: 'get' };
         const response = await ApiRequest(obj);
 
-        if (response.flag === true) {console.log(response.response_data.data)
+        if (response.flag === true) {// console.log(response.response_data.data)
             setMaterialAPI(response.response_data.data);
         }
-        if (response.flag === false) {console.log(response)
+        if (response.flag === false) {// console.log(response)
           // setValidatorErrorMsg(response.message);
           // setErrorMsg('');
           // setSuccessMsg('');
           // setloadingOpen(false);
+        }
+        // clickCancel();
+      })();
+    };
+
+    const loadSupplierData = () => {
+      (async () => {
+        // setloadingOpen(true);
+        const obj = { url: ApiPath.getSupplierData, method: 'get' };
+        const response = await ApiRequest(obj);
+          // console.log(response);
+        if (response.flag === true) {// console.log(response.response_data.data)
+            setSupplierAPI(response.response_data.data)
+        }
+        if (response.flag === false) {console.log(response)
         }
         // clickCancel();
       })();
@@ -64,6 +81,7 @@ function SupplierTransactionList() {
                           fromDate: ChangeDate(fromDate), 
                           toDate:ChangeDate(toDate), 
                           raw_id:materialName, 
+                          supplier_id:materialName, 
                           login_id: 20001 
                         };
             const obj = { url: ApiPath.searchSupplierTransaction, method: 'post',params: data };
@@ -103,6 +121,7 @@ function SupplierTransactionList() {
               toDateErrorHelperText={toDateErrorHelperText}
               clickSearch={clickSearch}
               materialAPI={materialAPI}
+              supplierAPI={supplierAPI}
             />
         </>
   )
