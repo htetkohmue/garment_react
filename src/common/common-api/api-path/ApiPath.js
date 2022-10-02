@@ -1,5 +1,5 @@
 export default {
-  defaultPerPage: 20,
+  defaultPerPage: 30,
   getTailorData: 'api/tailor-list/search-tailor',
   deleteTailorData: 'api/tailor-list/delete-tailor',
   storeTailorData: 'api/tailor-register/register-tailor',
@@ -19,5 +19,23 @@ export default {
   removeSupplierData: 'api/supplier/delete',
 
   // Supplier Transaction List
-  searchSupplierTransaction : 'api/supplier-transaction-list/search-supplier-transaction'
+  searchSupplierTransaction : 'api/supplier-transaction-list/search-supplier-transaction',
+
+  // ProductInList
+  searchTailor: 'api/product-in-list/searchTailor',
+  searchTailorByID: 'api/product-in-list/searchTailorByID',
+  searchProductIn: 'api/product-in-list/search-product',
+
+  // Customer
+  getTownship:  'api/township/getTownship',
+  storeTownship:  'api/township/storeTownship',
+
+  // Customer
+  storeCustomer: 'api/customer/storeCustomer',
+  getCustomerId:  'api/customer/getCustomerId',
+  getCustomerList: 'api/customer/getCustomerList',
+  getAllCustomerId: 'api/customer/getAllCustomerId',
+  editCustomerData: 'api/customer/editCustomer',
+  deleteCustomer: 'api/customer/deleteCustomer',
+
 };
