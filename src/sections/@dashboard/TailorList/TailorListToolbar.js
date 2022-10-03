@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 // material
 import { styled } from '@mui/material/styles';
 import { Toolbar, Tooltip, IconButton,FilledInput, Typography,FormControl,InputLabel, OutlinedInput, Autocomplete, InputAdornment, Popper,Box ,TextField  } from '@mui/material';
 // component
 import Iconify from '../../../components/Iconify';
+
 
 
 // ----------------------------------------------------------------------
@@ -51,6 +53,7 @@ UserListToolbar.propTypes = {
 
 export default function UserListToolbar({ numSelected, filterName, onFilterName,IdTailor,deleteTailor,
   posts,handleChange}) {
+    const { t } = useTranslation();
 
   return (
     <RootStyle
@@ -69,7 +72,7 @@ export default function UserListToolbar({ numSelected, filterName, onFilterName,
         <SearchStyle
           value={filterName}
           onChange={onFilterName}
-          placeholder="Search Tailor Name..."
+          placeholder={t("Search Tailor Name")}
           startAdornment={
             <InputAdornment position="start">
               <Iconify icon="eva:search-fill" sx={{ ml: 1, width: 20, height: 20, color: 'red' }} />
@@ -94,7 +97,7 @@ export default function UserListToolbar({ numSelected, filterName, onFilterName,
       renderInput={(params) => (
         <TextField
         {...params}
-          placeholder="Search Tailor ID..."
+          placeholder={t("Search Tailor ID")}
           InputProps={{
                 ...params.InputProps,
                 startAdornment: (

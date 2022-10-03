@@ -2,6 +2,7 @@ import { filter } from 'lodash';
 import { sentenceCase } from 'change-case';
 import { useState,useEffect} from 'react';
 import axios from "axios";
+import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 // material
 import {
@@ -34,17 +35,7 @@ import {ApiRequest} from '../common/common-api/api-request/ApiRequest';
 
 // mock
 
-// ----------------------------------------------------------------------
-const TABLE_HEAD = [
-  { id: 'no', label: 'No', alignRight: false },
-  { id: 'tailorId', label: 'ID', alignRight: false },
-  { id: 'nameMm', label: 'Name', alignRight: false },
-  { id: 'phoneNo', label: 'Phone No', alignRight: false },
-  { id: 'nrcNo', label: 'NRC No', alignRight: false },
-  { id: 'address', label: 'Address', alignRight: false },
-  { id: 'action', label: 'Action', alignRight: false },
-  { id: 'description', label: 'Note', alignRight: false },
-];
+
 
 // ----------------------------------------------------------------------
 
@@ -79,7 +70,9 @@ function applySortFilter(array, comparator, query) {
 
 const path = process.env.REACT_APP_BACKEND_URL;
 
-export default function User() {
+export default function TailorList() {
+
+  const { t } = useTranslation();
   const defaultPerPage = ApiPath.defaultPerPage;
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState('asc');
@@ -97,6 +90,18 @@ export default function User() {
   const [open, setOpen] = useState(false);
   const [deleteTailorId, setDeleteTailorId] = useState([]);
   const [loadingOpen, setloadingOpen] = useState(false); // for values
+
+  // ----------------------------------------------------------------------
+const TABLE_HEAD = [
+  { id: 'no', label:t('No'), alignRight: false },
+  { id: 'tailorId', label: t('ID'), alignRight: false },
+  { id: 'nameMm', label: t('Name'), alignRight: false },
+  { id: 'phoneNo', label: t('Phone No'), alignRight: false },
+  { id: 'nrcNo', label: t('NRC No'), alignRight: false },
+  { id: 'address', label: t('Address'), alignRight: false },
+  { id: 'action', label: t('Action'), alignRight: false },
+  { id: 'description', label: t('Note'), alignRight: false },
+];
 
   /* Formload get tailor data */
   useEffect(() => {(async () => {
@@ -218,10 +223,10 @@ export default function User() {
       {loadingOpen && (<Loading loadingOpen={loadingOpen} />)}
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h3" gutterBottom>
-          List of Tailors
+          {t('List of Tailors')}
           </Typography>
           <Button variant="contained" component={RouterLink} to="/dashboard/tailors-register" startIcon={<Iconify icon="eva:plus-fill" />}>
-            New Tailor
+            {t('New Tailor')}
           </Button>
         </Stack>
         {successMsg && (
@@ -234,7 +239,7 @@ export default function User() {
             <b>{errorMsg}</b>
           </Alert>
           )}
-        <Typography align="right">Total Row : {post.length} row(s)</Typography>
+        <Typography align="right">{t('Total Row')} : {post.length} {t('row(s)')}</Typography>
         <Card>
         <TailorListToolbar  handleChange={handleChange}  posts={post} IdTailor={selected}  deleteTailor={deleteTailor} numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName}/>
         {/* <TailorIDSearch posts={post}/> */}

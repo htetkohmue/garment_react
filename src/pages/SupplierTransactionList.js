@@ -2,7 +2,7 @@ import { Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import ApiPath from '../common/common-api/api-path/ApiPath';
 import { ApiRequest } from '../common/common-api/api-request/ApiRequest';
-import { ChangeDate } from '../common/change-date/ChangeDate';
+import { ChangeDate } from '../common/ChangeDate';
 import { FormData } from '../sections/@dashboard/SupplierTransactionList'
 
 function SupplierTransactionList() {

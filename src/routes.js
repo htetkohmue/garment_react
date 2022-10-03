@@ -20,13 +20,14 @@ import CustomerList from './pages/CustomerList';
 import CustomerTransaction from './pages/CustomerTransaction';
 import CustomerTransactionList from './pages/CustomerTransactionList';
 
+
 // ----------------------------------------------------------------------
 
-export default function Router() {
+export default function Router(props) {
   return useRoutes([
     {
       path: '/dashboard',
-      element: <DashboardLayout />,
+      element: <DashboardLayout props={props} />,
       children: [
         { path: 'app', element: <DashboardApp /> },
         { path: 'tailors-list', element: <TailorList /> },
