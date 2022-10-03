@@ -2,30 +2,32 @@ import { useRef, useState } from 'react';
 // material
 import { alpha } from '@mui/material/styles';
 import { Box, MenuItem, Stack, IconButton } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 // components
 import MenuPopover from '../../components/MenuPopover';
 
-// ----------------------------------------------------------------------
-
-const LANGS = [
-  {
-    value: 'en',
-    label: 'English',
-    icon: '/static/icons/gb.svg',
-  },
-  {
-    value: 'mm',
-    label: 'Myanmar',
-    icon: '/static/icons/Myanmar-19.svg',
-  },
-];
-
-// ----------------------------------------------------------------------
 
 export default function LanguagePopover(props) {
+  const { t } = useTranslation();
+  // ----------------------------------------------------------------------
+
+  const LANGS = [
+    {
+      value: 'en',
+      label: t('English'),
+      icon: '/static/icons/gb.svg',
+    },
+    {
+      value: 'mm',
+      label: t('Myanmar'),
+      icon: '/static/icons/Myanmar-19.svg',
+    },
+  ];
+
+  // ----------------------------------------------------------------------
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(props.props.props.open);
-  const [selectedOption, setSelectedOption] = useState(props.props.props.selectedOption);
+  const selectedLanguageKey = localStorage.getItem('selectedLanguageKey');
   return (
     <>
       <IconButton
@@ -40,7 +42,7 @@ export default function LanguagePopover(props) {
           }),
         }}
       >
-        <img src={LANGS[props.props.props.selectedOption].icon} alt={LANGS[props.props.props.selectedOption].label} />
+        <img src={LANGS[selectedLanguageKey].icon} alt={LANGS[selectedLanguageKey].label} />
       </IconButton>
 
       <MenuPopover
@@ -55,7 +57,7 @@ export default function LanguagePopover(props) {
         >
         <Stack spacing={0.75}>
           {LANGS.map((option,key) => (
-            <MenuItem key={option.value} selected={option.value === LANGS[0].value} 
+            <MenuItem key={option.value} selected={option.value === LANGS[selectedLanguageKey].value} 
             onClick={(e) => props.props.props.changeLanguage({'key':key,'value':option.value})}>
               <Box component="img" alt={option.label} src={option.icon} sx={{ width: 28, mr: 2 }} />
               {option.label}

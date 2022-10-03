@@ -10,6 +10,7 @@ import ThemeProvider from './theme';
 // components
 import ScrollToTop from './components/ScrollToTop';
 import { BaseOptionChartStyle } from './components/chart/BaseOptionChart';
+import  Loading from './common/LoadingPage/Loading';
 
 
 
@@ -18,25 +19,30 @@ import { BaseOptionChartStyle } from './components/chart/BaseOptionChart';
 function App() {
     const { t, i18n } = useTranslation();
     const [open, setOpen] = useState(false);
-    const [selectedOption, setSelectedOption] = useState(0);
+    const [loadingOpen, setloadingOpen] = useState(false); // for values
     const theme = useTheme();
     document.body.dir = i18n.dir();
 
     const changeLanguage = (lng) => { 
+      localStorage.setItem('selectedLanguageKey',lng.key);
       i18n.changeLanguage(lng.value)
       document.body.dir = i18n.dir();
       theme.direction = i18n.dir();
-      setSelectedOption(lng.key);
       setOpen(false);
+      setloadingOpen(true);
+      setTimeout(() => {
+        setloadingOpen(false);
+      }, 500)
     }
     const handleOpen = () => {
       setOpen(true);
     };
   return (
     <ThemeProvider>
+      {loadingOpen && (<Loading loadingOpen={loadingOpen} />)}
       <ScrollToTop />
       <BaseOptionChartStyle />
-      <Router changeLanguage={changeLanguage} selectedOption={selectedOption} open={open} handleOpen={handleOpen}  />
+      <Router changeLanguage={changeLanguage} open={open} handleOpen={handleOpen}  />
     </ThemeProvider>
   );
 }
