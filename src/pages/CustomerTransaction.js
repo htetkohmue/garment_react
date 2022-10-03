@@ -3,15 +3,16 @@ import React, { useEffect, useState } from 'react'
 import { styled } from '@mui/material/styles';
 import Divider from '@mui/material/Divider';
 import Chip from '@mui/material/Chip';
+import { border } from '@mui/system';
 import Page from '../components/Page';
 // ----------------------------------------------
-import { FilterData,ProductData } from '../sections/@dashboard/CustomerTransaction'
+import { CustomerData,ProductData } from '../sections/@dashboard/CustomerTransaction'
 import { ChangeDate } from '../common/ChangeDate';
 
 // --------------------------------------------------------------------
 const ContentStyle = styled('div')(({ theme }) => ({
-  maxWidth: 800,
-  margin: '5%',
+  maxWidth: 450,
+  margin: '3%',
   display: 'flex',
   justifyContent: 'center',
   flexDirection: 'column',
@@ -49,31 +50,69 @@ const path = process.env.REACT_APP_BACKEND_URL;
                 <b>{errorMsg}</b>
             </Alert>
             )}
-            <Typography variant="h3" mb={5}> Customer Transaction</Typography>
-          
-            <ContentStyle>
-            <Stack spacing={4}>
-            <Stack spacing={2}>
-              <Divider textAlign="left">
-                <Chip label="Tailor Data" />
-              </Divider>
-              <FilterData 
-                register={register}
-                date={date}  
-                handleChangeDate={(e) => setDate(e)} 
-                dateError={dateError}
-                dateErrorHelperText={dateErrorHelperText}
-                  />
-              </Stack>
-              <Stack spacing={2}>
-              <Divider textAlign="left">
-                <Chip label="Product Data" />
-              </Divider>
-                <ProductData />
-             </Stack>
-            </Stack>
-            </ContentStyle>
-           
+            <Typography variant="h3" mb={5}> Customer Transaction</Typography> 
+            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>      
+              <ContentStyle>
+                <Stack spacing={4}>
+                  <Stack spacing={2}>
+                    <Divider textAlign="left">
+                      <Chip label="Tailor Data" />
+                    </Divider>
+                    <CustomerData 
+                      register={register}
+                      date={date}  
+                      handleChangeDate={(e) => setDate(e)} 
+                      dateError={dateError}
+                      dateErrorHelperText={dateErrorHelperText}
+                        />
+                    </Stack>
+                    <Stack spacing={2}>
+                    <Divider textAlign="left">
+                      <Chip label="Product Data" />
+                    </Divider>
+                      <ProductData />
+                  </Stack>
+                </Stack>  
+              </ContentStyle>
+                <Stack  alignItems="center" style={{border: "1px solid #919eab"}} maxHeight="30%">                  
+                <CustomerData 
+                      register={register}
+                      date={date}  
+                      handleChangeDate={(e) => setDate(e)} 
+                      dateError={dateError}
+                      dateErrorHelperText={dateErrorHelperText}
+                        />
+                        <CustomerData 
+                      register={register}
+                      date={date}  
+                      handleChangeDate={(e) => setDate(e)} 
+                      dateError={dateError}
+                      dateErrorHelperText={dateErrorHelperText}
+                        />
+                        <CustomerData 
+                      register={register}
+                      date={date}  
+                      handleChangeDate={(e) => setDate(e)} 
+                      dateError={dateError}
+                      dateErrorHelperText={dateErrorHelperText}
+                        />
+                         <CustomerData 
+                      register={register}
+                      date={date}  
+                      handleChangeDate={(e) => setDate(e)} 
+                      dateError={dateError}
+                      dateErrorHelperText={dateErrorHelperText}
+                        />
+                         <CustomerData 
+                      register={register}
+                      date={date}  
+                      handleChangeDate={(e) => setDate(e)} 
+                      dateError={dateError}
+                      dateErrorHelperText={dateErrorHelperText}
+                        />
+                       
+                </Stack>
+            </Stack>           
           </Container>
         </Page>
     )

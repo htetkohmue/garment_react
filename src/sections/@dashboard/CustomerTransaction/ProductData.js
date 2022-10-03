@@ -37,26 +37,26 @@ export default function FilterData(props) {
             <Stack spacing={4}> 
                 <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
                 <FormControl fullWidth >
-                    <InputLabel id="demo-simple-select-required-label">Status</InputLabel>
+                    <InputLabel id="demo-simple-select-required-label">Product Name *</InputLabel>
                     <Select
                     labelId="demo-simple-select-required-label"
                     id="demo-simple-select-required"
-                    value={props.status}
-                    label="Status *"
-                    onChange={props.handleChangestatus}
+                    value={props.productName}
+                    label="Product Name *"
+                    onChange={props.handleChangeproductName}
                     >
                         <MenuItem value={1}>Active</MenuItem>
                         <MenuItem value={2}>Inactive</MenuItem>
                     </Select>
                 </FormControl>
                 <FormControl fullWidth >
-                    <InputLabel id="demo-simple-select-required-label">Status</InputLabel>
+                    <InputLabel id="demo-simple-select-required-label">Size *</InputLabel>
                     <Select
                     labelId="demo-simple-select-required-label"
                     id="demo-simple-select-required"
-                    value={props.status}
-                    label="Status *"
-                    onChange={props.handleChangestatus}
+                    value={props.productSize}
+                    label="Size *"
+                    onChange={props.handleChangeproductSize}
                     >
                         <MenuItem value={1}>Active</MenuItem>
                         <MenuItem value={2}>Inactive</MenuItem>
@@ -66,23 +66,24 @@ export default function FilterData(props) {
                 <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
                     <TextField
                     fullWidth
-                    label="Customer ID"
+                    label="Quantity *"
                     {...getFieldProps('customer_id')}
                     error={Boolean(touched.customer_id && errors.customer_id)}
                     helperText={touched.customer_id && errors.customer_id}
                 />  
                 <TextField
                     fullWidth
-                    label="Customer Name"
+                    label="Price *"
                     {...getFieldProps('customer_name')}
                     error={Boolean(touched.customer_id && errors.customer_id)}
                     helperText={touched.customer_id && errors.customer_id}
                 />  
                 </Stack>
-                <Button size="medium" variant="contained" >
-                    Add
-                </Button> 
-
+                <Stack spacing={3}  justifyContent="center" alignItems="center">
+                    <Button size="large" variant="contained" >
+                        Add
+                    </Button> 
+                </Stack>
             </Stack>               
             </Form>        
         </FormikProvider>

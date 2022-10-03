@@ -5,7 +5,7 @@ import { useNavigate, Link as RouterLink, useParams } from 'react-router-dom';
 import { Stack, TextField, IconButton, InputAdornment, label } from '@mui/material';
 import DatePicker from '../../../common/datepicker/DatePicker';
 
-export default function FilterData(props) {
+export default function CustomerData(props) {
     const navigate = useNavigate();
 
     const formik = useFormik({
