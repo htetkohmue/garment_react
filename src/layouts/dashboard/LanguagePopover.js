@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef,useState,useEffect} from 'react';
 // material
 import { alpha } from '@mui/material/styles';
 import { Box, MenuItem, Stack, IconButton } from '@mui/material';
@@ -27,7 +27,14 @@ export default function LanguagePopover(props) {
   // ----------------------------------------------------------------------
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(props.props.props.open);
-  const selectedLanguageKey = localStorage.getItem('selectedLanguageKey');
+  const [selectedLanguageKey, setSelectedLanguageKey] = useState(0);
+  useEffect(() => {
+    if (localStorage.getItem('selectedLanguageKey')===null) {
+      setSelectedLanguageKey(0);
+    }else{
+      setSelectedLanguageKey(localStorage.getItem('selectedLanguageKey'));
+    }
+  });
   return (
     <>
       <IconButton
