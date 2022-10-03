@@ -15,13 +15,14 @@ import TailorsRegister from './pages/TailorsRegister';
 import RawMaterial from './pages/RawMaterial';
 import Supplier from './pages/Supplier';
 
+
 // ----------------------------------------------------------------------
 
-export default function Router() {
+export default function Router(props) {
   return useRoutes([
     {
       path: '/dashboard',
-      element: <DashboardLayout />,
+      element: <DashboardLayout props={props} />,
       children: [
         { path: 'app', element: <DashboardApp /> },
         { path: 'tailors-list', element: <TailorList /> },

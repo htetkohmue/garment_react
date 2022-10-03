@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { useNavigate,Link as RouterLink,useParams  } from 'react-router-dom';
 
@@ -12,6 +13,7 @@ import Iconify from '../../../components/Iconify';
 // ----------------------------------------------------------------------
 
 export default function TailorsEditForm(props) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const RegisterSchema = Yup.object().shape({
     englishName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('English name required'),
@@ -45,7 +47,7 @@ export default function TailorsEditForm(props) {
         <Stack spacing={4}>
          <TextField
               fullWidth
-              label="Tailors ID"
+              label={t("Tailors ID")}
               {...getFieldProps('tailors_id')}
               error={Boolean(touched.tailors_id && errors.tailors_id)}
               helperText={touched.tailors_id && errors.tailors_id}
@@ -53,14 +55,14 @@ export default function TailorsEditForm(props) {
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
             <TextField
               fullWidth
-              label="English Name"
+              label={t("English Name")}
               {...getFieldProps('englishName')}
               error={Boolean(touched.englishName && errors.englishName)}
               helperText={touched.englishName && errors.englishName}
             />
             <TextField
             fullWidth
-              label="Myanmar Name"
+              label={t("Myanmar Name")}
               {...getFieldProps('myanmarName')}
               error={Boolean(touched.myanmarName && errors.myanmarName)}
               helperText={touched.myanmarName && errors.myanmarName}
@@ -71,20 +73,20 @@ export default function TailorsEditForm(props) {
             fullWidth
             autoComplete="phone"
             type="phone"
-            label="Phone No"
+            label={t("Phone No")}
             {...getFieldProps('phone')}
             error={Boolean(touched.phone && errors.phone)}
             helperText={touched.phone && errors.phone}
           />
           <Typography style={{color:'red',width:'100%'}} >
-          * get more than one comma ','
+          *{t("get more than one comma")} ','
           </Typography>
            </Stack>
            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
            <TextField
            fullWidth
             autoComplete="nrc"
-            label="NRC No"
+            label={t("NRC No")}
             {...getFieldProps('nrcNo')}
             error={Boolean(touched.nrcNo && errors.nrcNo)}
             helperText={touched.nrcNo && errors.nrcNo}
@@ -92,7 +94,7 @@ export default function TailorsEditForm(props) {
            <TextField
            fullWidth
             autoComplete="address"
-            label="Address"
+            label={t("Address")}
             {...getFieldProps('address')}
             error={Boolean(touched.address && errors.address)}
             helperText={touched.address && errors.address}
@@ -101,12 +103,12 @@ export default function TailorsEditForm(props) {
           <TextField
           fullWidth
             autoComplete="Description"
-            label="Description"
+            label={t("Description")}
             {...getFieldProps('description')}
           
           />
           <LoadingButton  size="large" type="submit" variant="contained" loading={isSubmitting} onClick={(e) => props.update(formik.values)} >
-            Update
+          {t("Update")}
           </LoadingButton>
         </Stack>
       </Form>

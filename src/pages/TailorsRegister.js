@@ -1,6 +1,7 @@
 import { Link as RouterLink, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 // @mui
 import { styled } from '@mui/material/styles';
 import { Stack, Card, Link, Container, Typography ,Alert} from '@mui/material';
@@ -28,6 +29,7 @@ const path = process.env.REACT_APP_BACKEND_URL;
 // ----------------------------------------------------------------------
 
 export default function TailorsRegister() {
+  const { t } = useTranslation();
   const defaultPerPage = ApiPath.defaultPerPage;
   const [successMsg, setSuccessMsg] = useState(''); // for success msg
   const [validatorErrorMsg, setValidatorErrorMsg] = useState([]); // for valid msg
@@ -129,12 +131,12 @@ export default function TailorsRegister() {
         <Stack direction="row" alignItems="center" justifyContent="space-between">
           {!edit && (
             <Typography variant="h3" gutterBottom>
-              Tailor Registration
+              {t('Tailor Registration')}
             </Typography>
           )}
           {edit && (
             <Typography variant="h3" gutterBottom>
-              Tailor Updating
+             {t('Tailor Updating')}
             </Typography>
           )}
         </Stack>
