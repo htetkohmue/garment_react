@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles';
 import { Link as RouterLink, useParams } from 'react-router-dom';
 import ApiPath from '../common/common-api/api-path/ApiPath';
 import { ApiRequest } from '../common/common-api/api-request/ApiRequest';
-import { ChangeDate } from '../common/change-date/ChangeDate';
+import { ChangeDate } from '../common/ChangeDate';
 import { FormData } from '../sections/@dashboard/CustomerRegister'
 import Page from '../components/Page';
 
