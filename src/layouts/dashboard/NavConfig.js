@@ -14,7 +14,14 @@ const navConfig = [
   {
     title: 'Suppliers',
     path: '/dashboard/',
-    icon: getIcon('eva:shopping-bag-fill'), 
+    icon: getIcon('eva:shopping-bag-fill'),
+    children: [
+      {
+        title: "Supplier",
+        path: "/dashboard/supplier",
+        icon: getIcon('eva:people-fill'),
+      }
+    ] 
   },
   {
     title: 'Tailor',
@@ -31,11 +38,34 @@ const navConfig = [
             path: "/dashboard/tailors-list",
             icon: getIcon('eva:people-fill'),
           },
+
+    ],
+  },
+  {
+    title: 'Customer',
+    path : null,
+    icon: getIcon('eva:people-fill'),
+    children: [
           {
-            title: "Supplier",
-            path: "/dashboard/supplier",
+            title: "Customer Register",
+            path: "/dashboard/customers-register",
+            icon: getIcon('eva:person-add-fill'),
+          },
+          {
+            title: "Customer list",
+            path: "/dashboard/customers-list",
+            icon: getIcon('eva:person-add-fill'),
+          },
+          {
+            title: "Customer Transaction",
+            path: "/dashboard/customers-transaction",
             icon: getIcon('eva:people-fill'),
-          }
+          },
+          {
+            title: "Customer Transaction List",
+            path: "/dashboard/customers-transaction-list",
+            icon: getIcon('eva:people-fill'),
+          },
 
     ],
   },
@@ -82,6 +112,24 @@ const navConfig = [
         path: "/dashboard/",
         icon: getIcon('eva:shopping-bag-fill'),
       }
+    ],
+  },
+  {
+    title: 'Supplier Transaction',
+    path : null,
+    icon: getIcon('eva:people-fill'),
+    children: [
+          // {
+          //   title: "Supplier Transaction Register",
+          //   path: "/dashboard/supplier_transaction-register",
+          //   icon: getIcon('eva:person-add-fill'),
+          // },
+          {
+            title: "Supplier Transaction List",
+            path: "/dashboard/supplier-transaction-list",
+            icon: getIcon('eva:people-fill'),
+          },
+
     ],
   },
   {

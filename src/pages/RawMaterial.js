@@ -37,7 +37,7 @@ import Scrollbar from '../components/Scrollbar';
 import Page from '../components/Page';
 import Iconify from '../components/Iconify';
 import { RawListToolbar, RawMaterialIndex, RawListHead } from '../sections/@dashboard/RawMaterial';
-import { isEmpty } from '../sections/common/Validation';
+import { isEmpty } from '../common/Validation/Validation';
 import '../sections/common/style.css';
 
 // mock
@@ -100,7 +100,7 @@ export default function RawMaterial() {
     { id: 'Name', label: 'Name', alignRight: false },
     { id: 'Type', label: 'Type', alignRight: false },
     { id: 'Edit', label: 'Edit', alignRight: false },
-    // { id: 'Delete', label: 'Delete', alignRight: false },
+    { id: 'Delete', label: 'Delete', alignRight: false },
     { id: 'Description', label: 'Description', alignRight: false },
   ];
 
@@ -184,7 +184,7 @@ export default function RawMaterial() {
   };
 
   const clickRegister = () => {
-    if (isEmpty(name)) {
+    if (!!name === false) {
       setNameError(true);
       setNameHelperText('Raw Material Name is required!');
     } else if (!!rawID === true) {
@@ -275,6 +275,7 @@ export default function RawMaterial() {
       const data = { id, login_id: 20001 };
 
       const obj = { url: ApiPath.DeleteRaws, method: 'post', params: data };
+     
       const response = await ApiRequest(obj);
 
       if (response.flag === true) {
@@ -372,6 +373,13 @@ export default function RawMaterial() {
                             <Tooltip title="edit">
                               <IconButton aria-label="edit" onClick={(e) => editRaws(e, id)}>
                                 <Iconify icon="akar-icons:edit" />
+                              </IconButton>
+                            </Tooltip>
+                          </TableCell>
+                          <TableCell align="left">
+                            <Tooltip title="delete">
+                              <IconButton aria-label="delete" onClick={(e) => deleteRaws([id])}>
+                                <Iconify icon="eva:trash-2-outline" />
                               </IconButton>
                             </Tooltip>
                           </TableCell>
