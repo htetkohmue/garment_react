@@ -74,44 +74,6 @@ const path = process.env.REACT_APP_BACKEND_URL;
                   </Stack>
                 </Stack>  
               </ContentStyle>
-                <Stack  alignItems="center" style={{border: "1px solid #919eab"}} maxHeight="30%">                  
-                <CustomerData 
-                      register={register}
-                      date={date}  
-                      handleChangeDate={(e) => setDate(e)} 
-                      dateError={dateError}
-                      dateErrorHelperText={dateErrorHelperText}
-                        />
-                        <CustomerData 
-                      register={register}
-                      date={date}  
-                      handleChangeDate={(e) => setDate(e)} 
-                      dateError={dateError}
-                      dateErrorHelperText={dateErrorHelperText}
-                        />
-                        <CustomerData 
-                      register={register}
-                      date={date}  
-                      handleChangeDate={(e) => setDate(e)} 
-                      dateError={dateError}
-                      dateErrorHelperText={dateErrorHelperText}
-                        />
-                         <CustomerData 
-                      register={register}
-                      date={date}  
-                      handleChangeDate={(e) => setDate(e)} 
-                      dateError={dateError}
-                      dateErrorHelperText={dateErrorHelperText}
-                        />
-                         <CustomerData 
-                      register={register}
-                      date={date}  
-                      handleChangeDate={(e) => setDate(e)} 
-                      dateError={dateError}
-                      dateErrorHelperText={dateErrorHelperText}
-                        />
-                       
-                </Stack>
             </Stack>           
           </Container>
         </Page>
