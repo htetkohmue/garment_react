@@ -34,7 +34,6 @@ export default function FilterData(props) {
     return (
         <FormikProvider value={formik}>
             <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-            <Stack spacing={4}> 
                 <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
                 <FormControl fullWidth >
                     <InputLabel id="demo-simple-select-required-label">Product Name *</InputLabel>
@@ -62,8 +61,6 @@ export default function FilterData(props) {
                         <MenuItem value={2}>Inactive</MenuItem>
                     </Select>
                 </FormControl>
-                </Stack>
-                <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
                     <TextField
                     fullWidth
                     label="Quantity *"
@@ -79,12 +76,11 @@ export default function FilterData(props) {
                     helperText={touched.customer_id && errors.customer_id}
                 />  
                 </Stack>
-                <Stack spacing={3}  justifyContent="center" alignItems="center">
+                <Stack alignItems="center" style={{marginTop:'2%'}}>
                     <Button size="large" variant="contained" >
                         Add
                     </Button> 
-                </Stack>
-            </Stack>               
+                </Stack>              
             </Form>        
         </FormikProvider>
     )

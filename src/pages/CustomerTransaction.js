@@ -11,7 +11,7 @@ import { ChangeDate } from '../common/ChangeDate';
 
 // --------------------------------------------------------------------
 const ContentStyle = styled('div')(({ theme }) => ({
-  maxWidth: 450,
+  maxWidth: 900,
   margin: '3%',
   display: 'flex',
   justifyContent: 'center',
@@ -33,10 +33,6 @@ const path = process.env.REACT_APP_BACKEND_URL;
       setSuccessMsg('');
     }
 
-    // const chosenDate = (date) => {
-    //   setDate(ChangeDate(date))
-    // }
-
     return (
         <Page title="Customer Tranction">
           <Container>
@@ -50,13 +46,12 @@ const path = process.env.REACT_APP_BACKEND_URL;
                 <b>{errorMsg}</b>
             </Alert>
             )}
-            <Typography variant="h3" mb={5}> Customer Transaction</Typography> 
-            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>      
+            <Typography variant="h3" mb={5}> Customer Transaction</Typography>     
               <ContentStyle>
                 <Stack spacing={4}>
                   <Stack spacing={2}>
                     <Divider textAlign="left">
-                      <Chip label="Tailor Data" />
+                      <Chip label="Customer Data" />
                     </Divider>
                     <CustomerData 
                       register={register}
@@ -73,8 +68,7 @@ const path = process.env.REACT_APP_BACKEND_URL;
                       <ProductData />
                   </Stack>
                 </Stack>  
-              </ContentStyle>
-            </Stack>           
+              </ContentStyle>        
           </Container>
         </Page>
     )

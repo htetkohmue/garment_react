@@ -26,7 +26,7 @@ export default function CustomerData(props) {
     return (
         <FormikProvider value={formik}>
             <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-            <Stack spacing={4}>
+            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
                  <DatePicker required
                     label='Date'
                     value={props.date}
@@ -34,7 +34,7 @@ export default function CustomerData(props) {
                     error={props.dateError}
                     helperText={props.dateErrorHelperText}
                 />   
-                <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+                
                     <TextField
                     fullWidth
                     label="Customer ID"
@@ -49,8 +49,7 @@ export default function CustomerData(props) {
                     error={Boolean(touched.customer_id && errors.customer_id)}
                     helperText={touched.customer_id && errors.customer_id}
                 />  
-                </Stack>
-            </Stack>               
+                </Stack>              
             </Form>        
         </FormikProvider>
     )
