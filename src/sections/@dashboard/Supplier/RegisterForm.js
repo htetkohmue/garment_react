@@ -2,6 +2,7 @@
 import * as yup from 'yup';
 import { useFormik, Form, FormikProvider, useFormikContext } from 'formik';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 // material
 import { Stack, Button, TextField } from '@mui/material';
@@ -9,12 +10,13 @@ import '../../../css/common.css';
 
 export default function RegisterForm(props) {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const RegisterSchema = yup.object().shape({
-    nameMm: yup.string().min(2, 'Too short').max(50, 'Too long').required('Enter your name in Myanmar'),
-    nameEn: yup.string().min(2, 'Too short').max(50, 'Too long').required('Enter your name in English'),
-    phoneNo: yup.string().min(8).required('Enter your phone number'),
-    email: yup.string().email('Enter valid email'),
-    address: yup.string().required('Enter your address'),
+    nameMm: yup.string().min(2, t('Too short')).max(50, t('Too long')).required(t('Enter your name in Myanmar')),
+    nameEn: yup.string().min(2, t('Too short')).max(50, t('Too long')).required(t('Enter your name in English')),
+    phoneNo: yup.string().min(8).required(t('Enter your phone number')),
+    email: yup.string().email(t('Enter valid email')),
+    address: yup.string().required(t('Enter your address')),
   });
   const formik = useFormik({
     enableReinitialize: true,
@@ -58,14 +60,14 @@ export default function RegisterForm(props) {
         <Stack spacing={4}>
           <TextField
             fullWidth
-            label="အမည်"
+            label={t('Name (Myanmar)')}
             {...getFieldProps('nameMm')}
             error={Boolean(touched.nameMm && errors.nameMm)}
             helperText={touched.nameMm && errors.nameMm}
           />
           <TextField
             fullWidth
-            label="အမည် (English)"
+            label={t('Name (English)')}
             {...getFieldProps('nameEn')}
             error={Boolean(touched.nameEn && errors.nameEn)}
             helperText={touched.nameEn && errors.nameEn}
@@ -73,21 +75,21 @@ export default function RegisterForm(props) {
 
           <TextField
             fullWidth
-            label="ဖုန်းနံပါတ်"
+            label={t('Phone No')}
             {...getFieldProps('phoneNo')}
             error={Boolean(touched.phoneNo && errors.phoneNo)}
             helperText={touched.phoneNo && errors.phoneNo}
           />
-          <TextField fullWidth label="အီးမေးလ်" {...getFieldProps('email')} />
-          <TextField fullWidth label="ကုမ္ပဏီ/စက်ရုံ" {...getFieldProps('company')} />
+          <TextField fullWidth label={t('Email')} {...getFieldProps('email')} />
+          <TextField fullWidth label={t('Company')} {...getFieldProps('company')} />
           <TextField
             fullWidth
-            label="လိပ်စာ"
+            label={t('Address')}
             {...getFieldProps('address')}
             error={Boolean(touched.address && errors.address)}
             helperText={touched.address && errors.address}
           />
-          <TextField fullWidth label="မှတ်ချက်" {...getFieldProps('comment')} />
+          <TextField fullWidth label={t('Description')} {...getFieldProps('comment')} />
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} justifyContent="right">
             {props.editSupplier ? (
               <Button
@@ -98,7 +100,7 @@ export default function RegisterForm(props) {
                 style={{ width: '100px', boxSizing: 'small' }}
                 onClick={(e) => props.update(formik.values)}
               >
-                ပြင်မည်
+                {t('Update')}
               </Button>
             ) : (
               <Button
@@ -109,7 +111,7 @@ export default function RegisterForm(props) {
                 style={{ width: '100px', boxSizing: 'small' }}
                 onClick={(e) => props.register(formik.values)}
               >
-                သိမ်းမည်
+                {t('Save')}
               </Button>
             )}
           </Stack>

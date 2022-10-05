@@ -1,9 +1,10 @@
 import { Link as RouterLink, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Stack, Card, Link, Container, Typography } from '@mui/material';
+import { Stack, Card, Link, Container, Typography, Alert } from '@mui/material';
 // hooks
 import useResponsive from '../hooks/useResponsive';
 // components
@@ -28,6 +29,7 @@ const path = process.env.REACT_APP_BACKEND_URL;
 // ----------------------------------------------------------------------
 
 export default function Supplier() {
+  const { t } = useTranslation();
   const defaultPerPage = ApiPath.defaultPerPage;
   const [successMsg, setSuccessMsg] = useState(''); // for success msg
   const [validatorErrorMsg, setValidatorErrorMsg] = useState([]); // for valid msg
@@ -138,12 +140,12 @@ export default function Supplier() {
         <Stack direction="row" alignItems="center" justifyContent="space-between">
           {!editSupplier && (
             <Typography variant="h3" gutterBottom>
-              ပိတ်အုပ်သွင်းသူအမည် စာရင်းသွင်းခြင်း
+              {t('Supplier Registration')}
             </Typography>
           )}
           {editSupplier && (
             <Typography variant="h3" gutterBottom>
-              ပိတ်အုပ်သွင်းသူအမည် ပြင်ဆင်ခြင်း
+              {t('Supplier Updating')}
             </Typography>
           )}
         </Stack>
@@ -156,12 +158,36 @@ export default function Supplier() {
             );
           })} */}
         </div>
-        <div style={{ backgroundColor: 'red', borderRadius: '10px' }}>
+        {successMsg && (
+          <Alert variant="filled" severity="success">
+            <b>{successMsg}</b>
+          </Alert>
+        )}
+        {errorMsg && (
+          <Alert variant="filled" severity="error">
+            <b>{errorMsg}</b>
+          </Alert>
+        )}
+        {validatorErrorMsg.length === 1 && (
+          <Alert variant="filled" severity="error">
+            <b>
+              {' '}
+              {validatorErrorMsg.map((data, index) => {
+                return (
+                  <div key={index} style={{ color: 'white' }}>
+                    {data}
+                  </div>
+                );
+              })}
+            </b>
+          </Alert>
+        )}
+        {/* <div style={{ backgroundColor: 'red', borderRadius: '10px' }}>
           <h3 style={{ color: 'white' }}>{errorMsg}</h3>
         </div>
         <div style={{ backgroundColor: 'green', borderRadius: '10px' }}>
           <h3 style={{ color: 'white' }}>{successMsg}</h3>
-        </div>
+        </div> */}
         <ContentStyle>
           <RegisterForm register={register} update={update} editSupplier={editSupplier} />
           <DisplayForm
