@@ -94,6 +94,7 @@ export default function RawMaterial() {
   const [rawIDs, setRawIDs] = useState([]);
   const [validatorErrorMsg, setValidatorErrorMsg] = useState([]);
   const [loadingOpen, setloadingOpen] = useState(false);
+//const [loadingOpen, setloadingOpen] = useState(false);
 
   const TABLE_HEAD = [
     { id: 'id', label: 'No', alignRight: false },
