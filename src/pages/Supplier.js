@@ -25,7 +25,6 @@ const ContentStyle = styled('div')(({ theme }) => ({
 }));
 
 const path = process.env.REACT_APP_BACKEND_URL;
-//testing
 // ----------------------------------------------------------------------
 
 export default function Supplier() {
@@ -56,9 +55,9 @@ export default function Supplier() {
         name_en: values.nameEn,
         phone_no: values.phoneNo,
         email: values.email,
-        company: values.company,
+        businessName: values.businessName,
         address: values.address,
-        comment: values.comment,
+        description: values.description,
         login_id: 1000,
       };
       const obj = { url: ApiPath.storeSupplierData, method: 'post', params: data };
@@ -85,9 +84,9 @@ export default function Supplier() {
         name_en: values.nameEn,
         phone_no: values.phoneNo,
         email: values.email,
-        company: values.company,
+        businessName: values.businessName,
         address: values.address,
-        comment: values.comment,
+        description: values.description,
         login_id: 1000,
       };
       const obj = { url: ApiPath.editSupplierData, method: 'post', params: data };
@@ -149,15 +148,15 @@ export default function Supplier() {
             </Typography>
           )}
         </Stack>
-        <div style={{ backgroundColor: 'red', borderRadius: '10px' }}>
-          {/* {validatorErrorMsg.map((data, index) => {
+        {/* <div style={{ backgroundColor: 'red', borderRadius: '10px' }}> */}
+        {/* {validatorErrorMsg.map((data, index) => {
             return (
               <div key={index} style={{ color: 'white' }}>
                 {data}
               </div>
             );
           })} */}
-        </div>
+        {/* </div> */}
         {successMsg && (
           <Alert variant="filled" severity="success">
             <b>{successMsg}</b>

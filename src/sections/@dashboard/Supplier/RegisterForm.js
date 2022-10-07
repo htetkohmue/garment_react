@@ -25,9 +25,9 @@ export default function RegisterForm(props) {
       nameEn: props.editSupplier.name_en || '',
       phoneNo: props.editSupplier.phone_no || '',
       email: props.editSupplier.email || '',
-      company: props.editSupplier.company || '',
+      businessName: props.editSupplier.businessName || '',
       address: props.editSupplier.address || '',
-      comment: props.editSupplier.comment || '',
+      description: props.editSupplier.description || '',
     },
     validationSchema: RegisterSchema,
     onSubmit: (values, { resetForm }) => {
@@ -81,7 +81,7 @@ export default function RegisterForm(props) {
             helperText={touched.phoneNo && errors.phoneNo}
           />
           <TextField fullWidth label={t('Email')} {...getFieldProps('email')} />
-          <TextField fullWidth label={t('Company')} {...getFieldProps('company')} />
+          <TextField fullWidth label={t('Company')} {...getFieldProps('businessName')} />
           <TextField
             fullWidth
             label={t('Address')}
@@ -89,7 +89,7 @@ export default function RegisterForm(props) {
             error={Boolean(touched.address && errors.address)}
             helperText={touched.address && errors.address}
           />
-          <TextField fullWidth label={t('Description')} {...getFieldProps('comment')} />
+          <TextField fullWidth label={t('Description')} {...getFieldProps('description')} />
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} justifyContent="right">
             {props.editSupplier ? (
               <Button
