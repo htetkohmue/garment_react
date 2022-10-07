@@ -94,7 +94,6 @@ export default function RawMaterial() {
   const [rawIDs, setRawIDs] = useState([]);
   const [validatorErrorMsg, setValidatorErrorMsg] = useState([]);
   const [loadingOpen, setloadingOpen] = useState(false);
-//const [loadingOpen, setloadingOpen] = useState(false);
 
   const TABLE_HEAD = [
     { id: 'id', label: 'No', alignRight: false },
@@ -233,7 +232,7 @@ export default function RawMaterial() {
       })();
     }
     clickCancel();
-    
+
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   };
 
@@ -276,7 +275,7 @@ export default function RawMaterial() {
       const data = { id, login_id: 20001 };
 
       const obj = { url: ApiPath.DeleteRaws, method: 'post', params: data };
-     
+
       const response = await ApiRequest(obj);
 
       if (response.flag === true) {
