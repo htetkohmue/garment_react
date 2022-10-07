@@ -30,9 +30,9 @@ export default function DisplayForm(props) {
             <TableCell align="center">{row.no}.</TableCell>
             <TableCell align="left">{row.name_mm}</TableCell>
             <TableCell align="left">{row.phone_no}</TableCell>
-            <TableCell align="left">{row.company}</TableCell>
+            <TableCell align="left">{row.businessName}</TableCell>
             <TableCell align="left">{row.address}</TableCell>
-            <TableCell align="left">{row.comment}</TableCell>
+            <TableCell align="left">{row.description}</TableCell>
             <TableCell align="center">
               <Button
                 variant="contained"
