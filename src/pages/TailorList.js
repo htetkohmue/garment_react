@@ -28,9 +28,10 @@ import Label from '../components/Label';
 import Scrollbar from '../components/Scrollbar';
 import Iconify from '../components/Iconify';
 import SearchNotFound from '../components/SearchNotFound';
-import { TailorListHead, TailorListToolbar, TailorMoreMenu ,AlertDialogSlide,Loading} from '../sections/@dashboard/TailorList';
+import { TailorListHead, TailorListToolbar, TailorMoreMenu ,Loading} from '../sections/@dashboard/TailorList';
 import ApiPath from '../common/common-api/api-path/ApiPath';
 import {ApiRequest} from '../common/common-api/api-request/ApiRequest';
+import AlertDialogSlide from '../common/AlertDialogSlide';
 
 
 // mock
@@ -105,7 +106,7 @@ const TABLE_HEAD = [
 
   /* Formload get tailor data */
   useEffect(() => {(async () => {
-    const data = {}
+    const data = {'language':localStorage.getItem('selectedLanguageName')}
     const obj = {url: ApiPath.getTailorData, method: 'get', params:data};
     const response = await ApiRequest(obj);
     if (response.flag===true) {
@@ -199,7 +200,7 @@ const TABLE_HEAD = [
     setOpen(false);
     setloadingOpen(true);
     (async () => {
-      const data = {"tailor_id": deleteTailorId}
+      const data = {"tailor_id": deleteTailorId,'language':localStorage.getItem('selectedLanguageName')}
       const obj = {url: ApiPath.deleteTailorData, method: 'post', params:data};
       const response = await ApiRequest(obj);
       if (response.flag===true) {
@@ -311,7 +312,13 @@ const TABLE_HEAD = [
             </TableContainer>
           </Scrollbar>
       
-          {open && (<AlertDialogSlide open={open} Agree={Agree} handleClose={handleClose} deleteTailorId={deleteTailorId}/>)}
+          {open && (<AlertDialogSlide 
+            open={open} 
+            Agree={Agree}
+            handleClose={handleClose} 
+            dialogTitle={t("Do you really want to delete this tailor data?")}
+            data={deleteTailorId}/>
+          )}
 
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
