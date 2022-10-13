@@ -87,7 +87,7 @@ const navConfig = [
       },
       {
         title: "Product In Register",
-        path: "/dashboard/product-register",
+        path: "/dashboard/product-in-register",
         icon: getIcon('eva:shopping-bag-fill'),
       },
       {

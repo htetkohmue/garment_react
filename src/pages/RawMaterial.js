@@ -232,7 +232,7 @@ export default function RawMaterial() {
       })();
     }
     clickCancel();
-    
+
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   };
 
@@ -275,7 +275,7 @@ export default function RawMaterial() {
       const data = { id, login_id: 20001 };
 
       const obj = { url: ApiPath.DeleteRaws, method: 'post', params: data };
-     
+
       const response = await ApiRequest(obj);
 
       if (response.flag === true) {
