@@ -1,56 +1,126 @@
-import { useFormik, Form, FormikProvider } from 'formik';
-import { useNavigate, Link as RouterLink, useParams } from 'react-router-dom';
-
+import PropTypes from 'prop-types';
 // material
-import { Stack, TextField, IconButton, InputAdornment, label } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { Toolbar, Tooltip, IconButton,FilledInput, Typography,FormControl,InputLabel, OutlinedInput, Autocomplete, InputAdornment, Popper,Box ,TextField  } from '@mui/material';
+// component
+import Iconify from '../../../components/Iconify';
 import DatePicker from '../../../common/datepicker/DatePicker';
 
-export default function CustomerData(props) {
-    const navigate = useNavigate();
+// ----------------------------------------------------------------------
 
-    const formik = useFormik({
-        initialValues: {
-          date: '',
-          customer_id: '',
-          customer_name: ''
-        },
-        // validationSchema: RegisterSchema,
-        onSubmit: (values, { resetForm }) => {
-          resetForm({ values: '' });
-          // navigate('/dashboard/tailors-register', { replace: true });
-        },
-      });
-    
-      const { errors, touched, handleSubmit, isSubmitting, getFieldProps, handleChange, handleBlur } = formik;
+const PopperStyle = styled((props) => <Popper placement="bottom-start" {...props} />)({
+  width: '260px !important',
+});
 
-    return (
-        <FormikProvider value={formik}>
-            <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-                 <DatePicker required
-                    label='Date'
-                    value={props.date}
-                    onChange={props.handleChangeDate}
-                    error={props.dateError}
-                    helperText={props.dateErrorHelperText}
-                />   
-                
-                    <TextField
-                    fullWidth
-                    label="Customer ID"
-                    {...getFieldProps('customer_id')}
-                    error={Boolean(touched.customer_id && errors.customer_id)}
-                    helperText={touched.customer_id && errors.customer_id}
-                />  
-                <TextField
-                    fullWidth
-                    label="Customer Name"
-                    {...getFieldProps('customer_name')}
-                    error={Boolean(touched.customer_id && errors.customer_id)}
-                    helperText={touched.customer_id && errors.customer_id}
-                />  
-                </Stack>              
-            </Form>        
-        </FormikProvider>
-    )
+// ----------------------------------------------------------------------
+
+CustomerData.propTypes = {
+  posts: PropTypes.array.isRequired,
+};
+
+
+const RootStyle = styled(Toolbar)(({ theme }) => ({
+//   height: 100,
+  display: 'flex',
+//   justifyContent: 'space-between', far two text box
+  padding: theme.spacing(0, 1, 0, 3),
+}));
+
+const SearchStyle = styled(OutlinedInput)(({ theme }) => ({
+  width: 260,
+  marginLeft:`50px !important`,
+  transition: theme.transitions.create(['box-shadow', 'width'], {
+    easing: theme.transitions.easing.easeInOut,
+    duration: theme.transitions.duration.shorter,
+  }),
+  '& fieldset': {
+    borderWidth: `1px !important`,
+    borderColor: `${theme.palette.grey[600_70]} !important`,
+  },
+}));
+
+// ----------------------------------------------------------------------
+
+
+
+CustomerData.propTypes = {
+  numSelected: PropTypes.number,
+  filterName: PropTypes.string,
+  onFilterName: PropTypes.func,
+};
+
+export default function CustomerData({ date,numSelected, filterName, onFilterName,IdCustomer,deleteCustomer,
+  posts,handleChange}) {
+
+  return (
+    <RootStyle
+      sx={{
+        ...(numSelected > 0 && {
+          color: 'primary.main',
+          bgcolor: 'primary.lighter',
+        }),
+      }}
+    > 
+    {numSelected > 0 ? (
+        <Typography component="div" variant="subtitle1">
+          {numSelected} selected
+        </Typography>
+      ) : (
+       <Autocomplete
+      sx={{ width: 260 }}
+      autoHighlight
+      popupIcon={null}
+      PopperComponent={PopperStyle}
+      options={posts}
+      getOptionLabel={(post) => post.customerId}
+      onChange={handleChange}
+      isOptionEqualToValue={(option, value) => option.id === value.id}
+      renderInput={(params) => (
+        <TextField
+        {...params}
+          placeholder="Search Customer ID..."
+          InputProps={{
+                ...params.InputProps,
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Iconify icon={'eva:search-fill'} sx={{ ml: 1, width: 20, height: 20, color: 'red' }} />
+                  </InputAdornment>
+                ),
+              }}
+        />
+      )}
+      />
+      )} 
+    {numSelected > 0 ? (
+        <Typography component="div" variant="subtitle1">
+          {numSelected} selected
+        </Typography>
+      ) : (
+        <SearchStyle
+          disabled
+          value={filterName}
+          onChange={onFilterName}
+          placeholder="Search Customer Name..."
+          startAdornment={
+            <InputAdornment position="start">
+              {/* <Iconify icon="eva:search-fill" sx={{ ml: 1, width: 20, height: 20, color: 'red' }} /> */}
+            </InputAdornment>
+          }
+        />
+      )}
+      {/* {numSelected > 0 ? (
+        <Tooltip title="Delete">
+          <IconButton  onClick={(e) => deleteCustomer(IdCustomer)}>
+            <Iconify icon="eva:trash-2-fill" />
+          </IconButton>
+        </Tooltip>
+      ) : (
+        <Tooltip title="Filter list">
+          <IconButton >
+            <Iconify icon="ic:round-filter-list" />
+          </IconButton>
+        </Tooltip>
+      )} */}
+    </RootStyle>
+  );
 }

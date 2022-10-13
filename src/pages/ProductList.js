@@ -228,7 +228,7 @@ import { ChangeDate } from '../common/ChangeDate';
         const obj = { url: ApiPath.searchProductIn, method: 'post', params: data };
         const response = await ApiRequest(obj);
         if (response.flag === true) {
-          setProductInAPI(response.response_data.data);
+          setProductInAPI(response.response_data.data);console.log(ProductInAPI);
           setTotalRow(response.response_data.row_count);
           setSelected([]);
           setErrorMsg("");
