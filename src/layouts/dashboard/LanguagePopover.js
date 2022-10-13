@@ -31,8 +31,10 @@ export default function LanguagePopover(props) {
   useEffect(() => {
     if (localStorage.getItem('selectedLanguageKey')===null) {
       setSelectedLanguageKey(0);
+      localStorage.setItem('selectedLanguageName',LANGS[0].value);
     }else{
       setSelectedLanguageKey(localStorage.getItem('selectedLanguageKey'));
+      localStorage.setItem('selectedLanguageName',LANGS[localStorage.getItem('selectedLanguageKey')].value);
     }
   });
   return (
