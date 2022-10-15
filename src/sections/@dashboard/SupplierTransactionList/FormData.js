@@ -39,9 +39,14 @@ function FormData(props) {
                     label="Supplier Name *"
                     onChange={props.handleChangeSupplierName}
                     >
-                        <MenuItem value={1}>Tom</MenuItem>
-                        <MenuItem value={2}>Jerry</MenuItem>
-                        <MenuItem value={3}>Micky</MenuItem>
+                       {
+                            props.supplierAPI.length > 0 &&
+                            props.supplierAPI.map((item,index)=>{
+                                return(
+                                    <MenuItem key={index} value={item.id}>{item.name_en}</MenuItem>
+                                )
+                            })
+                        }
                     </Select>
                 </FormControl>
 

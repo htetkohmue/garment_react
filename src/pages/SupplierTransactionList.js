@@ -15,10 +15,12 @@ function SupplierTransactionList() {
     const [toDateError, setToDateError]     = useState('');
     const [toDateErrorHelperText, setToDateErrorHelperText] = useState('');
     const [flag, setFlag]                   = useState(true);
-    const [materialAPI, setMaterialAPI]     = useState(true);
+    const [materialAPI, setMaterialAPI]     = useState([]);
+    const [supplierAPI, setSupplierAPI]     = useState([]);
     
     useEffect(() => {
       loadRawData();
+      loadSupplierData();
     }, []);
     const loadRawData = () => {
       (async () => {
@@ -26,10 +28,29 @@ function SupplierTransactionList() {
         const obj = { url: ApiPath.searchRaws, method: 'get' };
         const response = await ApiRequest(obj);
 
-        if (response.flag === true) {console.log(response.response_data.data)
+        if (response.flag === true) {
+          // console.log(response);
             setMaterialAPI(response.response_data.data);
         }
-        if (response.flag === false) {console.log(response)
+        if (response.flag === false) {// console.log(response)
+          // setValidatorErrorMsg(response.message);
+          // setErrorMsg('');
+          // setSuccessMsg('');
+          // setloadingOpen(false);
+        }
+        // clickCancel();
+      })();
+    };
+
+    const loadSupplierData = () => {
+      (async () => {
+        // setloadingOpen(true);
+        const obj = { url: ApiPath.getSupplierData, method: 'get' };
+        const response = await ApiRequest(obj);
+        if (response.flag === true) {
+          setSupplierAPI(response.response_data.data);
+        }
+        if (response.flag === false) {// console.log(response)
           // setValidatorErrorMsg(response.message);
           // setErrorMsg('');
           // setSuccessMsg('');
@@ -40,11 +61,6 @@ function SupplierTransactionList() {
     };
 
     const clickSearch = () =>{
-      // console.log(ChangeDate(fromDate));
-      // console.log(toDate);
-      console.log(materialName)
-   
-      
         if (!!fromDate === false) {
           setFromDateError(true);
           setFromDateErrorHelperText('From Date is required!');
@@ -64,12 +80,13 @@ function SupplierTransactionList() {
                           fromDate: ChangeDate(fromDate), 
                           toDate:ChangeDate(toDate), 
                           raw_id:materialName, 
+                          supplier_id:supplierName, 
                           login_id: 20001 
                         };
-            const obj = { url: ApiPath.searchSupplierTransaction, method: 'post',params: data };
-            console.log(obj)
+            const obj = { url: ApiPath.searchSupplierTransaction, method: 'get',params: data };
+            console.log(obj);
             const response = await ApiRequest(obj);
-      
+            console.log(response)
             if (response.flag === true) {
              console.log("object")
             }
@@ -103,6 +120,7 @@ function SupplierTransactionList() {
               toDateErrorHelperText={toDateErrorHelperText}
               clickSearch={clickSearch}
               materialAPI={materialAPI}
+              supplierAPI={supplierAPI}
             />
         </>
   )
