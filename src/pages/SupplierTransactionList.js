@@ -1,5 +1,6 @@
 import { Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
+import moment from 'moment';
 import ApiPath from '../common/common-api/api-path/ApiPath';
 import { ApiRequest } from '../common/common-api/api-request/ApiRequest';
 import { ChangeDate } from '../common/ChangeDate';
@@ -77,13 +78,14 @@ function SupplierTransactionList() {
           (async () => {
            // setloadingOpen(true);
             const data = { 
-                          fromDate: ChangeDate(fromDate), 
+                          fromDate: ChangeDate(toDate), 
                           toDate:ChangeDate(toDate), 
                           raw_id:materialName, 
                           supplier_id:supplierName, 
                           login_id: 20001 
                         };
-            const obj = { url: ApiPath.searchSupplierTransaction, method: 'get',params: data };
+              console.log(typeof data.fromDate)
+            const obj = { url: ApiPath.searchSupplierTransaction, method: 'post',params: data };
             console.log(obj);
             const response = await ApiRequest(obj);
             console.log(response)
@@ -112,8 +114,8 @@ function SupplierTransactionList() {
               toDate={toDate}
               handleChangeSupplierName={(e) => setSupplierName(e.target.value)}
               handleChangeMaterialName={(e) => setMaterialName(e.target.value)}
-              handleChangeFromDate={(e) => setFromDate(e)}
-              handleChangeToDate={(e) => setToDate(e)}
+              handleChangeFromDate={(e) => setFromDate(ChangeDate(e))}
+              handleChangeToDate={(e) => setToDate(ChangeDate(e))}
               fromDateError={fromDateError}
               fromDateErrorHelperText={fromDateErrorHelperText}
               toDateError={toDateError}

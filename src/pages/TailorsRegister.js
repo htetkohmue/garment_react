@@ -79,6 +79,7 @@ export default function TailorsRegister() {
         address: values.address,
         description: values.description,
         login_id: 10001,
+        language:localStorage.getItem('selectedLanguageName')
       };
       const obj = { url: ApiPath.storeTailorData, method: 'post', params: data };
       const response = await ApiRequest(obj);
@@ -106,6 +107,7 @@ export default function TailorsRegister() {
         address: values.address,
         description: values.description,
         login_id: 10001,
+        language:localStorage.getItem('selectedLanguageName')
       };
       const apiPath = ApiPath.updateTailorData;
       const obj = { url: `${apiPath}/${id}`, method: 'put', params: data };
