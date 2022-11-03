@@ -1,7 +1,9 @@
 import { Button, Container, Grid, Stack, Textarea, TextField } from '@mui/material';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 function RawMaterialIndex(props) {
+  const {t} = useTranslation();
   return (
     <>
       <Container>
@@ -10,31 +12,31 @@ function RawMaterialIndex(props) {
             <TextField
               fullWidth
               required
-              label="Raw Material Name"
+              label={t("Raw Material Name")}
               value={props.name}
               onChange={props.nameOnChange}
               error={props.nameError}
               helperText={props.nameHelperText}
             />
-            <TextField fullWidth label="Type" value={props.type} onChange={(e) => props.setType(e.target.value)} />
+            <TextField fullWidth label={t("Types")} value={props.type} onChange={(e) => props.setType(e.target.value)} />
           </Stack>
 
           <TextField
-            label="Description"
+            label={t("Description")}
             value={props.description}
             onChange={(e) => props.setDescription(e.target.value)}
           />
         </Stack>
 
         <Stack spacing={3} style={{ marginBottom: '20px' }} justifyContent="center" alignItems="center">
-          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1}>
             <Button fullWidth size="large" variant="contained" onClick={props.clickRegister}>
-              {props.insertMode}
+              {t(props.insertMode)}
             </Button>
-
-            <Button fullWidth size="large" variant="outlined" onClick={props.clickCancel}>
+          
+            {/* <Button fullWidth size="large" variant="outlined" onClick={props.clickCancel}>
               Cancel
-            </Button>
+            </Button> */}
           </Stack>
         </Stack>
       </Container>

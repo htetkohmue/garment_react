@@ -22,11 +22,12 @@ import {
   Tooltip,
 } from '@mui/material';
 // import { Formik, FormikProvider } from 'formik';
-import axios from 'axios';
+// import axios from 'axios';
 import { filter } from 'lodash';
 // import DeleteIcon from '@mui/icons-material/Delete';
 // import EditIcon from '@mui/icons-material/Edit';
 // import { toast, ToastContainer } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 import ApiPath from '../common/common-api/api-path/ApiPath';
 import { ApiRequest } from '../common/common-api/api-request/ApiRequest';
 
@@ -73,6 +74,7 @@ function applySortFilter(array, comparator, query) {
 }
 
 export default function RawMaterial() {
+  const { t } = useTranslation();
   const path = process.env.REACT_APP_BACKEND_URL;
   const [name, setName] = useState('');
   const [type, setType] = useState('');
@@ -98,7 +100,7 @@ export default function RawMaterial() {
   const TABLE_HEAD = [
     { id: 'id', label: 'No', alignRight: false },
     { id: 'Name', label: 'Name', alignRight: false },
-    { id: 'Type', label: 'Type', alignRight: false },
+    { id: 'Type', label: 'Types', alignRight: false },
     { id: 'Edit', label: 'Edit', alignRight: false },
     { id: 'Delete', label: 'Delete', alignRight: false },
     { id: 'Description', label: 'Description', alignRight: false },
@@ -310,7 +312,7 @@ export default function RawMaterial() {
           </Alert>
         )}
         <Typography variant="h3" mb={5}>
-          Raw Material
+          {t("Raw Material")}
         </Typography>
         <RawMaterialIndex
           path={path}
