@@ -1,11 +1,47 @@
-import { Typography } from '@mui/material'
+import { Card, Checkbox, Table, TableCell, TablePagination, TableRow, Typography,TableContainer,TableBody,Stack,Button } from '@mui/material'
+import { filter } from 'lodash';
 import React, { useEffect, useState } from 'react'
+import moment from 'moment';
+import { useTranslation } from 'react-i18next';
 import ApiPath from '../common/common-api/api-path/ApiPath';
 import { ApiRequest } from '../common/common-api/api-request/ApiRequest';
+import SearchNotFound from '../components/SearchNotFound';
 import { ChangeDate } from '../common/ChangeDate';
-import { FormData } from '../sections/@dashboard/SupplierTransactionList'
+import { FormData,SupplierTransactionListToolbar,SupplierTransactionListHead } from '../sections/@dashboard/SupplierTransactionList'
+import Scrollbar from '../components/Scrollbar';
+import Page from '../components/Page';
+
+function descendingComparator(a, b, orderBy) {
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
+  }
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
+  }
+  return 0;
+}
+
+function getComparator(order, orderBy) {
+  return order === 'desc'
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
+}
+
+function applySortFilter(array, comparator, query) {
+  const stabilizedThis = array.map((el, index) => [el, index]);
+  stabilizedThis.sort((a, b) => {
+    const order = comparator(a[0], b[0]);
+    if (order !== 0) return order;
+    return a[1] - b[1];
+  });
+  if (query) {
+    return filter(array, (_user) => _user.name.toLowerCase().indexOf(query.toLowerCase()) !== -1);
+  }
+  return stabilizedThis.map((el) => el[0]);
+}
 
 function SupplierTransactionList() {
+    const {t} = useTranslation();
     const [supplierName, setSupplierName]   = useState('');
     const [materialName, setMaterialName]   = useState('');
     const [fromDate, setFromDate]           = useState(()=>ChangeDate(new Date()));
@@ -15,10 +51,41 @@ function SupplierTransactionList() {
     const [toDateError, setToDateError]     = useState('');
     const [toDateErrorHelperText, setToDateErrorHelperText] = useState('');
     const [flag, setFlag]                   = useState(true);
-    const [materialAPI, setMaterialAPI]     = useState(true);
+    const [materialAPI, setMaterialAPI]     = useState([]);
+    const [supplierAPI, setSupplierAPI]     = useState([]);
+    const [resultAPI, setResultAPI]         = useState([]);
     
+    // table
+    const [page, setPage] = useState(0);
+    const [order, setOrder] = useState('asc');
+    const [selected, setSelected] = useState([]);
+    const [orderBy, setOrderBy] = useState('id');
+    const [filterName, setFilterName] = useState('');
+    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [totalRow, setTotalRow] = useState();
+    // const [totalQty, setTotalQty] = useState(0);
+    // const [allTotalAmount, setAllTotalAmount] = useState(0);
+
+    let totalQty = 0;
+    let allTotalAmount = 0;
+
+    const TABLE_HEAD = [
+      { id: 'id', label: 'No', alignRight: false },
+      { id: 'date', label: 'Date', alignRight: false },
+      { id: 'supplierNameEN', label: 'Supplier Name', alignRight: false },
+      { id: 'rawName', label: 'Raw Material Name', alignRight: false },
+      { id: 'price', label: 'Price', alignRight: false },
+      { id: 'qty', label: 'Qty', alignRight: false },
+      { id: 'totalAmount', label: 'Total Amount', alignRight: false },
+    ];
+
+    const filteredData = applySortFilter(resultAPI, getComparator(order, orderBy), filterName);
+    const isDataNotFound = filteredData.length === 0;
+    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - resultAPI.length) : 0;
+
     useEffect(() => {
       loadRawData();
+      loadSupplierData();
     }, []);
     const loadRawData = () => {
       (async () => {
@@ -26,10 +93,29 @@ function SupplierTransactionList() {
         const obj = { url: ApiPath.searchRaws, method: 'get' };
         const response = await ApiRequest(obj);
 
-        if (response.flag === true) {console.log(response.response_data.data)
+        if (response.flag === true) {
+          // console.log(response);
             setMaterialAPI(response.response_data.data);
         }
-        if (response.flag === false) {console.log(response)
+        if (response.flag === false) {// console.log(response)
+          // setValidatorErrorMsg(response.message);
+          // setErrorMsg('');
+          // setSuccessMsg('');
+          // setloadingOpen(false);
+        }
+        // clickCancel();
+      })();
+    };
+
+    const loadSupplierData = () => {
+      (async () => {
+        // setloadingOpen(true);
+        const obj = { url: ApiPath.getSupplierData, method: 'get' };
+        const response = await ApiRequest(obj);
+        if (response.flag === true) {
+          setSupplierAPI(response.response_data.data);
+        }
+        if (response.flag === false) {// console.log(response)
           // setValidatorErrorMsg(response.message);
           // setErrorMsg('');
           // setSuccessMsg('');
@@ -40,11 +126,6 @@ function SupplierTransactionList() {
     };
 
     const clickSearch = () =>{
-      // console.log(ChangeDate(fromDate));
-      // console.log(toDate);
-      console.log(materialName)
-   
-      
         if (!!fromDate === false) {
           setFromDateError(true);
           setFromDateErrorHelperText('From Date is required!');
@@ -61,17 +142,19 @@ function SupplierTransactionList() {
           (async () => {
            // setloadingOpen(true);
             const data = { 
-                          fromDate: ChangeDate(fromDate), 
+                          fromDate: ChangeDate(toDate), 
                           toDate:ChangeDate(toDate), 
                           raw_id:materialName, 
+                          supplier_id:supplierName, 
                           login_id: 20001 
                         };
+              console.log(typeof data.fromDate)
             const obj = { url: ApiPath.searchSupplierTransaction, method: 'post',params: data };
-            console.log(obj)
+            console.log(obj);
             const response = await ApiRequest(obj);
-      
+            console.log(response)
             if (response.flag === true) {
-             console.log("object")
+              setResultAPI(response.response_data.data)
             }
             if (response.flag === false) {console.log("object")
               // setValidatorErrorMsg(response.message);
@@ -84,10 +167,55 @@ function SupplierTransactionList() {
         }
     }
 
+    // tabel
+    const handleFilterByName = (event) => {
+      setFilterName(event.target.value);
+    };
+  
+    const handleRequestSort = (event, property) => {
+      const isAsc = orderBy === property && order === 'asc';
+      setOrder(isAsc ? 'desc' : 'asc');
+      setOrderBy(property);
+    };
+  
+    const handleSelectAllClick = (event) => {
+      if (event.target.checked) {
+        const newSelecteds = resultAPI.map((n) => n.id);
+        setSelected(newSelecteds);
+        return;
+      }
+      setSelected([]);
+      console.log(selected);
+    };
+  
+    const handleClick = (event, name) => {
+      const selectedIndex = selected.indexOf(name);
+      let newSelected = [];
+      if (selectedIndex === -1) {
+        newSelected = newSelected.concat(selected, name);
+      } else if (selectedIndex === 0) {
+        newSelected = newSelected.concat(selected.slice(1));
+      } else if (selectedIndex === selected.length - 1) {
+        newSelected = newSelected.concat(selected.slice(0, -1));
+      } else if (selectedIndex > 0) {
+        newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
+      }
+      setSelected(newSelected);
+    };
+  
+    const handleChangePage = (event, newPage) => {
+      setPage(newPage);
+    };
+  
+    const handleChangeRowsPerPage = (event) => {
+      setRowsPerPage(parseInt(event.target.value, 10));
+      setPage(0);
+    };
+
 
   return (
         <>
-          <Typography variant="h3" mb={5}>Supplier Transaction List</Typography>
+          <Typography variant="h3" mb={5}>{t("Supplier Transaction List")}</Typography>
             <FormData 
               supplierName={supplierName}
               materialName={materialName}
@@ -95,15 +223,134 @@ function SupplierTransactionList() {
               toDate={toDate}
               handleChangeSupplierName={(e) => setSupplierName(e.target.value)}
               handleChangeMaterialName={(e) => setMaterialName(e.target.value)}
-              handleChangeFromDate={(e) => setFromDate(e)}
-              handleChangeToDate={(e) => setToDate(e)}
+              handleChangeFromDate={(e) => setFromDate(ChangeDate(e))}
+              handleChangeToDate={(e) => setToDate(ChangeDate(e))}
               fromDateError={fromDateError}
               fromDateErrorHelperText={fromDateErrorHelperText}
               toDateError={toDateError}
               toDateErrorHelperText={toDateErrorHelperText}
               clickSearch={clickSearch}
               materialAPI={materialAPI}
+              supplierAPI={supplierAPI}
             />
+
+        {resultAPI.length > 0 && (
+          <>
+          <Card>
+            {/* <SupplierTransactionListToolbar
+              posts={resultAPI}
+              rawIDs={selected}
+             // delete={deleteRaws}
+              numSelected={selected.length}
+              filterName={filterName}
+              onFilterName={handleFilterByName}
+            /> */}
+
+            <Scrollbar>
+              <TableContainer sx={{ minWidth: 800 }}>
+                <Table>
+                  <SupplierTransactionListHead
+                    order={order}
+                    orderBy={orderBy}
+                    headLabel={TABLE_HEAD}
+                    rowCount={resultAPI.length}
+                    numSelected={selected.length}
+                    onRequestSort={handleRequestSort}
+                    onSelectAllClick={handleSelectAllClick}
+                  />
+                  <TableBody>
+               
+
+                    {
+                   
+                    filteredData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                      const { key, id, date, supplierNameEN, rawName, price, qty,totalAmount } = row;
+                      const isItemSelected = selected.indexOf(id) !== -1;
+                     
+                      totalQty += row.qty;
+                      allTotalAmount += row.totalAmount;
+                      return (
+                        <>
+                          <TableRow
+                            hover
+                            key={id}
+                            tabIndex={-1}
+                            role="checkbox"
+                            selected={isItemSelected}
+                            aria-checked={isItemSelected}
+                          >
+                            <TableCell padding="checkbox">
+                              <Checkbox checked={isItemSelected} onChange={(event) => handleClick(event, id)} />
+                            </TableCell>
+                            <TableCell align="left">{key}</TableCell>
+                            <TableCell align="left">{date}</TableCell>
+                            <TableCell align="left">{supplierNameEN}</TableCell>
+                            <TableCell align="left">{rawName}</TableCell>
+                            <TableCell align="left">{price}</TableCell>
+                            <TableCell align="left">{qty}</TableCell>
+                            <TableCell align="left">{totalAmount}</TableCell>
+                          </TableRow>
+                          
+                        </>
+                        
+                      );
+                    })}
+                    <TableRow>
+                      <TableCell colSpan={6}><Typography align="center" fontWeight={'bold'}>{t('Total')}</Typography></TableCell>
+                      <TableCell>{totalQty}</TableCell>
+                      <TableCell>{allTotalAmount}</TableCell>
+                    </TableRow>
+                    {emptyRows > 0 && (
+                      <TableRow style={{ height: 53 * emptyRows }}>
+                        <TableCell colSpan={8} />
+                      </TableRow>
+                    )}
+                  </TableBody>
+
+                  {isDataNotFound && (
+                    <TableBody>
+                      <TableRow>
+                        <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
+                          <SearchNotFound searchQuery={filterName} />
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  )}
+                </Table>
+              </TableContainer>
+            </Scrollbar>
+            
+            
+            
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={resultAPI.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </Card>
+          
+          <Stack spacing={2} direction={{ xs: 'column', sm: 'row' }} style={{ marginTop: '20px' }} justifyContent="center" alignItems="center">
+              {/* <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1}> */}
+                <Button  size="large" variant="contained" >
+                  {t('Edit')}
+                </Button>
+              
+                <Button  size="large" variant="contained" color="error">
+                  {t('Delete')}
+                </Button>
+              {/* </Stack> */}
+            </Stack>
+          </>
+
+        )
+        
+        }
+
+            
         </>
   )
 }
