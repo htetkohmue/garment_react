@@ -47,9 +47,9 @@ RawListToolbar.propTypes = {
   filterName: PropTypes.string,
   onFilterName: PropTypes.func,
 };
-function sayHello() {
-  alert('Hello!');
-}
+// function sayHello() {
+//   alert('Hello!');
+// }
 export default function RawListToolbar({ numSelected, filterName, onFilterName,rawIDs,deleteRaws,posts}) {
   const {t} = useTranslation();
   return (
