@@ -63,7 +63,21 @@
           "Enter your name in English" : "အမည်ကိုအင်္ဂလိပ်လိုထည့်ပါ",
           "Enter your phone number" : "ဖုန်းနံပါတ်ထည့်ပါ",
           "Enter valid email" : "မှန်ကန်သောအီးမေးလ်ထည့်ပါ",
-          "Enter your address" : "လိပ်စာထည့်ပါ"
+          "Enter your address" : "လိပ်စာထည့်ပါ",
+
+        
+          "Raw Material" : "ကုန်ကြမ်း",
+          "Raw Material Name" : "ကုန်ကြမ်းအမည်",
+          "Types" : "အမျိုးအစားများ",
+          "Search Raw Name..." : "ကုန်ကြမ်းအမည်ဖြင့်ရှာရန်",
+
+
+          "Supplier Transaction List" : "ပိတ်အုပ်အ၀င်စာရင်းရှာဖွေခြင်း",
+          "Search" : "ရှာဖွေမည်",
+          "Supplier Name" : "ပိတ်အုပ်သွင်းသူအမည်",
+          "Price" : "စျေးနှုန်း",
+          "Qty" : "အရေအတွက်",
+          "Total Amount" : "စုစုပေါင်းပမာဏ"
 
 
 }

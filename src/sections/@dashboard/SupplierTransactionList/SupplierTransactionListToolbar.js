@@ -15,7 +15,7 @@ const PopperStyle = styled((props) => <Popper placement="bottom-start" {...props
 
 // ----------------------------------------------------------------------
 
-RawListToolbar.propTypes = {
+SupplierTransactionListToolbar.propTypes = {
   posts: PropTypes.array.isRequired,
 };
 
@@ -42,15 +42,15 @@ const SearchStyle = styled(OutlinedInput)(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-RawListToolbar.propTypes = {
+SupplierTransactionListToolbar.propTypes = {
   numSelected: PropTypes.number,
   filterName: PropTypes.string,
   onFilterName: PropTypes.func,
 };
-// function sayHello() {
-//   alert('Hello!');
-// }
-export default function RawListToolbar({ numSelected, filterName, onFilterName,rawIDs,deleteRaws,posts}) {
+function sayHello() {
+  alert('Hello!');
+}
+export default function SupplierTransactionListToolbar({ numSelected, filterName, onFilterName,rawIDs,deleteRaws,posts}) {
   const {t} = useTranslation();
   return (
     <RootStyle

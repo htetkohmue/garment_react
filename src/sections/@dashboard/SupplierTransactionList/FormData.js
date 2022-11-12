@@ -1,17 +1,19 @@
 import { Container, Stack,Button, FormControl, InputLabel, Select, MenuItem, FormHelperText } from '@mui/material'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next';
 import DatePicker from '../../../common/datepicker/DatePicker';
 
 
 function FormData(props) {
     
+    const {t} = useTranslation();
   return (
     <>
         <Container>
             <Stack spacing={3} style={{ marginBottom: '20px' }}>
                 <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
                     <DatePicker required
-                        label='From Date'
+                        label={("From Date")}
                         value={props.fromDate}
                         onChange={props.handleChangeFromDate}
                         error={props.fromDateError}
@@ -31,7 +33,7 @@ function FormData(props) {
 
                 <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
                 <FormControl fullWidth >
-                    <InputLabel id="demo-simple-select-required-label">Supplier Name</InputLabel>
+                    <InputLabel id="demo-simple-select-required-label">{t("Supplier Name")}</InputLabel>
                     <Select
                     labelId="demo-simple-select-required-label"
                     id="demo-simple-select-required"
@@ -39,19 +41,24 @@ function FormData(props) {
                     label="Supplier Name *"
                     onChange={props.handleChangeSupplierName}
                     >
-                        <MenuItem value={1}>Tom</MenuItem>
-                        <MenuItem value={2}>Jerry</MenuItem>
-                        <MenuItem value={3}>Micky</MenuItem>
+                       {
+                            props.supplierAPI.length > 0 &&
+                            props.supplierAPI.map((item,index)=>{
+                                return(
+                                    <MenuItem key={index} value={item.id}>{item.name_en}</MenuItem>
+                                )
+                            })
+                        }
                     </Select>
                 </FormControl>
 
                 <FormControl fullWidth >
-                    <InputLabel id="demo-simple-select-required-label">Material Name</InputLabel>
+                    <InputLabel id="demo-simple-select-required-label">{t("Raw Material Name")}</InputLabel>
                     <Select
                     labelId="demo-simple-select-required-label"
                     id="demo-simple-select-required"
                     value={props.materialName}
-                    label="Material Name *"
+                    label={t("Raw Material Name")}
                     onChange={props.handleChangeMaterialName}
                     >
                     {
@@ -71,7 +78,7 @@ function FormData(props) {
             <Stack spacing={3} style={{ marginBottom: '20px' }} justifyContent="center" alignItems="center">
                 <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
                     <Button fullWidth size="large" variant="contained" onClick={props.clickSearch}>
-                        Search
+                        {t("Search")}
                     </Button>
 
                     {/* <Button fullWidth size="large" variant="outlined" onClick={props.clickCancel}>

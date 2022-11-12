@@ -20,6 +20,7 @@ export default {
 
   // Supplier Transaction List
   searchSupplierTransaction : 'api/supplier-transaction-list/search-supplier-transaction',
+  deleteSupplierTransaction : 'api/supplier-transaction-list/delete-supplier-transaction',
 
   // ProductInList
   searchTailor: 'api/product-in-list/searchTailor',
