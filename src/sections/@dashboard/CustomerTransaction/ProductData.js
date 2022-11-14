@@ -1,48 +1,23 @@
-import { useFormik, Form, FormikProvider } from 'formik';
-import { useNavigate, Link as RouterLink, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 // material
 import { Stack
     , TextField
-    , IconButton
-    , InputAdornment
     , label
-    ,Button
+    , InputLabel 
     , FormControl
-    , InputLabel
     , Select
-    , MenuItem } from '@mui/material';
+    , MenuItem } from '@mui/material';    
 
-export default function FilterData(props) {
-    const navigate = useNavigate();
-    const { t } = useTranslation();
-
-    const formik = useFormik({
-        initialValues: {
-            productName: '',// get only camel case
-            productSize: '',
-            productPrice: '',
-            productQty:''
-        },
-        // validationSchema: RegisterSchema,
-        onSubmit: (values, { resetForm }) => {
-          resetForm({ values: '' });
-          // navigate('/dashboard/tailors-register', { replace: true });
-        },
-      });
-    
-      const { errors, touched, handleSubmit, isSubmitting, getFieldProps, handleChange, handleBlur } = formik;
-
-    return (
-        <FormikProvider value={formik}>
-            <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-                <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+    export default function ProductData(props) {
+        const { t } = useTranslation();
+   
+        return (
+            <>
+            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
                 <FormControl fullWidth >
                     <InputLabel id="demo-simple-select-required-label">Product Name *</InputLabel>
                     <Select
-                    labelId="demo-simple-select-required-label"
-                    id="demo-simple-select-required"
                     value={props.productName}
                     label={t("Product Name *")}
                     onChange={props.handleChangeproductName}
@@ -71,29 +46,16 @@ export default function FilterData(props) {
                     <TextField
                     fullWidth
                     label={t("Quantity *")}
-                    {...getFieldProps('productQty')}
-                    error={Boolean(touched.productQty && errors.productQty)}
-                    helperText={touched.productQty && errors.productQty}
+                    value={props.productQty}
+                    onChange={props.changeProductQty}
                 />  
                 <TextField
                     fullWidth
                     label={t("Price *")}
-                    {...getFieldProps('productPrice')}
-                    error={Boolean(touched.productPrice && errors.productPrice)}
-                    helperText={touched.productPrice && errors.productPrice}
+                    value={props.productPrice}
+                    onChange={props.changeProductPrice}
                 />  
                 </Stack>
-                <Stack alignItems="center" style={{marginTop:'2%'}}>
-                    <Button 
-                    type="submit"
-                    size="large" 
-                    variant="contained" 
-                    loading={isSubmitting}
-                    onClick={(e) => props.clickAdd(formik.values)}>
-                      {t("Add")}
-                    </Button> 
-                </Stack>              
-            </Form>        
-        </FormikProvider>
-    )
-}
+            </>
+        );
+    }

@@ -1,21 +1,22 @@
-import { Container, Typography ,Alert, Stack, TableBody, Table, TableRow, TableCell, TableHead  , TableContainer} from '@mui/material'
+import { useTranslation } from 'react-i18next';
+import { Container, Typography ,Alert, Stack, Grid , Card,Button} from '@mui/material'
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
 import React, { useEffect, useState } from 'react'
 import { styled } from '@mui/material/styles';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import IconButton, { IconButtonProps } from '@mui/material/IconButton';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Divider from '@mui/material/Divider';
 import Chip from '@mui/material/Chip';
+import { Info } from '@material-ui/icons';
 import ApiPath from '../common/common-api/api-path/ApiPath';
 import { ApiRequest } from '../common/common-api/api-request/ApiRequest';
 import Page from '../components/Page';
 
 // ----------------------------------------------
-import { CustomerData,ProductData } from '../sections/@dashboard/CustomerTransaction'
+import { CustomerData,ProductData,ProductTable,TotalTable } from '../sections/@dashboard/CustomerTransaction'
 import DatePicker from '../common/datepicker/DatePicker';
 import { ChangeDate } from '../common/ChangeDate';
 
@@ -31,8 +32,33 @@ const ContentStyle = styled('div')(({ theme }) => ({
 const path = process.env.REACT_APP_BACKEND_URL;
 
 // ----------------------------------------------------------------------
+function descendingComparator(a, b, orderBy) {
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
+  }
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
+  }
+  return 0;
+}
 
+function getComparator(order, orderBy) {
+  return order === 'desc'
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
+}
+
+function applySortFilter(array, comparator, query) {
+  const stabilizedThis = array.map((el, index) => [el, index]);
+  stabilizedThis.sort((a, b) => {
+    const order = comparator(a[0], b[0]);
+    if (order !== 0) return order;
+    return a[1] - b[1];
+  });
+  return stabilizedThis.map((el) => el[0]);
+}
   function CustomerTransaction() {
+    const { t } = useTranslation();
     const [loadingOpen, setloadingOpen] = useState(false); // for values
     const [successMsg, setSuccessMsg] = useState(''); // for success msg
     const [errorMsg, setErrorMsg] = useState(''); // for error msg
@@ -51,11 +77,14 @@ const path = process.env.REACT_APP_BACKEND_URL;
 
     const [productSize,setproductSize]=useState('');
     const [productName,setproductName]=useState('');
-    // const [Adddata,setAdddata]=useState([]);
-    const [Alldata,setAlldata]=useState([]);
+    const [productQty,setProductQty]=useState('');
+    const [productPrice,setProductPrice]=useState('');
 
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [Alldata,setAlldata]=useState([]);
+    const [mergedata,setMergedata]=useState([]);
+    const [tableData,setTableData]=useState([]);
+    const [date, setDate]           = useState(()=>ChangeDate(new Date()));
+    
 
    /* Formload get Customer data */
     useEffect(() => {(async () => {
@@ -95,30 +124,49 @@ const path = process.env.REACT_APP_BACKEND_URL;
     setDeleteCustomerId(IdCustomer)
     setOpen(true);
   }
-
+ 
   const handleChangechooseDate = (e) => {setchooseDate(e)}
-  
-  const clickAdd = (values) => {
-    const Adddata = [{
-      productNames:productName,
-      productSizes:productSize,
-      productQty:values.productQty,
-      productPrice:values.productPrice
-    }]
 
-    // const Adddata = [
-    //  productName,
-    //  productSize,
-    //   values.productQty,
-    //   values.productPrice
-    // ]
 
-    const testArr = {productNames:productName,Adddata};
-
-     Alldata.push(testArr);
-     setAlldata(Alldata);
-     console.log(Alldata);
+  function priceRow(qty: number, rate: number) {
+    return qty * rate;
   }
+
+  function createRow(tableId:number , productName:string, productSize:string, productQty: number, productPrice: number) {
+    const price = priceRow(productQty, productPrice);
+    return {tableId,productName,productSize,productQty, productPrice, price };
+  }
+ 
+  // Click Add
+  const clickAdd = () => {
+    const tableId=tableData.length;
+    setTableData(current => [...current, createRow(tableId,productName,productSize,productQty,productPrice)]);     
+  } 
+  
+  const handleDelete = (id) => {
+    const deletedData= tableData.filter((word) => {
+      return word.tableId !== id;
+    })
+    setTableData(deletedData)
+  };
+
+  const groupByName = tableData.reduce((group, product) => {
+    const { productName } = product;
+    group[productName] = group[productName] ?? [];
+    group[productName].push(product);
+    return group;
+  }, []);
+
+  function subtotal(items) {
+    return items.map(({ productPrice }) => productPrice).reduce((sum, i) => sum + i, 0);
+  }
+  
+  function qtytotal(items) {
+    return items.map(({ productQty }) => Number(productQty)).reduce((sum, i) => sum + i, 0);
+  }
+
+  const invoiceSubtotal = subtotal(tableData);
+  const qtyTotal = qtytotal(tableData);
 
     return (
         <Page title="Customer Tranction">
@@ -156,56 +204,45 @@ const path = process.env.REACT_APP_BACKEND_URL;
                     <Divider textAlign="left">
                       <Chip label="Product Data" />
                     </Divider>
-                      <ProductData clickAdd={clickAdd} 
+                      <ProductData 
+                       productQty={productQty}
+                       changeProductQty={(e) => setProductQty(e.target.value)}
+                       productPrice={productPrice}
+                       changeProductPrice={(e) => setProductPrice(e.target.value)}
+                       productName={productName}
                        handleChangeproductName={(e) => setproductName(e.target.value)}
+                       productSize={productSize}
                        handleChangeproductSize={(e) => setproductSize(e.target.value)}
                       />
                   </Stack>
+                  <Stack alignItems="center" style={{marginTop:'2%'}}>
+                    <Button 
+                    type="submit"
+                    size="large" 
+                    variant="contained"
+                    onClick={clickAdd}>
+                      {t("Add")}
+                    </Button> 
+                </Stack>
+
+                {groupByName.map((datas,key) => (
+                  <Grid container spacing={2}>
+                  <Grid item xs={12} md={6} lg={10}>
+                  <Card>
+                  <ProductTable handleDelete={handleDelete} tableDatas={datas}/>
+                  </Card>
+                  <br/>
+                  </Grid>
+                  </Grid>))}
+                  {tableData.length>0 && (
+                    <Grid item xs={12} md={6} lg={10}>
+                    <Card>
+                      <TotalTable  filterName={filterName} date={date} invoiceSubtotal={invoiceSubtotal} qtyTotal={qtyTotal} />
+                    </Card>
+                    </Grid>
+                    )}
                 </Stack>  
               </ContentStyle>
-              <Stack spacing={2}>
-              <Stack  direction={{ xs: 'column', sm: 'row' }} spacing={3}>
-
-              {Alldata.length > 0 && (
-                <TableContainer sx={{ minWidth: 600 }}>
-                 {Alldata.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                  const {  productNames , Adddata} = row;
-                  return (
-                  <Card style={{width:"80%",margin: "3%"}} spacing={5}>
-                  <Table id="main">
-                  <TableHead>
-                      {/* <TableCell align="center">No.</TableCell> */}
-                      <TableCell align="center">Product Name</TableCell>
-                      <TableCell align="center">Product Size</TableCell>
-                      <TableCell align="left">Product Quantity</TableCell>
-                      <TableCell align="left">Product Price</TableCell>
-                  </TableHead>
-                  <TableBody>
-                  {Adddata.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                      const { key , productNames , productQty , productSizes , productPrice } = row;
-                      // const isItemSelected = selected.indexOf(id) !== -1;
-                      return (
-                      <TableRow>
-                        {/* <TableCell align="center">{key}</TableCell> */}
-                        <TableCell align="center">{productNames}</TableCell>
-                        <TableCell align="center">{productSizes}</TableCell>
-                        <TableCell align="left">{productQty}</TableCell>
-                        <TableCell align="left">{productPrice}</TableCell>
-                      </TableRow>
-                      );
-                  })}
-                  </TableBody>
-                  </Table>
-                  </Card>
-                  );
-              })}
-            </TableContainer>
-
-              )}
-             
-
-              </Stack> 
-              </Stack>    
           </Container>
         </Page>
     )

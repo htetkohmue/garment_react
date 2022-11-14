@@ -101,26 +101,9 @@ export default function CustomerData({ date,numSelected, filterName, onFilterNam
           value={filterName}
           onChange={onFilterName}
           placeholder="Search Customer Name..."
-          startAdornment={
-            <InputAdornment position="start">
-              {/* <Iconify icon="eva:search-fill" sx={{ ml: 1, width: 20, height: 20, color: 'red' }} /> */}
-            </InputAdornment>
-          }
         />
       )}
-      {/* {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton  onClick={(e) => deleteCustomer(IdCustomer)}>
-            <Iconify icon="eva:trash-2-fill" />
-          </IconButton>
-        </Tooltip>
-      ) : (
-        <Tooltip title="Filter list">
-          <IconButton >
-            <Iconify icon="ic:round-filter-list" />
-          </IconButton>
-        </Tooltip>
-      )} */}
+      
     </RootStyle>
   );
 }
