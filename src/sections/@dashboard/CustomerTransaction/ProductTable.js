@@ -35,7 +35,7 @@ export default function ProductTable(props) {
   }
   
   function qtytotal(items) {
-    return items.map(({ qty }) => Number(qty)).reduce((sum, i) => sum + i, 0);
+    return items.map(({ productQty }) => Number(productQty)).reduce((sum, i) => sum + i, 0);
   }
 
   const invoiceSubtotal = subtotal(props.tableDatas);
@@ -44,7 +44,7 @@ export default function ProductTable(props) {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700}} aria-label="spanning table">
-        <TableHead sx={{ backgroundColor: '#b3d1ff'}}>
+        <TableHead style={{backgroundColor:'#80ccff'}}>
           <TableRow>
             <TableCell align="right" sx={{ borderBottom: 1 }}>{t('No')}</TableCell>
             <TableCell align="right"sx={{ borderBottom: 1 }}>{t('Name')}</TableCell>

@@ -158,7 +158,7 @@ function applySortFilter(array, comparator, query) {
   }, []);
 
   function subtotal(items) {
-    return items.map(({ productPrice }) => productPrice).reduce((sum, i) => sum + i, 0);
+    return items.map(({ price }) => Number(price)).reduce((sum, i) => sum + i, 0);
   }
   
   function qtytotal(items) {
