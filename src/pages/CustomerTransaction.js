@@ -264,13 +264,13 @@ function applySortFilter(array, comparator, query) {
                 </Stack>
 
                 {groupByName.map((datas,key) => (
-                  <Grid container spacing={2}>
+                  // <Grid container spacing={2}>
                   <Grid item xs={12} md={6} lg={10}>
                   <Card>
                   <ProductTable handleDelete={handleDelete} tableDatas={datas}/>
                   </Card>
-                  <br/>
-                  </Grid>
+                  {/* <br/> */}
+                  {/* </Grid> */}
                   </Grid>))}
                   {tableData.length>0 && (
                     <Grid item xs={12} md={6} lg={10}>
