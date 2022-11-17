@@ -22,10 +22,12 @@ import { Stack
                     label={t("Product Name *")}
                     onChange={props.handleChangeproductName}
                     >
-                        <MenuItem value={1}>AAA</MenuItem>
-                        <MenuItem value={2}>BBB</MenuItem>
-                        <MenuItem value={3}>CCC</MenuItem>
-                        <MenuItem value={4}>DDD</MenuItem>
+                        {props.productNameData.length >0 &&
+                            props.productNameData.map((i,ind) => {
+                                return( <MenuItem key={ind} value={i.id}>{ i.product_name }</MenuItem>)
+                            
+                            })
+                        }
                     </Select>
                 </FormControl>
                 <FormControl fullWidth >

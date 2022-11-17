@@ -26,6 +26,7 @@ export default {
   searchTailor: 'api/product-in-list/searchTailor',
   searchTailorByID: 'api/product-in-list/searchTailorByID',
   searchProductIn: 'api/product-in-list/search-product',
+  getProductNames: 'api/product/get-product-names',
 
   // Customer
   getTownship:  'api/township/getTownship',

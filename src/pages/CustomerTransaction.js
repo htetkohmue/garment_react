@@ -84,6 +84,8 @@ function applySortFilter(array, comparator, query) {
     const [mergedata,setMergedata]=useState([]);
     const [tableData,setTableData]=useState([]);
     const [date, setDate]           = useState(()=>ChangeDate(new Date()));
+
+    const [productNameData,setproductNameData]=useState([]);
     
 
    /* Formload get Customer data */
@@ -93,6 +95,21 @@ function applySortFilter(array, comparator, query) {
       const response = await ApiRequest(obj);
       if (response.flag===true) {
         setPost(response.response_data.data);
+      }
+      if (response.flag===false) {
+        setErrorMsg(response.message);
+        setSuccessMsg("");
+      } 
+  })();
+    }, []);
+
+    /* Formload get Products Name */
+    useEffect(() => {(async () => {
+      const data = {}
+      const obj = {url: ApiPath.getProductNames, method: 'get', params:data};
+      const response = await ApiRequest(obj);
+      if (response.flag===true) {
+        setproductNameData(response.response_data.data);
       }
       if (response.flag===false) {
         setErrorMsg(response.message);
@@ -213,6 +230,7 @@ function applySortFilter(array, comparator, query) {
                        handleChangeproductName={(e) => setproductName(e.target.value)}
                        productSize={productSize}
                        handleChangeproductSize={(e) => setproductSize(e.target.value)}
+                       productNameData={productNameData}
                       />
                   </Stack>
                   <Stack alignItems="center" style={{marginTop:'2%'}}>
