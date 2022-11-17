@@ -228,7 +228,7 @@ import { ChangeDate } from '../common/ChangeDate';
         const obj = { url: ApiPath.searchProductIn, method: 'post', params: data };
         const response = await ApiRequest(obj);
         if (response.flag === true) {
-          setProductInAPI(response.response_data.data);
+          setProductInAPI(response.response_data.data);console.log(ProductInAPI);
           setTotalRow(response.response_data.row_count);
           setSelected([]);
           setErrorMsg("");
@@ -335,7 +335,7 @@ import { ChangeDate } from '../common/ChangeDate';
                       const { key , id , Date , tailorId , name , totalQty , totalAmt,allData} = row;
                       const isItemSelected = selected.indexOf(id) !== -1;
                       return (
-                        <Table style={{margin: "1%",border: "1px solid #919eab", width: "98%"}} id="main">
+                        <Table style={{margin: "1%",border: "1px solid #919eab", width: "98%",borderRadius:'10px'}} id="main">
                           <TableBody>
                           <TableRow 
                           key={id}

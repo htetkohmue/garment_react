@@ -68,54 +68,6 @@ function FormData(props) {
                     error={props.customerIdError}
                     helperText={props.customerIdHelperText}
                 />
-                <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-                <TextField
-                    fullWidth
-                    label="English Name *"
-                    value={props.nameEng}
-                    onChange={props.handleChangenameEng}
-                    error={props.nameEngError}
-                    helperText={props.nameEngHelperText}
-                />
-                <TextField
-                    fullWidth
-                    label="Myanmar Name *"
-                    value={props.nameMm}
-                    onChange={props.handleChangenameMm}
-                    error={props.nameMmError}
-                    helperText={props.nameMmHelperText}
-                />
-                </Stack>
-                <TextField
-                    fullWidth
-                    label="Email"
-                    value={props.email}
-                    onChange={props.handleChangeEmail}
-                />               
-                 <TextField
-                    fullWidth
-                    label="Phone Number *"
-                    value={props.phone}
-                    onChange={props.handleChangephone}
-                    error={props.phoneError}
-                    helperText={props.phoneHelperText}
-                />
-                 <TextField
-                    fullWidth
-                    label="NRC Number *"
-                    value={props.nrc}
-                    onChange={props.handleChangenrc}
-                    error={props.nrcError}
-                    helperText={props.nrcHelperText}
-                />
-                <TextField
-                    fullWidth
-                    label="Address *"
-                    value={props.address}
-                    onChange={props.handleChangeaddress}
-                    error={props.addressError}
-                    helperText={props.addressHelperText}
-                />
                 <Stack  direction={{ xs: 'column', sm: 'row' }} spacing={2}>
                 <FormControl fullWidth >
                     <InputLabel id="demo-simple-select-required-label">Township Name</InputLabel>
@@ -176,6 +128,55 @@ function FormData(props) {
                 </Dialog>
               
                 </Stack>
+                <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+                <TextField
+                    fullWidth
+                    label="English Name *"
+                    value={props.nameEng}
+                    onChange={props.handleChangenameEng}
+                    error={props.nameEngError}
+                    helperText={props.nameEngHelperText}
+                />
+                <TextField
+                    fullWidth
+                    label="Myanmar Name *"
+                    value={props.nameMm}
+                    onChange={props.handleChangenameMm}
+                    error={props.nameMmError}
+                    helperText={props.nameMmHelperText}
+                />
+                </Stack>
+                <TextField
+                    fullWidth
+                    label="Email"
+                    value={props.email}
+                    onChange={props.handleChangeEmail}
+                />               
+                 <TextField
+                    fullWidth
+                    label="Phone Number *"
+                    value={props.phone}
+                    onChange={props.handleChangephone}
+                    error={props.phoneError}
+                    helperText={props.phoneHelperText}
+                />
+                 <TextField
+                    fullWidth
+                    label="NRC Number *"
+                    value={props.nrc}
+                    onChange={props.handleChangenrc}
+                    error={props.nrcError}
+                    helperText={props.nrcHelperText}
+                />
+                <TextField
+                    fullWidth
+                    label="Address *"
+                    value={props.address}
+                    onChange={props.handleChangeaddress}
+                    error={props.addressError}
+                    helperText={props.addressHelperText}
+                />
+                
                 <FormControl fullWidth >
                     <InputLabel id="demo-simple-select-required-label">Status</InputLabel>
                     <Select

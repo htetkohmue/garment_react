@@ -1,90 +1,61 @@
-import { useFormik, Form, FormikProvider } from 'formik';
-import { useNavigate, Link as RouterLink, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 // material
 import { Stack
     , TextField
-    , IconButton
-    , InputAdornment
     , label
-    ,Button
+    , InputLabel 
     , FormControl
-    , InputLabel
     , Select
-    , MenuItem } from '@mui/material';
+    , MenuItem } from '@mui/material';    
 
-export default function FilterData(props) {
-    const navigate = useNavigate();
-
-    const formik = useFormik({
-        initialValues: {
-          date: '',
-          customer_id: '',
-          customer_name: ''
-        },
-        // validationSchema: RegisterSchema,
-        onSubmit: (values, { resetForm }) => {
-          resetForm({ values: '' });
-          // navigate('/dashboard/tailors-register', { replace: true });
-        },
-      });
-    
-      const { errors, touched, handleSubmit, isSubmitting, getFieldProps, handleChange, handleBlur } = formik;
-
-    return (
-        <FormikProvider value={formik}>
-            <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-            <Stack spacing={4}> 
-                <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+    export default function ProductData(props) {
+        const { t } = useTranslation();
+   
+        return (
+            <>
+            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
                 <FormControl fullWidth >
-                    <InputLabel id="demo-simple-select-required-label">Status</InputLabel>
+                    <InputLabel id="demo-simple-select-required-label">Product Name *</InputLabel>
                     <Select
-                    labelId="demo-simple-select-required-label"
-                    id="demo-simple-select-required"
-                    value={props.status}
-                    label="Status *"
-                    onChange={props.handleChangestatus}
+                    value={props.productName}
+                    label={t("Product Name *")}
+                    onChange={props.handleChangeproductName}
                     >
-                        <MenuItem value={1}>Active</MenuItem>
-                        <MenuItem value={2}>Inactive</MenuItem>
+                        <MenuItem value={1}>AAA</MenuItem>
+                        <MenuItem value={2}>BBB</MenuItem>
+                        <MenuItem value={3}>CCC</MenuItem>
+                        <MenuItem value={4}>DDD</MenuItem>
                     </Select>
                 </FormControl>
                 <FormControl fullWidth >
-                    <InputLabel id="demo-simple-select-required-label">Status</InputLabel>
+                    <InputLabel id="demo-simple-select-required-label">Size *</InputLabel>
                     <Select
                     labelId="demo-simple-select-required-label"
                     id="demo-simple-select-required"
-                    value={props.status}
-                    label="Status *"
-                    onChange={props.handleChangestatus}
+                    value={props.productSize}
+                    label={t("Size *")}
+                    onChange={props.handleChangeproductSize}
                     >
-                        <MenuItem value={1}>Active</MenuItem>
-                        <MenuItem value={2}>Inactive</MenuItem>
+                        <MenuItem value={1}>S</MenuItem>
+                        <MenuItem value={2}>M</MenuItem>
+                        <MenuItem value={3}>L</MenuItem>
+                        <MenuItem value={4}>XL</MenuItem>
                     </Select>
                 </FormControl>
-                </Stack>
-                <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
                     <TextField
                     fullWidth
-                    label="Customer ID"
-                    {...getFieldProps('customer_id')}
-                    error={Boolean(touched.customer_id && errors.customer_id)}
-                    helperText={touched.customer_id && errors.customer_id}
+                    label={t("Quantity *")}
+                    value={props.productQty}
+                    onChange={props.changeProductQty}
                 />  
                 <TextField
                     fullWidth
-                    label="Customer Name"
-                    {...getFieldProps('customer_name')}
-                    error={Boolean(touched.customer_id && errors.customer_id)}
-                    helperText={touched.customer_id && errors.customer_id}
+                    label={t("Price *")}
+                    value={props.productPrice}
+                    onChange={props.changeProductPrice}
                 />  
                 </Stack>
-                <Button size="medium" variant="contained" >
-                    Add
-                </Button> 
-
-            </Stack>               
-            </Form>        
-        </FormikProvider>
-    )
-}
+            </>
+        );
+    }
