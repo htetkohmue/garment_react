@@ -39,10 +39,13 @@ import { Stack
                     label={t("Size *")}
                     onChange={props.handleChangeproductSize}
                     >
-                        <MenuItem value={1}>S</MenuItem>
-                        <MenuItem value={2}>M</MenuItem>
-                        <MenuItem value={3}>L</MenuItem>
-                        <MenuItem value={4}>XL</MenuItem>
+                        {props.productSizeData.length >0 &&
+                            props.productSizeData.map((i,ind) => {
+                                return( <MenuItem key={ind} value={i.id}>{ i.size }</MenuItem>)
+                            
+                            })
+                        }
+                        
                     </Select>
                 </FormControl>
                     <TextField

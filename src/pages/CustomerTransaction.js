@@ -86,6 +86,7 @@ function applySortFilter(array, comparator, query) {
     const [date, setDate]           = useState(()=>ChangeDate(new Date()));
 
     const [productNameData,setproductNameData]=useState([]);
+    const [productSizeData,setproductSizeData]=useState([]);
     
 
    /* Formload get Customer data */
@@ -136,6 +137,24 @@ function applySortFilter(array, comparator, query) {
         setFilterName('');
       }
     }
+
+    /* change name */
+    const changeproductName = (event, value) =>{
+      (async () => {  
+        setproductName(event.target.value);
+         const data = {product_id:event.target.value}
+         const obj = {url: ApiPath.getProductNameByID, method: 'post', params:data};
+          const response = await ApiRequest(obj);
+          if (response.flag===true) {
+            setproductSizeData(response.response_data.data);
+          }
+          if (response.flag===false) {
+            setproductSizeData("");
+          }  
+      })();
+    }
+
+   
      /** click delete function - cross sign */
   const deleteCustomer=(IdCustomer)=>{
     setDeleteCustomerId(IdCustomer)
@@ -227,10 +246,11 @@ function applySortFilter(array, comparator, query) {
                        productPrice={productPrice}
                        changeProductPrice={(e) => setProductPrice(e.target.value)}
                        productName={productName}
-                       handleChangeproductName={(e) => setproductName(e.target.value)}
+                       handleChangeproductName={changeproductName}
                        productSize={productSize}
                        handleChangeproductSize={(e) => setproductSize(e.target.value)}
                        productNameData={productNameData}
+                       productSizeData={productSizeData}
                       />
                   </Stack>
                   <Stack alignItems="center" style={{marginTop:'2%'}}>
