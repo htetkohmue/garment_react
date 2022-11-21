@@ -28,6 +28,7 @@ import { filter } from 'lodash';
 // import EditIcon from '@mui/icons-material/Edit';
 // import { toast, ToastContainer } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import Loading from '../common/LoadingPage/Loading';
 import ApiPath from '../common/common-api/api-path/ApiPath';
 import { ApiRequest } from '../common/common-api/api-request/ApiRequest';
 
@@ -129,8 +130,9 @@ export default function RawMaterial() {
         setValidatorErrorMsg(response.message);
         setErrorMsg('');
         setSuccessMsg('');
-        setloadingOpen(false);
+        
       }
+      setloadingOpen(false);
       clickCancel();
     })();
   };
@@ -193,10 +195,10 @@ export default function RawMaterial() {
       (async () => {
         setloadingOpen(true);
         const data = { id: rawID, name, type, description, login_id: 20001 };
-
         const obj = { url: `${ApiPath.UpdateRaws}/${rawID}`, method: 'put', params: data };
         const response = await ApiRequest(obj);
         loadRawData();
+       
         if (response.flag === true) {
           setSuccessMsg(response.response_data.message);
           setValidatorErrorMsg([]);
@@ -218,7 +220,7 @@ export default function RawMaterial() {
 
         const obj = { url: ApiPath.storeRaws, method: 'post', params: data };
         const response = await ApiRequest(obj);
-        loadRawData();
+        loadRawData(); console.log(response)
         if (response.flag === true) {
           setSuccessMsg(response.response_data.message);
           setValidatorErrorMsg([]);
@@ -226,8 +228,8 @@ export default function RawMaterial() {
           setloadingOpen(false);
         }
         if (response.flag === false) {
-          setValidatorErrorMsg(response.message);
-          setErrorMsg('');
+          setValidatorErrorMsg('');
+          setErrorMsg(response.message);
           setSuccessMsg('');
           setloadingOpen(false);
         }
@@ -266,8 +268,8 @@ export default function RawMaterial() {
         setValidatorErrorMsg(response.message);
         setErrorMsg('');
         setSuccessMsg('');
-        setloadingOpen(false);
       }
+      setloadingOpen(false);
     })();
   };
 
@@ -301,6 +303,7 @@ export default function RawMaterial() {
   return (
     <Page title="Dashboard: RawMaterial">
       <Container>
+      {loadingOpen && (<Loading loadingOpen={loadingOpen} />)}
         {successMsg && (
           <Alert variant="filled" severity="info">
             <b>{successMsg}</b>

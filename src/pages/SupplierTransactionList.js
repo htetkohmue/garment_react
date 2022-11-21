@@ -19,6 +19,7 @@ import { filter } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
+import Loading from '../common/LoadingPage/Loading';
 import ApiPath from '../common/common-api/api-path/ApiPath';
 import { ApiRequest } from '../common/common-api/api-request/ApiRequest';
 import SearchNotFound from '../components/SearchNotFound';
@@ -115,41 +116,36 @@ function SupplierTransactionList() {
   }, []);
   const loadRawData = () => {
     (async () => {
-      // setloadingOpen(true);
+      setloadingOpen(true);
       const obj = { url: ApiPath.searchRaws, method: 'get' };
       const response = await ApiRequest(obj);
 
       if (response.flag === true) {
-        // console.log(response);
         setMaterialAPI(response.response_data.data);
       }
       if (response.flag === false) {
-        // console.log(response)
-        // setValidatorErrorMsg(response.message);
-        // setErrorMsg('');
-        // setSuccessMsg('');
-        // setloadingOpen(false);
+        setValidatorErrorMsg(response.message);
+        setErrorMsg('');
+        setSuccessMsg('');
       }
-      // clickCancel();
+      setloadingOpen(false);
     })();
   };
 
   const loadSupplierData = () => {
     (async () => {
-      // setloadingOpen(true);
+      setloadingOpen(true);
       const obj = { url: ApiPath.getSupplierData, method: 'get' };
       const response = await ApiRequest(obj);
       if (response.flag === true) {
         setSupplierAPI(response.response_data.data);
       }
       if (response.flag === false) {
-        // console.log(response)
-        // setValidatorErrorMsg(response.message);
-        // setErrorMsg('');
-        // setSuccessMsg('');
-        // setloadingOpen(false);
+        setValidatorErrorMsg(response.message);
+        setErrorMsg('');
+        setSuccessMsg('');
       }
-      // clickCancel();
+      setloadingOpen(false);
     })();
   };
 
@@ -174,7 +170,7 @@ function SupplierTransactionList() {
 
     if (flag) {
       (async () => {
-        // setloadingOpen(true);
+        setloadingOpen(true);
         const data = {
           fromDate: ChangeDate(fromDate),
           toDate: ChangeDate(toDate),
@@ -182,30 +178,24 @@ function SupplierTransactionList() {
           supplier_id: supplierName,
           login_id: 20001,
         };
-        // console.log(typeof data.fromDate)
+    
         const obj = { url: ApiPath.searchSupplierTransaction, method: 'post', params: data };
-        // console.log(obj);
+        
         const response = await ApiRequest(obj);
-        // console.log(response)
+        
         if (response.flag === true) {
           setResultAPI(response.response_data.data);
         }
         if (response.flag === false) {
-          console.log('object');
-          // setValidatorErrorMsg(response.message);
-          // setErrorMsg('');
-          // setSuccessMsg('');
-          // setloadingOpen(false);
+          setValidatorErrorMsg('');
+          setErrorMsg(response.message);
+          setSuccessMsg('');
+          
         }
-        // clickCancel();
+        setloadingOpen(false);
       })();
     }
   };
-
-  // tabel
-  // const handleFilterByName = (event) => {
-  //   setFilterName(event.target.value);
-  // };
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -256,7 +246,6 @@ function SupplierTransactionList() {
       const obj = { url: ApiPath.deleteSupplierTransaction, method: 'post', params: data };
 
       const response = await ApiRequest(obj);
-      // console.log(response);
       if (response.flag === true) {
         setSuccessMsg(response.response_data.message);
         setValidatorErrorMsg([]);
@@ -276,32 +265,11 @@ function SupplierTransactionList() {
 
   const clickEdit = (e, id) => {
     console.log(id);
-    // (async () => {
-    //   setloadingOpen(true);
-
-    //   const obj = { url: `${ApiPath.EditRaws}/${id}`, method: 'post' };
-
-    //   const response = await ApiRequest(obj);
-
-    //   if (response.flag === true) {
-    //     setName(response.response_data.data.name);
-    //     setType(response.response_data.data.type);
-    //     setDescription(response.response_data.data.description);
-    //     setInsertMode('Update');
-    //     setRawID(response.response_data.data.id);
-    //     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-    //   }
-    //   if (response.flag === false) {
-    //     setValidatorErrorMsg(response.message);
-    //     setErrorMsg('');
-    //     setSuccessMsg('');
-    //     setloadingOpen(false);
-    //   }
-    // })();
   };
 
   return (
     <Page title="Supplier Transaction List">
+      {loadingOpen && (<Loading loadingOpen={loadingOpen} />)}
       <Container>
         {successMsg && (
           <Alert variant="filled" severity="info">
@@ -337,15 +305,6 @@ function SupplierTransactionList() {
         {resultAPI.length > 0 && (
           <>
             <Card>
-              {/* <SupplierTransactionListToolbar
-                posts={resultAPI}
-                rawIDs={selected}
-              // delete={deleteRaws}
-                numSelected={selected.length}
-                filterName={filterName}
-                onFilterName={handleFilterByName}
-              /> */}
-
               <Scrollbar>
                 <TableContainer sx={{ minWidth: 800 }}>
                   <Table>
@@ -403,7 +362,7 @@ function SupplierTransactionList() {
                           </Typography>
                         </TableCell>
                         <TableCell>{totalQty}</TableCell>
-                        <TableCell>{allTotalAmount}</TableCell>
+                        <TableCell align="right">{allTotalAmount}</TableCell>
                       </TableRow>
                       {emptyRows > 0 && (
                         <TableRow style={{ height: 53 * emptyRows }}>
