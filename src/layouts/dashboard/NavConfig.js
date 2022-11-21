@@ -13,14 +13,24 @@ const navConfig = [
   },
   {
     title: 'Suppliers',
-    path: '/dashboard/',
+    path : null,
     icon: getIcon('eva:shopping-bag-fill'),
     children: [
       {
         title: "Supplier",
         path: "/dashboard/supplier",
         icon: getIcon('eva:people-fill'),
-      }
+      },
+      {
+        title: 'Supplier Transaction Register',
+        path: '/dashboard/supplier_transaction-register',
+        icon: getIcon('eva:person-add-fill'),
+      },
+      {
+        title: "Supplier Transaction List",
+        path: "/dashboard/supplier-transaction-list",
+        icon: getIcon('eva:people-fill'),
+      },
     ] 
   },
   {
@@ -99,7 +109,7 @@ const navConfig = [
   },
   {
     title: 'Fabric',
-    path: '/dashboard/',
+    path : null,
     icon: getIcon('eva:shopping-bag-fill'),
     children: [
       {
@@ -114,24 +124,7 @@ const navConfig = [
       }
     ],
   },
-  {
-    title: 'Supplier Transaction',
-    path : null,
-    icon: getIcon('eva:people-fill'),
-    children: [
-          // {
-          //   title: "Supplier Transaction Register",
-          //   path: "/dashboard/supplier_transaction-register",
-          //   icon: getIcon('eva:person-add-fill'),
-          // },
-          {
-            title: "Supplier Transaction List",
-            path: "/dashboard/supplier-transaction-list",
-            icon: getIcon('eva:people-fill'),
-          },
-
-    ],
-  },
+ 
   {
     title: 'Home Page',
     path: '/dashboard/',
