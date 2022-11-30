@@ -19,12 +19,13 @@ import { Stack
                     <InputLabel id="demo-simple-select-required-label">Product Name *</InputLabel>
                     <Select
                     value={props.productName}
+                    name={props.pName}
                     label={t("Product Name *")}
                     onChange={props.handleChangeproductName}
                     >
                         {props.productNameData.length >0 &&
                             props.productNameData.map((i,ind) => {
-                                return( <MenuItem key={ind} value={i.id}>{ i.product_name }</MenuItem>)
+                                return( <MenuItem key={ind} value={i.id} name={i.product_name}>{ i.product_name }</MenuItem>)
                             
                             })
                         }
@@ -36,12 +37,13 @@ import { Stack
                     labelId="demo-simple-select-required-label"
                     id="demo-simple-select-required"
                     value={props.productSize}
+                    name={props.pSize}
                     label={t("Size *")}
                     onChange={props.handleChangeproductSize}
                     >
                         {props.productSizeData.length >0 &&
                             props.productSizeData.map((i,ind) => {
-                                return( <MenuItem key={ind} value={i.id}>{ i.size }</MenuItem>)
+                                return( <MenuItem key={ind} value={i.id} name={i.size}>{ i.size }</MenuItem>)
                             
                             })
                         }

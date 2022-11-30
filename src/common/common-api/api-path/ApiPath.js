@@ -41,4 +41,6 @@ export default {
   editCustomerData: 'api/customer/editCustomer',
   deleteCustomer: 'api/customer/deleteCustomer',
 
+  storeCustomerTranction: 'api/customer-transaction-register/save'
+
 };

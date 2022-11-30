@@ -62,6 +62,7 @@ function applySortFilter(array, comparator, query) {
     const [loadingOpen, setloadingOpen] = useState(false); // for values
     const [successMsg, setSuccessMsg] = useState(''); // for success msg
     const [errorMsg, setErrorMsg] = useState(''); // for error msg
+    const [validatorErrorMsg, setValidatorErrorMsg] = useState([]);
     
     const [post, setPost] = useState([]);
     const [open, setOpen] = useState(false);
@@ -79,6 +80,9 @@ function applySortFilter(array, comparator, query) {
     const [productName,setproductName]=useState('');
     const [productQty,setProductQty]=useState('');
     const [productPrice,setProductPrice]=useState('');
+    const [pName,setpName]=useState('');
+    const [pSize,setpSize]=useState('');
+    const [customerId,setCustomerId]=useState('');
 
     const [Alldata,setAlldata]=useState([]);
     const [mergedata,setMergedata]=useState([]);
@@ -130,18 +134,21 @@ function applySortFilter(array, comparator, query) {
         setCustomerData(post);
         setPost(post.filter(data =>data.customerId === value.customerId));
         setFilterName(value.nameMm);
+        setCustomerId(value.customerId);
       }
       if (value===null) {
         setPost(customerData)
         setSelectedOptions([]);
         setFilterName('');
+        setCustomerId('');
       }
     }
 
     /* change name */
     const changeproductName = (event, value) =>{
-      (async () => {  
-        setproductName(event.target.value);
+      (async () => {
+        setproductName(value.props.value);
+        setpName(value.props.name);
          const data = {product_id:event.target.value}
          const obj = {url: ApiPath.getProductNameByID, method: 'post', params:data};
           const response = await ApiRequest(obj);
@@ -152,6 +159,11 @@ function applySortFilter(array, comparator, query) {
             setproductSizeData("");
           }  
       })();
+    }
+
+    const changeproductsize = (event,  value) => {
+      setproductSize(value.props.value);
+      setpSize(value.props.name);
     }
 
    
@@ -168,16 +180,41 @@ function applySortFilter(array, comparator, query) {
     return qty * rate;
   }
 
-  function createRow(tableId:number , productName:string, productSize:string, productQty: number, productPrice: number) {
+  function createRow(tableId:number , productName:string, productSize:string, productQty: number, productPrice: number,pName:string,pSize:string) {
     const price = priceRow(productQty, productPrice);
-    return {tableId,productName,productSize,productQty, productPrice, price };
+    return {tableId,productName,productSize,productQty, productPrice, price ,pName,pSize};
   }
  
   // Click Add
   const clickAdd = () => {
     const tableId=tableData.length;
-    setTableData(current => [...current, createRow(tableId,productName,productSize,productQty,productPrice)]);     
+    setTableData(current => [...current, createRow(tableId,productName,productSize,productQty,productPrice,pName,pSize)]);     
   } 
+
+  const clickSave = () => {
+    (async () => {
+      console.log(tableData);
+      console.log(invoiceSubtotal);
+      console.log(qtyTotal);
+      console.log(customerId);
+      setloadingOpen(true);
+      const data = {customer_id:customerId,product_data:tableData,total_qty:qtyTotal,total_amt:invoiceSubtotal}
+      const obj = {url: ApiPath.storeCustomerTranction, method: 'post', params:data};
+      const response = await ApiRequest(obj);
+      if (response.flag===true) {
+        setSuccessMsg(response.response_data.message);
+        setValidatorErrorMsg([]);
+        setErrorMsg('');
+        setloadingOpen(false);
+     }
+     if (response.flag===false) {
+      setValidatorErrorMsg(response.message);
+      setErrorMsg('');
+      setSuccessMsg('');
+      setloadingOpen(false);
+     } 
+    })();
+  }
   
   const handleDelete = (id) => {
     const deletedData= tableData.filter((word) => {
@@ -248,9 +285,11 @@ function applySortFilter(array, comparator, query) {
                        productName={productName}
                        handleChangeproductName={changeproductName}
                        productSize={productSize}
-                       handleChangeproductSize={(e) => setproductSize(e.target.value)}
+                       handleChangeproductSize={changeproductsize}
                        productNameData={productNameData}
                        productSizeData={productSizeData}
+                       pName={pName}
+                       pSize={pSize}
                       />
                   </Stack>
                   <Stack alignItems="center" style={{marginTop:'2%'}}>
@@ -280,6 +319,17 @@ function applySortFilter(array, comparator, query) {
                     </Grid>
                     )}
                 </Stack>  
+                {tableData.length>0 && (
+                <Stack alignItems="center" style={{marginTop:'2%'}}>
+                    <Button 
+                    type="submit"
+                    size="large" 
+                    variant="contained"
+                    onClick={clickSave}>
+                      {t("Save")}
+                    </Button> 
+                </Stack>
+                )}
               </ContentStyle>
           </Container>
         </Page>

@@ -47,7 +47,9 @@ export default function ProductTable(props) {
         <TableHead style={{backgroundColor:'#80ccff'}}>
           <TableRow>
             <TableCell align="right" sx={{ borderBottom: 1 }}>{t('No')}</TableCell>
+            <TableCell align="right"sx={{ borderBottom: 1 }}>{t('ID')}</TableCell>
             <TableCell align="right"sx={{ borderBottom: 1 }}>{t('Name')}</TableCell>
+            <TableCell align="right"sx={{ borderBottom: 1 }}>{t('Size ID')}</TableCell>
             <TableCell align="right"sx={{ borderBottom: 1 }}>{t('Size')}</TableCell>
             <TableCell align="right"sx={{ borderBottom: 1 }}>{t('Quantity')}</TableCell>
             <TableCell align="right"sx={{ borderBottom: 1 }}>{t('Rate')}</TableCell>
@@ -61,7 +63,9 @@ export default function ProductTable(props) {
             <TableRow key={key}>
               <TableCell align="right" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>{key+1}</TableCell>
               <TableCell align="right" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>{row.productName}</TableCell>
+              <TableCell align="right" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>{row.pName}</TableCell>
               <TableCell align="right" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>{row.productSize}</TableCell>
+              <TableCell align="right" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>{row.pSize}</TableCell>
               <TableCell align="right" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>{row.productQty}</TableCell>
               <TableCell align="right" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>{row.productPrice}</TableCell>
               <TableCell align="right" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>=</TableCell>
