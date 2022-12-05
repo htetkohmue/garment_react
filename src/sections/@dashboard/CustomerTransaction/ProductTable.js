@@ -31,7 +31,7 @@ export default function ProductTable(props) {
   const { t } = useTranslation();
 
   function subtotal(items) {
-    return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
+    return items.map(({ total }) => total).reduce((sum, i) => sum + i, 0);
   }
   
   function qtytotal(items) {
@@ -69,7 +69,7 @@ export default function ProductTable(props) {
               <TableCell align="right" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>{row.productQty}</TableCell>
               <TableCell align="right" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>{row.productPrice}</TableCell>
               <TableCell align="right" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>=</TableCell>
-              <TableCell align="right"  sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>{row.price}</TableCell>
+              <TableCell align="right"  sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>{row.total}</TableCell>
               <TableCell align="center" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>
               <Button
                 variant="outlined"
@@ -81,7 +81,7 @@ export default function ProductTable(props) {
             </TableRow>
           ))}
           <TableRow >
-            <TableCell align="right" colSpan={3} style={{color:'bold'}}><b>{t('Total')}</b></TableCell>
+            <TableCell align="right" colSpan={5} style={{color:'bold'}}><b>{t('Total')}</b></TableCell>
             <TableCell align="right" ><b>{qtyTotal}</b></TableCell>
             <TableCell colSpan={2} > </TableCell>
             <TableCell align="right" ><b>{invoiceSubtotal}</b></TableCell>

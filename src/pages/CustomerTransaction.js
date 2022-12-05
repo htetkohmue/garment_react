@@ -181,8 +181,8 @@ function applySortFilter(array, comparator, query) {
   }
 
   function createRow(tableId:number , productName:string, productSize:string, productQty: number, productPrice: number,pName:string,pSize:string) {
-    const price = priceRow(productQty, productPrice);
-    return {tableId,productName,productSize,productQty, productPrice, price ,pName,pSize};
+    const total = priceRow(productQty, productPrice);
+    return {tableId,productName,productSize,productQty, productPrice, total ,pName,pSize};
   }
  
   // Click Add
@@ -193,23 +193,20 @@ function applySortFilter(array, comparator, query) {
 
   const clickSave = () => {
     (async () => {
-      console.log(tableData);
-      console.log(invoiceSubtotal);
-      console.log(qtyTotal);
-      console.log(customerId);
       setloadingOpen(true);
-      const data = {customer_id:customerId,product_data:tableData,total_qty:qtyTotal,total_amt:invoiceSubtotal}
+      const data = {customer_id:customerId,product_data:tableData,total_qty:qtyTotal,total_amt:invoiceSubtotal,tran_date:chooseDate}
       const obj = {url: ApiPath.storeCustomerTranction, method: 'post', params:data};
       const response = await ApiRequest(obj);
       if (response.flag===true) {
         setSuccessMsg(response.response_data.message);
         setValidatorErrorMsg([]);
         setErrorMsg('');
+        setTableData([]);
         setloadingOpen(false);
      }
      if (response.flag===false) {
       setValidatorErrorMsg(response.message);
-      setErrorMsg('');
+      setErrorMsg(response.response_data.message);
       setSuccessMsg('');
       setloadingOpen(false);
      } 
@@ -231,7 +228,7 @@ function applySortFilter(array, comparator, query) {
   }, []);
 
   function subtotal(items) {
-    return items.map(({ price }) => Number(price)).reduce((sum, i) => sum + i, 0);
+    return items.map(({ total }) => Number(total)).reduce((sum, i) => sum + i, 0);
   }
   
   function qtytotal(items) {
