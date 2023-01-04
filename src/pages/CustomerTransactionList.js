@@ -1,16 +1,9 @@
 import { useTranslation } from 'react-i18next';
 import { Container, Typography ,Alert, Stack, Grid , Card,Button} from '@mui/material'
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
 import React, { useEffect, useState } from 'react'
 import { styled } from '@mui/material/styles';
 import Divider from '@mui/material/Divider';
 import Chip from '@mui/material/Chip';
-import { Info } from '@material-ui/icons';
 import ApiPath from '../common/common-api/api-path/ApiPath';
 import { ApiRequest } from '../common/common-api/api-request/ApiRequest';
 import Page from '../components/Page';
@@ -179,16 +172,6 @@ function applySortFilter(array, comparator, query) {
   const handleChangechooseFromDate = (e) => {setchooseFromDate(e)}
   const handleChangechooseToDate = (e) => {setchooseToDate(e)}
 
-
-  // function priceRow(qty: number, rate: number) {
-  //   return qty * rate;
-  // }
-
-  // function createRow(tableId:number , productName:string, productSize:string, productQty: number, productPrice: number,pName:string,pSize:string) {
-  //   const total = priceRow(productQty, productPrice);
-  //   return {tableId,productName,productSize,productQty, productPrice, total ,pName,pSize};
-  // }
- 
   // Click Add
   const clickSearch = () => {
     (async () => {
@@ -221,24 +204,6 @@ function applySortFilter(array, comparator, query) {
     setTableData(deletedData)
   };
 
-  // const groupByName = tableData.reduce((group, product) => {
-  //   const { productName } = product;
-  //   group[productName] = group[productName] ?? [];
-  //   group[productName].push(product);
-  //   return group;
-  // }, []);
-
-  // function subtotal(items) {
-  //   return items.map(({ total }) => Number(total)).reduce((sum, i) => sum + i, 0);
-  // }
-  
-  // function qtytotal(items) {
-  //   return items.map(({ productQty }) => Number(productQty)).reduce((sum, i) => sum + i, 0);
-  // }
-
-  // const invoiceSubtotal = subtotal(tableData);
-  // const qtyTotal = qtytotal(tableData);
-
     return (
         <Page title="Customer Tranction">
           <Container>
@@ -253,7 +218,7 @@ function applySortFilter(array, comparator, query) {
             </Alert>
             )}
             <Typography variant="h3" mb={5}> Customer Transaction List</Typography>     
-              <ContentStyle>
+              {/* <ContentStyle> */}
                 <Stack spacing={2}>
                   <Stack spacing={2}>
                      <Divider textAlign="left">
@@ -322,7 +287,7 @@ function applySortFilter(array, comparator, query) {
                     </Grid>
                     )}
                 </Stack>
-              </ContentStyle>
+              {/* </ContentStyle> */}
           </Container>
         </Page>
     )

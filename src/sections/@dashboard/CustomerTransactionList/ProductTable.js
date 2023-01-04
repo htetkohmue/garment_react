@@ -12,7 +12,9 @@ import {
  ,Grid
  ,Card
  ,CardHeader
- ,Box
+ ,Box 
+ , IconButton
+ , Tooltip
 } from '@mui/material'
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -25,6 +27,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { borderBottom } from '@mui/system';
+import Iconify from '../../../components/Iconify';
 
 
 export default function ProductTable(props) {
@@ -32,6 +35,25 @@ export default function ProductTable(props) {
 
   return (
     <TableContainer component={Paper}>
+      <Table>
+      <TableRow> 
+          <TableCell align="left" rowSpan={4}>{props.tableDatas.tran_date}</TableCell>
+          <TableCell align="left">{props.tableDatas.customer_id} - {props.tableDatas.name_mm}</TableCell>
+          <TableCell align="right" width="4%">
+          <Tooltip title="edit">
+              <IconButton aria-label="edit">
+                <Iconify icon="akar-icons:edit" />
+              </IconButton>
+            </Tooltip>
+          </TableCell>
+          <TableCell align="right" width="4%">
+          <Tooltip title="delete">
+              <IconButton aria-label="delete">
+                <Iconify icon="eva:trash-2-outline" />
+              </IconButton>
+            </Tooltip>
+          </TableCell>
+      </TableRow>
       <Table sx={{ minWidth: 700}} aria-label="spanning table">
         <TableHead style={{backgroundColor:'#80ccff'}}>
           <TableRow>
@@ -59,14 +81,6 @@ export default function ProductTable(props) {
               <TableCell align="right" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>{row.price}</TableCell>
               <TableCell align="right" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>=</TableCell>
               <TableCell align="right"  sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>{row.amount}</TableCell>
-              <TableCell align="center" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>
-              <Button
-                variant="outlined"
-                color="error"
-                startIcon={<DeleteIcon />}
-                onClick={(e) => props.handleDelete(row.tableId)}
-              >Remove</Button>
-          </TableCell>
             </TableRow>
           ))}
           <TableRow >
@@ -76,6 +90,17 @@ export default function ProductTable(props) {
             <TableCell align="right" ><b>{props.tableDatas.total_amt}</b></TableCell>
           </TableRow>
         </TableBody>
+      </Table>
+      <TableRow>
+        <TableCell>{props.tableDatas.voucher_no}</TableCell>
+        <TableCell align="right">
+          <Tooltip title="Print">
+            <IconButton aria-label="Print" >
+              <Iconify icon="oi:print" />
+            </IconButton>
+        </Tooltip>
+        </TableCell>
+      </TableRow>
       </Table>
     </TableContainer>
   );

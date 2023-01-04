@@ -23,6 +23,7 @@ import { Stack
                     label={t("Product Name *")}
                     onChange={props.handleChangeproductName}
                     >
+                        <MenuItem key="" value="---Select---" name="">--Select--</MenuItem>
                         {props.productNameData.length >0 &&
                             props.productNameData.map((i,ind) => {
                                 return( <MenuItem key={ind} value={i.id} name={i.product_name}>{ i.product_name }</MenuItem>)
@@ -41,6 +42,7 @@ import { Stack
                     label={t("Size *")}
                     onChange={props.handleChangeproductSize}
                     >
+                        <MenuItem key="" value="" name="">--Select--</MenuItem>
                         {props.productSizeData.length >0 &&
                             props.productSizeData.map((i,ind) => {
                                 return( <MenuItem key={ind} value={i.id} name={i.size}>{ i.size }</MenuItem>)
