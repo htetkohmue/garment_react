@@ -292,6 +292,7 @@ export default function User() {
                         <TableCell align="left">{townshipName}</TableCell> 
                         <TableCell align="left">{status}</TableCell> 
                         <TableCell align="left">
+                          {/* Edit and delete */}
                           <CustomerMoreMenu open={open} IdCustomer={id} deleteCustomer={deleteCustomer} />
                         </TableCell>
                         <TableCell align="left">{description}</TableCell> 

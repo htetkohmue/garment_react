@@ -287,6 +287,7 @@ const TABLE_HEAD = [
                         <TableCell align="left">{nrcNo}</TableCell>
                         <TableCell align="left">{address}</TableCell> 
                         <TableCell align="left">
+                          {/* Edit and delete */}
                           <TailorMoreMenu open={open} IdTailor={id} deleteTailor={deleteTailor} />
                         </TableCell>
                         <TableCell align="left">{description}</TableCell> 

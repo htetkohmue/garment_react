@@ -22,6 +22,7 @@ import { ApiRequest } from '../../../common/common-api/api-request/ApiRequest';
 import DatePicker from '../../../common/datepicker/DatePicker';
 
 function FormData(props) {
+    console.log(props.customerId);  
     const [open, setOpen] = React.useState(false);
     const [newTown, setnewTown] = useState("");
     const [successMsg, setSuccessMsg] = useState(''); // for success msg
@@ -192,7 +193,7 @@ function FormData(props) {
                 </FormControl>
                 
                 <DatePicker required
-                    label='Join Date'
+                    label='Date'
                     value={props.joinDate}
                     onChange={props.handleChangejoinDate}
                     error={props.joinDateError}

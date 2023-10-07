@@ -1,22 +1,7 @@
-import {
-  Container
- , Stack
- ,Button
- , FormControl
- , InputLabel
- , Select
- , MenuItem
- , FormHelperText 
- ,TextField
- ,Alert
- ,Grid
- ,Card
- ,CardHeader
- ,Box 
- , IconButton
- , Tooltip
-} from '@mui/material'
+import { Menu, MenuItem, IconButton, ListItemIcon, ListItemText, Tooltip} from '@mui/material'
 import * as React from 'react';
+import { useRef, useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -30,8 +15,15 @@ import { borderBottom } from '@mui/system';
 import Iconify from '../../../components/Iconify';
 
 
-export default function ProductTable(props) {
+export default function ProductTable(props,editCusTranId) {
   const { t } = useTranslation();
+  const [isOpen, setIsOpen] = useState(false);
+  const ref                 = useRef(null);
+  const [open, setOpen] = useState(false);
+  const [editCusTran, seteditCusTran] = useState([]);
+  const [deleteCusTran, setdeleteCusTran] = useState([]);
+  const [deleteId, setDeleteId] = useState([]);
+  const [Id, setId] = useState([]);
 
   return (
     <TableContainer component={Paper}>
@@ -40,19 +32,22 @@ export default function ProductTable(props) {
           <TableCell align="left" rowSpan={4}>{props.tableDatas.tran_date}</TableCell>
           <TableCell align="left">{props.tableDatas.customer_id} - {props.tableDatas.name_mm}</TableCell>
           <TableCell align="right" width="4%">
+            
           <Tooltip title="edit">
-              <IconButton aria-label="edit">
+            {/* continue */}
+              <IconButton component={RouterLink} to={`/dashboard/customers-transaction/${props.tableDatas.id}`}>
                 <Iconify icon="akar-icons:edit" />
               </IconButton>
             </Tooltip>
           </TableCell>
           <TableCell align="right" width="4%">
           <Tooltip title="delete">
-              <IconButton aria-label="delete">
+              <IconButton aria-label="delete" onClick={(event) =>props.deleteCusTran(props.tableDatas.id)}>
                 <Iconify icon="eva:trash-2-outline" />
               </IconButton>
             </Tooltip>
           </TableCell>
+         
       </TableRow>
       <Table sx={{ minWidth: 700}} aria-label="spanning table">
         <TableHead style={{backgroundColor:'#80ccff'}}>
@@ -66,7 +61,7 @@ export default function ProductTable(props) {
             <TableCell align="right"sx={{ borderBottom: 1 }}>{t('Rate')}</TableCell>
             <TableCell align="right"sx={{ borderBottom: 1 }}> </TableCell>
             <TableCell align="right"sx={{ borderBottom: 1 }}>{t('Kyat')}</TableCell>
-            <TableCell align="left"sx={{ borderBottom: 1 }}> </TableCell>
+            {/* <TableCell align="left"sx={{ borderBottom: 1 }}>{t('Action')} </TableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -81,6 +76,34 @@ export default function ProductTable(props) {
               <TableCell align="right" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>{row.price}</TableCell>
               <TableCell align="right" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>=</TableCell>
               <TableCell align="right"  sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>{row.amount}</TableCell>
+              {/* <TableCell align="center"  sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>
+                <IconButton ref={ref} onClick={() => setIsOpen(true)}>
+                  <Iconify icon="eva:more-vertical-fill" width={20} height={20} />
+                </IconButton>
+                <Menu
+                  open={isOpen}
+                  anchorEl={ref.current}
+                  onClose={() => setIsOpen(false)}
+                  PaperProps={{
+                    sx: { width: 200, maxWidth: '100%' },
+                  }}
+                  anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                  transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                >
+                  <MenuItem sx={{ color: 'text.secondary' }}>
+                    <ListItemIcon>
+                      <Iconify icon="eva:trash-2-outline" width={24} height={24} />
+                    </ListItemIcon>
+                    <ListItemText primary="Delete"  onClick={(e) => props.handleDelete(row.customer_transaction_id)} primaryTypographyProps={{ variant: 'body2' }} />
+                  </MenuItem>
+                  <MenuItem component={RouterLink} to={`/dashboard/customers-transaction/${Id}`} sx={{ color: 'text.secondary' }}>
+                    <ListItemIcon>
+                      <Iconify icon="eva:edit-fill" width={24} height={24} />
+                    </ListItemIcon>
+                    <ListItemText primary="Edit" primaryTypographyProps={{ variant: 'body2' }} />
+                  </MenuItem>
+                </Menu>              
+              </TableCell> */}
             </TableRow>
           ))}
           <TableRow >

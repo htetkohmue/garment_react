@@ -87,6 +87,8 @@ function applySortFilter(array, comparator, query) {
 
     const [productNameData,setproductNameData]=useState([]);
     const [productSizeData,setproductSizeData]=useState([]);
+    const [Id,setId]=useState([]);
+    
     
 
    /* Formload get Customer data */
@@ -197,9 +199,9 @@ function applySortFilter(array, comparator, query) {
     })();     
   } 
   
-  const handleDelete = (id) => {
+  const deleteCusTran = (id) => {
     const deletedData= tableData.filter((word) => {
-      return word.tableId !== id;
+      return word.id !== id;
     })
     setTableData(deletedData)
   };
@@ -276,7 +278,7 @@ function applySortFilter(array, comparator, query) {
                 {tableData.map((datas,key) => (
                   <Grid item xs={12} md={6} lg={10}>
                   <Card>
-                  <ProductTable handleDelete={handleDelete} tableDatas={datas}/>
+                  <ProductTable deleteCusTran={deleteCusTran}  tableDatas={datas}/>
                   </Card>
                   </Grid>))}
                   {tableData.length>0 && (

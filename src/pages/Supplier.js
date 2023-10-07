@@ -18,7 +18,7 @@ import { ApiRequest } from '../common/common-api/api-request/ApiRequest';
 
 const ContentStyle = styled('div')(({ theme }) => ({
   maxWidth: 600,
-  margin: '70px',
+  margin: '30px',
   display: 'flex',
   justifyContent: 'center',
   flexDirection: 'column',
@@ -188,6 +188,7 @@ export default function Supplier() {
           <h3 style={{ color: 'white' }}>{successMsg}</h3>
         </div> */}
         <ContentStyle>
+          <Stack spacing={4}>
           <RegisterForm register={register} update={update} editSupplier={editSupplier} />
           <DisplayForm
             supplierData={supplierData}
@@ -196,6 +197,7 @@ export default function Supplier() {
             remove={remove}
             errorMsg={errorMsg}
           />
+          </Stack>
         </ContentStyle>
       </Container>
     </Page>

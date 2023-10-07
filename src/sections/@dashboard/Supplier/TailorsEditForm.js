@@ -77,7 +77,7 @@ export default function TailorsEditForm(props) {
             helperText={touched.phone && errors.phone}
           />
           <Typography style={{color:'red',width:'100%'}} >
-          * get more than one comma ','
+          * If more than one , use comma ','
           </Typography>
            </Stack>
            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>

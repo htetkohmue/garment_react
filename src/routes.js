@@ -44,6 +44,7 @@ export default function Router(props) {
         { path: 'customers-register', element: <CustomerRegister /> },
         { path: 'customers-list', element: <CustomerList /> },
         { path: 'customers-transaction', element: <CustomerTransaction /> },
+        { path: 'customers-transaction/:id', element: <CustomerTransaction /> },
         { path: 'customers-transaction-list', element: <CustomerTransactionList /> },
       ],
     },

@@ -43,7 +43,7 @@ export default function TailorsRegister() {
   useEffect(() => {
     (async () => {
       const data = {};
-      const apiPath = ApiPath.editTailorData;
+      const apiPath = ApiPath.editCustomerTranction;
       const obj = { url: `${apiPath}/${id}`, method: 'get', params: data };
       const response = await ApiRequest(obj);
       if (response.flag === true) {

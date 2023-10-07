@@ -14,7 +14,7 @@ export default function RegisterForm(props) {
   const RegisterSchema = yup.object().shape({
     nameMm: yup.string().min(2, t('Too short')).max(50, t('Too long')).required(t('Enter your name in Myanmar')),
     nameEn: yup.string().min(2, t('Too short')).max(50, t('Too long')).required(t('Enter your name in English')),
-    phoneNo: yup.string().min(8).required(t('Enter your phone number')),
+    phoneNo: yup.string().min(6).required(t('Enter your phone number')),
     email: yup.string().email(t('Enter valid email')),
     address: yup.string().required(t('Enter your address')),
   });

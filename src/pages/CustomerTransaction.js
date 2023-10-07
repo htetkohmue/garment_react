@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { Link as RouterLink, useParams } from 'react-router-dom';
 import { Container, Typography ,Alert, Stack, Grid , Card,Button} from '@mui/material'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -91,9 +92,11 @@ function applySortFilter(array, comparator, query) {
 
     const [productNameData,setproductNameData]=useState([]);
     const [productSizeData,setproductSizeData]=useState([]);
+    const [value, setValue] = useState([]); // for values
+    const [edit, setEdit] = useState(false); // for values
     
 
-   /* Formload get Customer data */
+    /* Formload get Customer data */
     useEffect(() => {(async () => {
       const data = {}
       const obj = {url: ApiPath.getCustomerList, method: 'get', params:data};
@@ -107,6 +110,39 @@ function applySortFilter(array, comparator, query) {
       } 
   })();
     }, []);
+
+      /** edit get data function */
+  const { id, setId } = useParams();
+  useEffect(() => {
+    (async () => {
+      const data = {};
+      const apiPath = ApiPath.editCustomerTranction;
+      const obj = { url: `${apiPath}/${id}`, method: 'get', params: data };
+      const response = await ApiRequest(obj);
+      if (response.flag === true) {
+
+        setchooseDate(response.response_data.data.tran_date);
+       
+        // setValue({
+        //   customerId: response.response_data.data.customer_id,
+        // });
+        // setPost(post.filter(data =>data.customerId === response.response_data.data.customer_id));
+        // setCustomerId(response.response_data.data.customer_id);
+
+        setFilterName(response.response_data.data.name_mm);
+        
+        setTableData(response.response_data.data.cus_tran_data);
+       
+        setEdit(true);
+        setloadingOpen(false);
+      }
+      if (id != null && response.flag === false) {
+        setErrorMsg(response.message);
+        setSuccessMsg('');
+        setValidatorErrorMsg([]);
+      }
+    })();
+  }, []);
 
     /* Formload get Products Name */
     useEffect(() => {(async () => {
@@ -187,6 +223,7 @@ function applySortFilter(array, comparator, query) {
  
   // Click Add
   const clickAdd = () => {
+    console.log(pName);
     const tableId=tableData.length;
     setTableData(current => [...current, createRow(tableId,productName,productSize,productQty,productPrice,pName,pSize)]);     
   } 
@@ -290,11 +327,7 @@ function applySortFilter(array, comparator, query) {
                       />
                   </Stack>
                   <Stack alignItems="center" style={{marginTop:'2%'}}>
-                    <Button 
-                    type="submit"
-                    size="large" 
-                    variant="contained"
-                    onClick={clickAdd}>
+                    <Button type="submit" size="large" variant="contained" onClick={clickAdd}>
                       {t("Add")}
                     </Button> 
                 </Stack>
@@ -318,13 +351,12 @@ function applySortFilter(array, comparator, query) {
                 </Stack>  
                 {tableData.length>0 && (
                 <Stack alignItems="center" style={{marginTop:'2%'}}>
-                    <Button 
-                    type="submit"
-                    size="large" 
-                    variant="contained"
-                    onClick={clickSave}>
-                      {t("Save")}
-                    </Button> 
+                   {!edit &&  <Button  type="submit" size="large" variant="contained" onClick={clickSave}>
+                      {t("Save")}           
+                    </Button>}
+                   {edit && <Button  type="submit" size="large" variant="contained" onClick={clickSave}>
+                      {t("Update")}    
+                    </Button>}                      
                 </Stack>
                 )}
               </ContentStyle>
