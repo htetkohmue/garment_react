@@ -69,9 +69,14 @@ function FormData(props) {
                     label={t("Fabric Name")}
                     onChange={props.handleChangeFabricName}
                     >
-                    <MenuItem value={1}>name1</MenuItem>
-                    <MenuItem value={2}>name2</MenuItem>
-                    <MenuItem value={3}>name3</MenuItem>
+                    {
+                        props.fabricAll.length > 0 &&
+                        props.fabricAll.map((item,index)=>{
+                            return(
+                                <MenuItem key={index} value={item.id}>{item.name}</MenuItem>
+                            )
+                        })
+                    }
                     </Select>
                 </FormControl>
 
@@ -84,8 +89,14 @@ function FormData(props) {
                     label={t("Size")}
                     onChange={props.handleChangeSize}
                     >
-                    <MenuItem value={'Xl'}>XL</MenuItem>
-                    <MenuItem value={'S'}>S</MenuItem>
+                    {
+                        props.sizesAll.length > 0 &&
+                        props.sizesAll.map((item,index)=>{
+                            return(
+                                <MenuItem key={index} value={item.id}>{item.size}</MenuItem>
+                            )
+                        })
+                    }
                     </Select>
                 </FormControl>
                 </Stack>
@@ -100,14 +111,23 @@ function FormData(props) {
                 />
                 <TextField
                     fullWidth
+                    label={t("Product Name")}
+                    value={props.productName}
+                    onChange={props.handleChangeProductName}
+                    error={props.productNameError}
+                    helperText={props.productNameHelperText}
+                />
+              </Stack>
+              <Stack style={{marginBottom: '20px' ,marginTop: '20px',marginLeft: '20px',marginRight: '20px'}} direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+              
+                <TextField
+                    fullWidth
                     label={t("Rate")}
                     value={props.rate}
                     onChange={props.handleChangeRate}
                     error={props.rateError}
                     helperText={props.rateHelperText}
                 />
-              </Stack>
-              <Stack style={{marginBottom: '20px' ,marginTop: '20px',marginLeft: '20px',marginRight: '20px'}} direction={{ xs: 'column', sm: 'row' }} spacing={2}>
               <Card style={{height:'90px',width:'100%'}}>
                <input accept="image/*" type="file" id="select-image" style={{ display: 'none' }} onChange={e => setSelectedImage(e.target.files[0])}/>
                 <InputLabel htmlFor="select-image">
@@ -149,8 +169,14 @@ function FormData(props) {
                         label={t("Tailor")}
                         onChange={props.handleChangeTailor}
                         >
-                        <MenuItem value={'Aye Aye'}>Aye Aye</MenuItem>
-                        <MenuItem value={'Maung Maung'}>Maung Maung</MenuItem>
+                        {
+                        props.tailorAll.length > 0 &&
+                        props.tailorAll.map((item,index)=>{
+                            return(
+                                <MenuItem key={index} value={item.tailor_id}>{item.name_en}</MenuItem>
+                            )
+                        })
+                    }
                     </Select>
                     </FormControl>
               </Stack>

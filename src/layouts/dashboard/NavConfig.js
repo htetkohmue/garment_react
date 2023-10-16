@@ -70,10 +70,16 @@ const navConfig = [
     ],
   },
   {
-    title: 'Raw Material',
-    path: '/dashboard/raws',
+    title: 'Raw Materials',
+    path: '/dashboard/',
     icon: getIcon('eva:shopping-bag-fill'),
-    
+    children: [
+      {
+        title: "Raw Material",
+        path: "/dashboard/raws",
+        icon: getIcon('eva:people-fill'),
+      }
+    ] 
   },  
   {
     title: 'Product',
@@ -81,7 +87,7 @@ const navConfig = [
     icon: getIcon('eva:shopping-bag-fill'),
     children: [
       {
-        title: "Tailor-Raw Transaction",
+        title: "Tailor Raw Transaction",
         path: "",
         icon: getIcon('eva:shopping-bag-fill'),
       },
@@ -119,14 +125,33 @@ const navConfig = [
     path : null,
     icon: getIcon('eva:people-fill'),
     children: [
-          // {
-          //   title: "Supplier Transaction Register",
-          //   path: "/dashboard/supplier_transaction-register",
-          //   icon: getIcon('eva:person-add-fill'),
-          // },
+          {
+            title: "Supplier Transaction Register",
+            // path: "/dashboard/supplier_transaction-register",
+            path: "",
+            icon: getIcon('eva:person-add-fill'),
+          },
           {
             title: "Supplier Transaction List",
             path: "/dashboard/supplier-transaction-list",
+            icon: getIcon('eva:people-fill'),
+          },
+
+    ],
+  },
+  {
+    title: 'Data Management',
+    path : null,
+    icon: getIcon('eva:people-fill'),
+    children: [
+          {
+            title: "Data Import/Export",
+            path: "",
+            icon: getIcon('eva:person-add-fill'),
+          },
+          {
+            title: "Data Balance",
+            path: "",
             icon: getIcon('eva:people-fill'),
           },
 

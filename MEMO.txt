@@ -1,0 +1,40 @@
+to create select box 
+ Call useEffect on main form
+ useEffect(() => {
+      (async () => {
+         setloadingOpen(true);
+        const obj = { url: ApiPath.getSizes, method: 'get' };
+        const response = await ApiRequest(obj);
+        if (response.flag === true) {
+          setSizesAll(response.response_data.data);
+        }
+      })();
+    }, []);
+
+sizesAll={sizesAll}
+
+Component 
+<InputLabel id="demo-simple-select-required-label">Township Name</InputLabel>
+                    <Select
+                    labelId="demo-simple-select-required-label"
+                    id="demo-simple-select-required"
+                    value={props.TownshipName}
+                    label="Township Name *"
+                    onChange={props.handleChangeTownshipName}
+                    >
+                    {
+                        props.sizesAll.length > 0 &&
+                        props.sizesAll.map((item,index)=>{
+                            return(
+                                <MenuItem key={index} value={item.id}>{item.name}</MenuItem>
+                            )
+                        })
+                    }
+                    </Select>
+-------------------------------------------------------------
+
+
+
+
+
+

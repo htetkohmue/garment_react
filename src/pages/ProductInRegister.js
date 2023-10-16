@@ -45,13 +45,15 @@ export default function ProductInRegister() {
   const [edit, setEdit] = useState(false); // for values
   const [loadingOpen, setloadingOpen] = useState(false); // for values
 
-  const [townshipAPI, settownshipAPI]     = useState(true);
+  const [fabricAll, setFabricAll]   = useState([]);
   const [fabricName, setFabricName]   = useState('');
+  const [sizesAll, setSizesAll]   = useState('');
   const [size, setSize]   = useState('');
   const [qty, setQty]   = useState('');
   const [rate, setRate]   = useState('');
+  const [tailorAll, setTailorAll]   = useState([]);
   const [tailor, setTailor]   = useState('');
-  const [townshipName, setTownshipName]   = useState('');
+  const [productName, setProductName]   = useState('');
   const [date, setDate]           = useState(()=>ChangeDate(new Date()));
   const [dateError, setDateError] = useState('');
   const [dateErrorHelperText, setDateErrorHelperText] = useState('');
@@ -80,10 +82,10 @@ export default function ProductInRegister() {
     useEffect(() => {
       (async () => {
          setloadingOpen(true);
-        const obj = { url: ApiPath.getTownship, method: 'get' };
+        const obj = { url: ApiPath.searchRaws, method: 'get' };
         const response = await ApiRequest(obj);
         if (response.flag === true) {
-            settownshipAPI(response.response_data.data);
+            setFabricAll(response.response_data.data);
         }
       })();
     }, []);
@@ -91,10 +93,21 @@ export default function ProductInRegister() {
     useEffect(() => {
       (async () => {
          setloadingOpen(true);
-        const obj = { url: ApiPath.getCustomerId, method: 'get' };
+        const obj = { url: ApiPath.getTailorAll, method: 'get' };
         const response = await ApiRequest(obj);
         if (response.flag === true) {
-          setCustomerId(response.response_data.data);
+          setTailorAll(response.response_data.data);
+        }
+      })();
+    }, []);
+
+    useEffect(() => {
+      (async () => {
+         setloadingOpen(true);
+        const obj = { url: ApiPath.getSizes, method: 'get' };
+        const response = await ApiRequest(obj);
+        if (response.flag === true) {
+          setSizesAll(response.response_data.data);
         }
       })();
     }, []);
@@ -106,6 +119,7 @@ export default function ProductInRegister() {
       setQty('');
       setRate('');
       setTailor('');
+      setProductName('');
       setDate('');
       setAddress('');
       setStatus('');
@@ -176,7 +190,7 @@ export default function ProductInRegister() {
     <Page title="ProductInRegister">
       <Container maxWidth="xl"  >
           <Typography variant="h3" gutterBottom>
-              {t('Fabric Return Registration')}
+              {t('Product In Registration')}
           </Typography>
           <br/>
           <Grid item xs={12} md={12} lg={12}>
@@ -191,15 +205,19 @@ export default function ProductInRegister() {
               handleChangeRate={(e) => setRate(e.target.value.replace(/[^0-9]/g, ''))} 
               tailor={tailor}
               handleChangeTailor={(e) => setTailor(e.target.value)} 
+              productName={productName} 
+              handleChangeProductName={(e) => setProductName(e.target.value)}
               date={date}
-              handleChangeDate={(e) => setDate(ChangeDate(e))}  
+              handleChangeDate={(e) => setDate(ChangeDate(e))}
               dateError={dateError}
               dateErrorHelperText={dateErrorHelperText}
               clickImageUpload={clickImageUpload}
               imageCancle={imageCancle}
               clickAdd={clickAdd}
               clickCancel={clickCancel}
-              townshipAPI={townshipAPI}
+              fabricAll={fabricAll}
+              tailorAll={tailorAll}
+              sizesAll={sizesAll}
             />
           </Grid>
           <br/>
