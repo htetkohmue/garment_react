@@ -60,13 +60,13 @@ function FormData(props) {
             <Grid item xs={12} md={6} lg={8}>
                <Card>
                 <Stack style={{marginBottom: '20px' ,marginTop: '20px',marginLeft: '20px',marginRight: '20px'}} direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-                <FormControl fullWidth >
-                    <InputLabel id="demo-simple-select-required-label">{t('Fabric Name')}</InputLabel>
+                {/* <FormControl fullWidth >
+                     <InputLabel id="demo-simple-select-required-label">{t('Raw Name')}</InputLabel>
                     <Select
                     labelId="demo-simple-select-required-label"
                     id="demo-simple-select-required"
                     value={props.fabricName}
-                    label={t("Fabric Name")}
+                    label={t("Raw Name")}
                     onChange={props.handleChangeFabricName}
                     >
                     {
@@ -77,26 +77,41 @@ function FormData(props) {
                             )
                         })
                     }
+                    </Select> */}
+                    
+                    <FormControl fullWidth >
+                    <InputLabel id="demo-simple-select-required-label">Product Name *</InputLabel>
+                    <Select
+                    value={props.productName}
+                    name={props.pName}
+                    label={t("Product Name *")}
+                    onChange={props.handleChangeproductName}
+                    >
+                        {props.productNameData.length >0 &&
+                            props.productNameData.map((i,ind) => {
+                                return( <MenuItem key={ind} value={i.id} name={i.product_name}>{ i.product_name }</MenuItem>)
+                            
+                            })
+                        }
                     </Select>
                 </FormControl>
-
                 <FormControl fullWidth >
-                    <InputLabel id="demo-simple-select-required-label">{t('Size')}</InputLabel>
+                    <InputLabel id="demo-simple-select-required-label">Size *</InputLabel>
                     <Select
                     labelId="demo-simple-select-required-label"
                     id="demo-simple-select-required"
-                    value={props.size}
-                    label={t("Size")}
-                    onChange={props.handleChangeSize}
+                    value={props.productSize}
+                    name={props.pSize}
+                    label={t("Size *")}
+                    onChange={props.handleChangeproductSize}
                     >
-                    {
-                        props.sizesAll.length > 0 &&
-                        props.sizesAll.map((item,index)=>{
-                            return(
-                                <MenuItem key={index} value={item.id}>{item.size}</MenuItem>
-                            )
-                        })
-                    }
+                        {props.productSizeData.length >0 &&
+                            props.productSizeData.map((i,ind) => {
+                                return( <MenuItem key={ind} value={i.id} name={i.size}>{ i.size }</MenuItem>)
+                            
+                            })
+                        }
+                        
                     </Select>
                 </FormControl>
                 </Stack>
@@ -111,23 +126,15 @@ function FormData(props) {
                 />
                 <TextField
                     fullWidth
-                    label={t("Product Name")}
-                    value={props.productName}
-                    onChange={props.handleChangeProductName}
-                    error={props.productNameError}
-                    helperText={props.productNameHelperText}
-                />
-              </Stack>
-              <Stack style={{marginBottom: '20px' ,marginTop: '20px',marginLeft: '20px',marginRight: '20px'}} direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-              
-                <TextField
-                    fullWidth
                     label={t("Rate")}
                     value={props.rate}
                     onChange={props.handleChangeRate}
                     error={props.rateError}
                     helperText={props.rateHelperText}
                 />
+              </Stack>
+              <Stack style={{marginBottom: '20px' ,marginTop: '20px',marginLeft: '20px',marginRight: '20px'}} direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+              
               <Card style={{height:'90px',width:'100%'}}>
                <input accept="image/*" type="file" id="select-image" style={{ display: 'none' }} onChange={e => setSelectedImage(e.target.files[0])}/>
                 <InputLabel htmlFor="select-image">
@@ -179,9 +186,9 @@ function FormData(props) {
                     }
                     </Select>
                     </FormControl>
+                    
               </Stack>
               </Card>
-              <br/><br/><br/>
               <Card >
                 <Stack spacing={3} style={{marginBottom: '50px' ,marginTop: '50px',marginLeft: '20px',marginRight: '20px'}} justifyContent="center" alignItems="center">
                     <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>

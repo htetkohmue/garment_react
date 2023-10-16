@@ -45,7 +45,7 @@ export default function ProductInRegister() {
   const [edit, setEdit] = useState(false); // for values
   const [loadingOpen, setloadingOpen] = useState(false); // for values
 
-  const [fabricAll, setFabricAll]   = useState([]);
+  const [productNameAll, setProductNameAll]   = useState([]);
   const [fabricName, setFabricName]   = useState('');
   const [sizesAll, setSizesAll]   = useState('');
   const [size, setSize]   = useState('');
@@ -53,7 +53,6 @@ export default function ProductInRegister() {
   const [rate, setRate]   = useState('');
   const [tailorAll, setTailorAll]   = useState([]);
   const [tailor, setTailor]   = useState('');
-  const [productName, setProductName]   = useState('');
   const [date, setDate]           = useState(()=>ChangeDate(new Date()));
   const [dateError, setDateError] = useState('');
   const [dateErrorHelperText, setDateErrorHelperText] = useState('');
@@ -75,6 +74,15 @@ export default function ProductInRegister() {
   const [totalTableData, setTotalTableData]   = useState([]);
   const [imageCancle, setImageCancle]   = useState(true);
 
+  const [productSize,setProductSize]=useState('');
+  const [productName,setProductName]=useState('');
+  const [productQty,setProductQty]=useState('');
+  const [productPrice,setProductPrice]=useState('');
+  const [pName,setpName]=useState('');
+  const [pSize,setpSize]=useState('');
+  const [productNameData,setproductNameData]=useState([]);
+  const [productSizeData,setProductSizeData]=useState([]);
+
   const darkTheme = createTheme({ palette: { mode: 'dark' } });
   const lightTheme = createTheme({ palette: { mode: 'light' } });
     
@@ -82,10 +90,10 @@ export default function ProductInRegister() {
     useEffect(() => {
       (async () => {
          setloadingOpen(true);
-        const obj = { url: ApiPath.searchRaws, method: 'get' };
+        const obj = { url: ApiPath.getProductAll, method: 'get' };
         const response = await ApiRequest(obj);
         if (response.flag === true) {
-            setFabricAll(response.response_data.data);
+            setProductName(response.response_data.data);
         }
       })();
     }, []);
@@ -100,21 +108,47 @@ export default function ProductInRegister() {
         }
       })();
     }, []);
-
-    useEffect(() => {
-      (async () => {
-         setloadingOpen(true);
-        const obj = { url: ApiPath.getSizes, method: 'get' };
-        const response = await ApiRequest(obj);
-        if (response.flag === true) {
-          setSizesAll(response.response_data.data);
-        }
-      })();
+    
+    /* Formload get Products Name */
+    useEffect(() => {(async () => {
+      const data = {}
+      const obj = {url: ApiPath.getProductNames, method: 'get', params:data};
+      const response = await ApiRequest(obj);
+      if (response.flag===true) {
+        setproductNameData(response.response_data.data);
+      }
+      if (response.flag===false) {
+        setErrorMsg(response.message);
+        setSuccessMsg("");
+      } 
+  })();
     }, []);
+
+    /* change name */
+    const changeproductName = (event, value) =>{
+      (async () => {
+        setProductName(value.props.value);
+        setpName(value.props.name);
+         const data = {product_id:event.target.value}
+         const obj = {url: ApiPath.getProductNameByID, method: 'post', params:data};
+          const response = await ApiRequest(obj);
+          if (response.flag===true) {
+            setProductSizeData(response.response_data.data);
+          }
+          if (response.flag===false) {
+            setProductSizeData("");
+          }  
+      })();
+    }
+
+    const changeproductsize = (event,  value) => {
+      setProductSize(value.props.value);
+      setpSize(value.props.name);
+    }
 
    
     const clickCancel = () => {
-      setFabricName('');
+      // setFabricName('');
       setSize('');
       setQty('');
       setRate('');
@@ -128,22 +162,22 @@ export default function ProductInRegister() {
     };
 
 
-    function priceRow(qty: number, rate: number) {
+    function priceRow(qty, rate) {
       return qty * rate;
     }
 
-    function createRow(tableId:number , name:string, size:string, qty: number, rate: number,imageUrl:string,imageName:string) {
+    function createRow(tableId , name, size, qty, rate,imageUrl,imageName,pName,pSize) {
       const price = priceRow(qty, rate);
-      return {tableId,name,size,qty, rate, price ,imageUrl,imageName};
+      return {tableId,name,size,qty, rate, price ,imageUrl,imageName,pName,pSize};
     }
 
     const clickAdd = (image) => {
       const tableId=tableData.length;
       setImageUrl(URL.createObjectURL(image));
       setImageName(image.name)
-      setImageArr(current => [...current,{imageUrl:URL.createObjectURL(image),imageName:image.name,name:fabricName}]);
-      setTableData(current => [...current, createRow(tableId,fabricName,size,qty,rate,URL.createObjectURL(image),image.name)]);
-      setTotalTableData(current => [...current, createRow(tableId,fabricName,size,qty,rate,URL.createObjectURL(image),image.name)]);
+      setImageArr(current => [...current,{imageUrl:URL.createObjectURL(image),imageName:image.name,name:productName}]);
+      setTableData(current => [...current, createRow(tableId,productName,productSize,qty,rate,URL.createObjectURL(image),image.name,pName,pSize)]);
+      setTotalTableData(current => [...current, createRow(tableId,productName,productSize,qty,rate,URL.createObjectURL(image),image.name,pName,pSize)]);
     };
 
     const handleDelete = (id) => {
@@ -182,8 +216,6 @@ export default function ProductInRegister() {
   
     const invoiceSubtotal = subtotal(tableData);
     const qtyTotal = qtytotal(tableData);
-
-    
   
   return (
    
@@ -195,18 +227,12 @@ export default function ProductInRegister() {
           <br/>
           <Grid item xs={12} md={12} lg={12}>
           <ProductFormData 
-              fabricName={fabricName}
-              handleChangeFabricName={(e) => setFabricName(e.target.value)}
-              size={size}
-              handleChangeSize={(e) => setSize(e.target.value)} 
               qty={qty}
               handleChangeQty={(e) => setQty(e.target.value.replace(/[^0-9]/g, ''))} 
               rate={rate}
               handleChangeRate={(e) => setRate(e.target.value.replace(/[^0-9]/g, ''))} 
               tailor={tailor}
-              handleChangeTailor={(e) => setTailor(e.target.value)} 
-              productName={productName} 
-              handleChangeProductName={(e) => setProductName(e.target.value)}
+              handleChangeTailor={(e) => setTailor(e.target.value)}
               date={date}
               handleChangeDate={(e) => setDate(ChangeDate(e))}
               dateError={dateError}
@@ -215,9 +241,16 @@ export default function ProductInRegister() {
               imageCancle={imageCancle}
               clickAdd={clickAdd}
               clickCancel={clickCancel}
-              fabricAll={fabricAll}
               tailorAll={tailorAll}
-              sizesAll={sizesAll}
+
+              productName={productName}
+              handleChangeproductName={changeproductName}
+              productSize={productSize}
+              handleChangeproductSize={changeproductsize}
+              productNameData={productNameData}
+              productSizeData={productSizeData}
+              pName={pName}
+              pSize={pSize}
             />
           </Grid>
           <br/>

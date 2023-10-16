@@ -52,4 +52,7 @@ export default {
   updateCustomerTranction: 'api/customer-transaction-register/update',
   deleteCustomerTranction: 'api/customer-transaction-list/destroy',
 
+  // Product
+  getProductAll: 'api/product-in-list/getProductAll',
+
 };

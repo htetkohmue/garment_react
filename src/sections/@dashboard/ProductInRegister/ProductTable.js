@@ -40,15 +40,16 @@ export default function ProductTable(props) {
 
   const invoiceSubtotal = subtotal(props.tableDatas);
   const qtyTotal = qtytotal(props.tableDatas);
- 
-  
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700}} aria-label="spanning table">
         <TableHead sx={{ backgroundColor: '#b3d1ff'}}>
           <TableRow>
             <TableCell align="right" sx={{ borderBottom: 1 }}>{t('No')}</TableCell>
+            <TableCell align="right"sx={{ borderBottom: 1 }}>{t('ID')}</TableCell>
             <TableCell align="right"sx={{ borderBottom: 1 }}>{t('Name')}</TableCell>
+            <TableCell align="right"sx={{ borderBottom: 1 }}>{t('Size ID')}</TableCell>
             <TableCell align="right"sx={{ borderBottom: 1 }}>{t('Size')}</TableCell>
             <TableCell align="right"sx={{ borderBottom: 1 }}>{t('Quantity')}</TableCell>
             <TableCell align="right"sx={{ borderBottom: 1 }}>{t('Rate')}</TableCell>
@@ -62,7 +63,9 @@ export default function ProductTable(props) {
             <TableRow key={key}>
               <TableCell align="right" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>{key+1}</TableCell>
               <TableCell align="right" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>{row.name}</TableCell>
+              <TableCell align="right" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>{row.pName}</TableCell>
               <TableCell align="right" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>{row.size}</TableCell>
+              <TableCell align="right" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>{row.pSize}</TableCell>
               <TableCell align="right" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>{row.qty}</TableCell>
               <TableCell align="right" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>{row.rate}</TableCell>
               <TableCell align="right" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>=</TableCell>

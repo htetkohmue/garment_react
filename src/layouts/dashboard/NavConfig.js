@@ -87,6 +87,11 @@ const navConfig = [
     icon: getIcon('eva:shopping-bag-fill'),
     children: [
       {
+        title: "Product Register",
+        path: "",
+        icon: getIcon('eva:shopping-bag-fill'),
+      },
+      {
         title: "Tailor Raw Transaction",
         path: "",
         icon: getIcon('eva:shopping-bag-fill'),
