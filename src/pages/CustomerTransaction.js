@@ -201,22 +201,14 @@ function applySortFilter(array, comparator, query) {
       setproductSize(value.props.value);
       setpSize(value.props.name);
     }
-
-   
-     /** click delete function - cross sign */
-  const deleteCustomer=(IdCustomer)=>{
-    setDeleteCustomerId(IdCustomer)
-    setOpen(true);
-  }
  
   const handleChangechooseDate = (e) => {setchooseDate(e)}
 
-
-  function priceRow(qty: number, rate: number) {
+  function priceRow(qty, rate) {
     return qty * rate;
   }
 
-  function createRow(tableId:number , productName:string, productSize:string, productQty: number, productPrice: number,pName:string,pSize:string) {
+  function createRow(tableId,productName, productSize, productQty, productPrice,pName,pSize) {
     const total = priceRow(productQty, productPrice);
     return {tableId,productName,productSize,productQty, productPrice, total ,pName,pSize};
   }
@@ -249,7 +241,37 @@ function applySortFilter(array, comparator, query) {
      } 
     })();
   }
+
+  const clickUpdate = () => {
+    (async () => {
+      setloadingOpen(true);
+      const data = {customer_id:customerId,product_data:tableData,total_qty:qtyTotal,total_amt:invoiceSubtotal,tran_date:chooseDate}
+      
+      const path = ApiPath.updateCustomerTranction;
+      const obj = { url: `${path}/${id}`, method: 'put', params: data };
+      const response = await ApiRequest(obj);
+      console.log(response);
+      if (response.flag===true) {
+        setSuccessMsg(response.response_data.message);
+        setValidatorErrorMsg([]);
+        setErrorMsg('');
+        setTableData([]);
+        setloadingOpen(false);
+     }
+     if (response.flag===false) {
+      setValidatorErrorMsg(response.message);
+      setErrorMsg(response.response_data.message);
+      setSuccessMsg('');
+      setloadingOpen(false);
+     } 
+    })();
+  }
   
+  /** click delete function - cross sign */
+  const deleteCustomer=(IdCustomer)=>{
+      setDeleteCustomerId(IdCustomer)
+      setOpen(true);
+    }
   const handleDelete = (id) => {
     const deletedData= tableData.filter((word) => {
       return word.tableId !== id;
@@ -288,7 +310,8 @@ function applySortFilter(array, comparator, query) {
                 <b>{errorMsg}</b>
             </Alert>
             )}
-            <Typography variant="h3" mb={5}> Customer Transaction</Typography>     
+            <Typography variant="h3" mb={5}> Customer Transaction</Typography>  
+            <spam>Err: When date is chosen , date format is TFormat.</spam>   
               <ContentStyle>
                 <Stack spacing={4}>
                   <Stack spacing={2}>
@@ -354,7 +377,7 @@ function applySortFilter(array, comparator, query) {
                    {!edit &&  <Button  type="submit" size="large" variant="contained" onClick={clickSave}>
                       {t("Save")}           
                     </Button>}
-                   {edit && <Button  type="submit" size="large" variant="contained" onClick={clickSave}>
+                   {edit && <Button  type="submit" size="large" variant="contained" onClick={clickUpdate}>
                       {t("Update")}    
                     </Button>}                      
                 </Stack>

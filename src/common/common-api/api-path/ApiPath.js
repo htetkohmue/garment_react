@@ -39,12 +39,13 @@ export default {
   getCustomerList: 'api/customer/getCustomerList',
   getAllCustomerId: 'api/customer/getAllCustomerId',
   editCustomerData: 'api/customer/editCustomer',
+  updateCustomer: 'api/customer/updateCustomer',
   deleteCustomer: 'api/customer/deleteCustomer',
 
   storeCustomerTranction: 'api/customer-transaction-register/save',
   searchCustomerTranction: 'api/customer-transaction-list/search',
   editCustomerTranction: 'api/customer-transaction-list/edit',
-  updateCustomerTranction: 'api/customer-transaction-list/update',
-  deleteCustomerTranction: 'api/customer-transaction-list/destory',
+  updateCustomerTranction: 'api/customer-transaction-register/update',
+  deleteCustomerTranction: 'api/customer-transaction-list/destroy',
 
 };

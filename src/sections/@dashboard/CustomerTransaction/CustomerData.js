@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types';
 // material
 import { styled } from '@mui/material/styles';
-import { Toolbar, Tooltip, IconButton,FilledInput, Typography,FormControl,InputLabel, OutlinedInput, Autocomplete, InputAdornment, Popper,Box ,TextField  } from '@mui/material';
+// import { Toolbar, Tooltip, IconButton,FilledInput, Typography,FormControl,InputLabel, OutlinedInput, Autocomplete, InputAdornment, Popper,Box ,TextField  } from '@mui/material';
+import { Toolbar,Typography, OutlinedInput, Autocomplete, InputAdornment, Popper,Box ,TextField  } from '@mui/material';
+
 // component
 import Iconify from '../../../components/Iconify';
 import DatePicker from '../../../common/datepicker/DatePicker';
@@ -51,6 +53,8 @@ CustomerData.propTypes = {
 
 export default function CustomerData({ date,numSelected, filterName, onFilterName,IdCustomer,deleteCustomer,
   posts,handleChange}) {
+
+    console.log(numSelected);
 
   return (
     <RootStyle

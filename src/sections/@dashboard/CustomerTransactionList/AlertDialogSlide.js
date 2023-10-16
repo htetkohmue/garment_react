@@ -5,7 +5,6 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import Slide from '@mui/material/Slide';
 
 
 export default function AlertDialogSlide(props) {
@@ -18,15 +17,15 @@ export default function AlertDialogSlide(props) {
         onClose={(e) => props.handleClose()}
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>{"Do you really want to delete this tailor data?"}</DialogTitle>
+        <DialogTitle>{"Do you really want to delete this Customer Transaction Data?"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            Deleting Tailor Data
+            Deleting Customer Transaction Data
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={(e) => props.handleClose()}>Disagree</Button>
-          <Button onClick={(e) => props.Agree(props.deleteTailorId)}>Agree</Button>
+          <Button onClick={(e) => props.Agree(props.deleteCusTranId)}>Agree</Button>
         </DialogActions>
       </Dialog>
     </div>

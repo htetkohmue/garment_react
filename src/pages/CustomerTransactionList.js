@@ -9,7 +9,7 @@ import { ApiRequest } from '../common/common-api/api-request/ApiRequest';
 import Page from '../components/Page';
 
 // ----------------------------------------------
-import { CustomerData,FormLoad,ProductTable,TotalTable } from '../sections/@dashboard/CustomerTransactionList'
+import { CustomerData,FormLoad,ProductTable,TotalTable,AlertDialogSlide } from '../sections/@dashboard/CustomerTransactionList'
 import DatePicker from '../common/datepicker/DatePicker';
 import { ChangeDate } from '../common/ChangeDate';
 
@@ -64,6 +64,7 @@ function applySortFilter(array, comparator, query) {
     const [deleteCustomerId, setDeleteCustomerId] = useState([]);
     const [customerData, setCustomerData] = useState([]);
     const [selectedOptions, setSelectedOptions] = useState([]);
+    const [deleteCusTranId, setDeleteCusTranId] = useState([]);
 
     const [chooseFromDate, setchooseFromDate]       = useState(()=>ChangeDate(new Date()));
     const [chooseToDate, setchooseToDate]           = useState(()=>ChangeDate(new Date()));
@@ -164,12 +165,53 @@ function applySortFilter(array, comparator, query) {
       setpSize(value.props.name);
     }
 
-   
-     /** click delete function - cross sign */
-  const deleteCustomer=(IdCustomer)=>{
-    setDeleteCustomerId(IdCustomer)
-    setOpen(true);
-  }
+     /** click delete function for searchbox - cross sign */
+    const deleteCustomer=(IdCustomer)=>{
+      setDeleteCustomerId(IdCustomer)
+      setOpen(true);
+    }
+
+    /** Delete function Start */
+     /** Clear table */
+     const deleteCusTran = (id) => {
+      setDeleteCusTranId(id);
+      setOpen(true);
+    };
+
+    /** to Delete Customer Data */
+    const Agree = (deleteCusTranId) => {    
+      setOpen(false);
+      setloadingOpen(true);
+      (async () => {
+        const data = {"id": deleteCusTranId}
+        const obj = {url: ApiPath.deleteCustomerTranction, method: 'post', params:data};
+        const response = await ApiRequest(obj);
+        if (response.flag===true) {
+          
+          const deletedData= tableData.filter((word) => {
+            // return only not same table id that want to delete 
+            return word.id !== deleteCusTranId;
+          })
+          setTableData(deletedData)
+
+          setSuccessMsg(response.response_data.message);
+          setPost(post.filter(item => !deleteCusTranId.includes(item.id)));
+          setSelected([]);
+          setErrorMsg("");
+          setloadingOpen(false);
+        }
+        if (response.flag===false) {
+          setErrorMsg(response.message);
+          setSuccessMsg("");
+          setloadingOpen(false);
+        } 
+      })();
+    };
+
+     /** close alert box function */
+    const handleClose = () => {
+      setOpen(false);
+    };
  
   const handleChangechooseFromDate = (e) => {setchooseFromDate(e)}
   const handleChangechooseToDate = (e) => {setchooseToDate(e)}
@@ -198,13 +240,6 @@ function applySortFilter(array, comparator, query) {
       } 
     })();     
   } 
-  
-  const deleteCusTran = (id) => {
-    const deletedData= tableData.filter((word) => {
-      return word.id !== id;
-    })
-    setTableData(deletedData)
-  };
 
     return (
         <Page title="Customer Tranction">
@@ -219,7 +254,7 @@ function applySortFilter(array, comparator, query) {
                 <b>{errorMsg}</b>
             </Alert>
             )}
-            <Typography variant="h3" mb={5}> Customer Transaction List</Typography>     
+            <Typography variant="h3" mb={5}> Customer Transaction List</Typography>
               {/* <ContentStyle> */}
                 <Stack spacing={2}>
                   <Stack spacing={2}>
@@ -289,6 +324,7 @@ function applySortFilter(array, comparator, query) {
                     </Grid>
                     )}
                 </Stack>
+                {open && (<AlertDialogSlide open={open} Agree={Agree} handleClose={handleClose} deleteCusTranId={deleteCusTranId}/>)}
               {/* </ContentStyle> */}
           </Container>
         </Page>

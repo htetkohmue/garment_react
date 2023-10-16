@@ -97,23 +97,23 @@ const navConfig = [
       }
     ],
   },
-  {
-    title: 'Fabric',
-    path: '/dashboard/',
-    icon: getIcon('eva:shopping-bag-fill'),
-    children: [
-      {
-        title: "Fabric Register",
-        path: "/dashboard/",
-        icon: getIcon('eva:shopping-bag-fill'),
-      },
-      {
-        title: "Fabric List",
-        path: "/dashboard/",
-        icon: getIcon('eva:shopping-bag-fill'),
-      }
-    ],
-  },
+  // {
+  //   title: 'Fabric',
+  //   path: '/dashboard/',
+  //   icon: getIcon('eva:shopping-bag-fill'),
+  //   children: [
+  //     {
+  //       title: "Fabric Register",
+  //       path: "/dashboard/",
+  //       icon: getIcon('eva:shopping-bag-fill'),
+  //     },
+  //     {
+  //       title: "Fabric List",
+  //       path: "/dashboard/",
+  //       icon: getIcon('eva:shopping-bag-fill'),
+  //     }
+  //   ],
+  // },
   {
     title: 'Supplier Transaction',
     path : null,

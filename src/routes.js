@@ -41,6 +41,7 @@ export default function Router(props) {
         { path: 'product-list', element: <ProductList /> },
         { path: 'raws', element: <RawMaterial /> },
         { path: 'supplier-transaction-list', element: <SupplierTransactionList /> },
+        { path: 'customers-register', element: <CustomerRegister /> },
         { path: 'customers-register/:id', element: <CustomerRegister /> },
         { path: 'customers-list', element: <CustomerList /> },
         { path: 'customers-transaction', element: <CustomerTransaction /> },
