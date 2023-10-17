@@ -97,7 +97,7 @@ export default function UserListToolbar({ numSelected, filterName, onFilterName,
                             ...params.InputProps,
                             startAdornment: (
                               <InputAdornment position="start">
-                                {/* <Iconify icon={'eva:search-fill'} sx={{ ml: 1, width: 20, height: 20, color: 'red' }} /> */}
+                                <Iconify icon={'eva:search-fill'} sx={{ ml: 1, width: 20, height: 20, color: 'red' }} />
                               </InputAdornment>
                             ),
                           }}

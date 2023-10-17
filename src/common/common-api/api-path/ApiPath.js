@@ -55,4 +55,10 @@ export default {
   // Product
   getProductAll: 'api/product-in-list/getProductAll',
 
+  // Product In 
+  storeProductIn: 'api/product-in/store',
+  editProductIn: 'api/product-in/edit',
+  updateProductIn: 'api/product-in/update',
+  destroyProductIn: 'api/product-in/destroy',
+
 };

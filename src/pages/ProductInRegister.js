@@ -1,15 +1,11 @@
-import { faker } from '@faker-js/faker';
+
 // @mui
 import { useTheme,createTheme, ThemeProvider,styled} from '@mui/material/styles';
 import React, { useEffect, useState } from 'react'
-import { Grid, Container, Typography ,TextField , Card, CardHeaderTypeMap,Box, Stack,InputLabel,
-  Button } from '@mui/material';
-import Divider from '@mui/material/Divider';
-import Chip from '@mui/material/Chip';
+import { Grid, Container, Typography ,Alert , Card, Box, Stack, Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 // components
 import Page from '../components/Page';
-import Iconify from '../components/Iconify';
 // sections
 import {
   AppTasks,
@@ -216,11 +212,51 @@ export default function ProductInRegister() {
   
     const invoiceSubtotal = subtotal(tableData);
     const qtyTotal = qtytotal(tableData);
+
+    // Save Data
+    const clickSave = () => {
+      (async () => {
+        setloadingOpen(true);
+        const data = {tailor_id:tailor,product_data:tableData,total_qty:qtyTotal,total_amt:invoiceSubtotal,inDate:date}
+        const obj = {url: ApiPath.storeProductIn, method: 'post', params:data};
+        const response = await ApiRequest(obj);
+        if (response.flag===true) {
+          setSuccessMsg(response.response_data.message);
+          setValidatorErrorMsg([]);
+          setErrorMsg('');
+          setTableData([]);
+          setSize('');
+          setQty('');
+          setRate('');
+          setTailor('');
+          setProductName('');
+          setDate('');
+          setImageCancle(false);
+          setloadingOpen(false);
+       }
+       if (response.flag===false) {
+        setValidatorErrorMsg(response.message);
+        setErrorMsg(response.response_data.message);
+        setSuccessMsg('');
+        setloadingOpen(false);
+       } 
+      })();
+    }
   
   return (
    
     <Page title="ProductInRegister">
       <Container maxWidth="xl"  >
+            {successMsg && (
+            <Alert variant="filled" severity="info">
+                <b>{successMsg}</b>
+            </Alert>
+            )}
+            {errorMsg && (
+            <Alert variant="filled" severity="error">
+                <b>{errorMsg}</b>
+            </Alert>
+            )}
           <Typography variant="h3" gutterBottom>
               {t('Product In Registration')}
           </Typography>
@@ -284,7 +320,7 @@ export default function ProductInRegister() {
             {tableData.length>0 && (
             <Stack style={{marginBottom: '10px' ,marginTop: '10px',marginLeft: '10px',marginRight: '10px'}} justifyContent="center" alignItems="center">
                 <Stack direction={{ xs: 'column', sm: 'row' }} >
-                    <Button fullWidth size="large" variant="contained" onClick={clickAdd}>
+                    <Button fullWidth size="large" variant="contained" onClick={clickSave}>
                         {t('Save')}
                     </Button>
                 </Stack>
