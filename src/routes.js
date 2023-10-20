@@ -5,7 +5,8 @@ import LogoOnlyLayout from './layouts/LogoOnlyLayout';
 //
 import Blog from './pages/Blog';
 import TailorList from './pages/TailorList';
-import ProductList from './pages/ProductList';
+// import ProductList from './pages/ProductList';
+import ProductInList from './pages/ProductInList';
 import ProductInRegister from './pages/ProductInRegister';
 import Login from './pages/Login';
 import NotFound from './pages/Page404';
@@ -38,7 +39,8 @@ export default function Router(props) {
         { path: 'supplier', element: <Supplier /> },
         { path: 'tailors-register/:id', element: <TailorsRegister /> },
         { path: 'product-in-register', element: <ProductInRegister /> },
-        { path: 'product-list', element: <ProductList /> },
+        // { path: 'product-list', element: <ProductList /> },
+        { path: 'product-in-list', element: <ProductInList /> },
         { path: 'raws', element: <RawMaterial /> },
         { path: 'supplier-transaction-list', element: <SupplierTransactionList /> },
         { path: 'customers-register', element: <CustomerRegister /> },

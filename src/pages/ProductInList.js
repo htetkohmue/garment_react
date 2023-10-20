@@ -25,7 +25,7 @@ import Iconify from '../components/Iconify';
 import Page from '../components/Page';
 import Scrollbar from '../components/Scrollbar';
 // sections
-import { ProductSearch,TailorListToolbar,ProductInHead ,AlertDialogSlide,Loading } from '../sections/@dashboard/ProductInList';
+import { ProductSearch,TailorListToolbar,ProductInHead ,AlertDialogSlide,Loading, ProductInTable } from '../sections/@dashboard/ProductInList';
 import ApiPath from '../common/common-api/api-path/ApiPath';
 import {ApiRequest} from '../common/common-api/api-request/ApiRequest';
 import { ChangeDate } from '../common/ChangeDate';
@@ -61,7 +61,7 @@ import { ChangeDate } from '../common/ChangeDate';
   
   const path = process.env.REACT_APP_BACKEND_URL;
   
-  export default function ProductList(props) {
+  export default function ProductInList(props) {
     const navigate = useNavigate();
     const defaultPerPage = ApiPath.defaultPerPage;
     const [page, setPage] = useState(0);
@@ -286,7 +286,7 @@ import { ChangeDate } from '../common/ChangeDate';
     }
 
   return (
-  <Page title="Product List">
+  <Page title="Product In List">
     <Container>
         {successMsg && (
           <Alert variant="filled" severity="info">
@@ -299,7 +299,7 @@ import { ChangeDate } from '../common/ChangeDate';
           </Alert>
         )}
         <Typography variant="h4" sx={{ mb: 5 }}>
-          Product List
+          Product In List
         </Typography>
         <Stack style={{marginBottom: "2%"}}>
             <ProductSearch 
