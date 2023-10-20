@@ -32,8 +32,19 @@ Component
                     }
                     </Select>
 -------------------------------------------------------------
+cloud upload link 
+https://console.cloud.google.com/iam-admin/serviceaccounts/details/115502105339101621089?authuser=2&project=smart-axis-402313
+Learn Doc
+https://www.iankumu.com/blog/laravel-google-cloud-storage/
+-----------------------------------------------------------
 
+To Do 21/10/2023
 
+1.language ApiPath =>  'language' => 'en',
+2.error clear
+3.select box selected
+
+--------------------------------------------------------------
 
 
 

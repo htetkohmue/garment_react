@@ -249,7 +249,7 @@ import { ChangeDate } from '../common/ChangeDate';
       setOpen(false);
       setloadingOpen(true);
       (async () => {
-        const data = {tailor_id:tailorId, Date:EditDate, language:"en"};
+        const data = {tailor_id:tailorId, start_date:EditDate,end_date:EditDate, language:"en"};
         const obj = { url: ApiPath.searchProductIn, method: 'post', params: data };
         const response = await ApiRequest(obj);
         if (response.flag === true) {
@@ -269,7 +269,7 @@ import { ChangeDate } from '../common/ChangeDate';
       setOpen(false);
       setloadingOpen(true);
       (async () => {
-        const data = {tailor_id:tailorId, Date:deleteDate, language:"en"};
+        const data = {tailor_id:tailorId, start_date:deleteDate,end_date:deleteDate, language:"en"};
         const obj = { url: ApiPath.searchProductIn, method: 'post', params: data };
         const response = await ApiRequest(obj);
         if (response.flag === true) {

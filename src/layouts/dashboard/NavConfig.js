@@ -6,11 +6,11 @@ import Iconify from '../../components/Iconify';
 const getIcon = (name) => <Iconify icon={name} width={22} height={22} />;
 
 const navConfig = [
-  {
-    title: 'dashboard',
-    path: '/dashboard/app',
-    icon: getIcon('eva:pie-chart-2-fill'),
-  },
+  // {
+  //   title: 'dashboard',
+  //   path: '/dashboard/app',
+  //   icon: getIcon('eva:pie-chart-2-fill'),
+  // },
   {
     title: 'Suppliers',
     path: '/dashboard/',
@@ -20,9 +20,32 @@ const navConfig = [
         title: "Supplier",
         path: "/dashboard/supplier",
         icon: getIcon('eva:people-fill'),
-      }
+      },
+      {
+        title: "Supplier Transaction Register",
+        // path: "/dashboard/supplier_transaction-register",
+        path: "",
+        icon: getIcon('eva:person-add-fill'),
+      },
+      {
+        title: "Supplier Transaction List",
+        path: "/dashboard/supplier-transaction-list",
+        icon: getIcon('eva:people-fill'),
+      },
     ] 
   },
+  {
+    title: 'Raw Materials',
+    path: '/dashboard/',
+    icon: getIcon('eva:shopping-bag-fill'),
+    children: [
+      {
+        title: "Raw Material",
+        path: "/dashboard/raws",
+        icon: getIcon('eva:people-fill'),
+      }
+    ] 
+  }, 
   {
     title: 'Tailor',
     path : null,
@@ -70,18 +93,6 @@ const navConfig = [
     ],
   },
   {
-    title: 'Raw Materials',
-    path: '/dashboard/',
-    icon: getIcon('eva:shopping-bag-fill'),
-    children: [
-      {
-        title: "Raw Material",
-        path: "/dashboard/raws",
-        icon: getIcon('eva:people-fill'),
-      }
-    ] 
-  },  
-  {
     title: 'Product',
     path: '/dashboard/products',
     icon: getIcon('eva:shopping-bag-fill'),
@@ -109,65 +120,29 @@ const navConfig = [
     ],
   },
   // {
-  //   title: 'Fabric',
-  //   path: '/dashboard/',
-  //   icon: getIcon('eva:shopping-bag-fill'),
+  //   title: 'Data Management',
+  //   path : null,
+  //   icon: getIcon('eva:people-fill'),
   //   children: [
-  //     {
-  //       title: "Fabric Register",
-  //       path: "/dashboard/",
-  //       icon: getIcon('eva:shopping-bag-fill'),
-  //     },
-  //     {
-  //       title: "Fabric List",
-  //       path: "/dashboard/",
-  //       icon: getIcon('eva:shopping-bag-fill'),
-  //     }
+  //         {
+  //           title: "Data Import/Export",
+  //           path: "",
+  //           icon: getIcon('eva:person-add-fill'),
+  //         },
+  //         {
+  //           title: "Data Balance",
+  //           path: "",
+  //           icon: getIcon('eva:people-fill'),
+  //         },
+
   //   ],
   // },
-  {
-    title: 'Supplier Transaction',
-    path : null,
-    icon: getIcon('eva:people-fill'),
-    children: [
-          {
-            title: "Supplier Transaction Register",
-            // path: "/dashboard/supplier_transaction-register",
-            path: "",
-            icon: getIcon('eva:person-add-fill'),
-          },
-          {
-            title: "Supplier Transaction List",
-            path: "/dashboard/supplier-transaction-list",
-            icon: getIcon('eva:people-fill'),
-          },
-
-    ],
-  },
-  {
-    title: 'Data Management',
-    path : null,
-    icon: getIcon('eva:people-fill'),
-    children: [
-          {
-            title: "Data Import/Export",
-            path: "",
-            icon: getIcon('eva:person-add-fill'),
-          },
-          {
-            title: "Data Balance",
-            path: "",
-            icon: getIcon('eva:people-fill'),
-          },
-
-    ],
-  },
-  {
-    title: 'Home Page',
-    path: '/dashboard/',
-    icon: getIcon('eva:shopping-bag-fill'),
+  // {
+  //   title: 'Home Page',
+  //   path: '/dashboard/',
+  //   icon: getIcon('eva:shopping-bag-fill'),
     
-  },
+  // },
   // {
   //   title: 'blog',
   //   path: '/dashboard/blog',
