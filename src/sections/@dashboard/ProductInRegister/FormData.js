@@ -1,17 +1,13 @@
 import {
-     Container
-    , Stack
+     Stack
     ,Button
     , FormControl
     , InputLabel
     , Select
     , MenuItem
-    , FormHelperText 
     ,TextField
-    ,Alert
     ,Grid
     ,Card
-    ,CardHeader
     ,Box
 } from '@mui/material'
 
@@ -19,21 +15,21 @@ import React, { useState,useEffect } from 'react'
 import { useTranslation } from 'react-i18next';
 import {LocalizationProvider} from '@mui/lab';
 import AdapterDateFns from '@mui/lab/modern/AdapterDateFns';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import ApiPath from '../../../common/common-api/api-path/ApiPath';
-import { ApiRequest } from '../../../common/common-api/api-request/ApiRequest';
+// import Dialog from '@mui/material/Dialog';
+// import DialogActions from '@mui/material/DialogActions';
+// import DialogContent from '@mui/material/DialogContent';
+// import DialogTitle from '@mui/material/DialogTitle';
+// import ApiPath from '../../../common/common-api/api-path/ApiPath';
+// import { ApiRequest } from '../../../common/common-api/api-request/ApiRequest';
 
 import DatePicker from '../../../common/datepicker/DatePicker';
 
 
 function FormData(props) {
     const { t } = useTranslation();
-    const [open, setOpen] = React.useState(false);
-    const [successMsg, setSuccessMsg] = useState(''); // for success msg
-    const [errorMsg, setErrorMsg] = useState(''); // for error msg
+    // const [open, setOpen] = React.useState(false);
+    // const [successMsg, setSuccessMsg] = useState(''); // for success msg
+    // const [errorMsg, setErrorMsg] = useState(''); // for error msg
     const [selectedImage, setSelectedImage] = useState(null);
     const [imageUrl, setImageUrl] = useState(null);
     const [ImageName, setImageName] = useState(null);
@@ -133,8 +129,9 @@ function FormData(props) {
                     helperText={props.rateHelperText}
                 />
               </Stack>
+             
               <Stack style={{marginBottom: '20px' ,marginTop: '20px',marginLeft: '20px',marginRight: '20px'}} direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-              
+              {!props.edit && (
               <Card style={{height:'90px',width:'100%'}}>
                <input accept="image/*" type="file" id="select-image" style={{ display: 'none' }} onChange={e => setSelectedImage(e.target.files[0])}/>
                 <InputLabel htmlFor="select-image">
@@ -143,7 +140,11 @@ function FormData(props) {
                     </Button>
                 </InputLabel>
                 <InputLabel style={{marginTop: '10px',textAlign:'center'}}>{ImageName}</InputLabel>
-                </Card>
+                </Card>)}
+                {props.edit && (
+                    <Card style={{height:'90px',width:'100%'}}>Not Allow</Card>
+                )}
+                {!props.edit && (
                 <Card sx={{border:1}} style={{height:'200px',width:'100%'}}>
                 {/* <CardHeader  title={'Photo'} /> */}
                 {imageUrl && selectedImage && (
@@ -151,12 +152,15 @@ function FormData(props) {
                     <img src={imageUrl} alt={selectedImage.name} height="200px" width="100%"/>
                 </Box>
                 )}
-                </Card>
+                </Card>)}
+                {props.edit && (
+                    <Card style={{height:'200px',width:'100%'}}>Not Allow to edit Image here.</Card>
+                )}
               </Stack>
               </Card>
             </Grid>
-            <Grid item xs={11} md={6} lg={4}>
-             <Card >
+            <Grid item xs={11} md={6} lg={4} >
+             <Card style={{height:398}}>
                 <Stack style={{marginBottom: '20px' ,marginTop: '20px',marginLeft: '20px',marginRight: '20px'}} spacing={2}>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <DatePicker required
@@ -186,10 +190,8 @@ function FormData(props) {
                     }
                     </Select>
                     </FormControl>
-                    
               </Stack>
-              </Card>
-              <Card >
+              
                 <Stack spacing={3} style={{marginBottom: '50px' ,marginTop: '50px',marginLeft: '20px',marginRight: '20px'}} justifyContent="center" alignItems="center">
                     <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
                         <Button fullWidth size="large" variant="contained" onClick={(e) => props.clickAdd(selectedImage)}>

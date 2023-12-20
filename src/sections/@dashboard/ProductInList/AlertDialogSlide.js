@@ -26,7 +26,7 @@ export default function AlertDialogSlide(props) {
         </DialogContent>
         <DialogActions>
           <Button onClick={(e) => props.handleClose()}>Disagree</Button>
-          <Button onClick={(e) => props.Agree(props.deleteTailorId)}>Agree</Button>
+          <Button onClick={(e) => props.Agree(props.deletePinTranId)}>Agree</Button>
         </DialogActions>
       </Dialog>
     </div>

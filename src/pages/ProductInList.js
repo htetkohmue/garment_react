@@ -8,6 +8,7 @@ import { Container
   , Typography
   , Button
   , Card
+  , Grid
   , TableContainer
   , Table
   , TableBody
@@ -19,13 +20,15 @@ import { Container
   , Alert
   ,Tab 
   ,TablePagination } from '@mui/material';
+import Divider from '@mui/material/Divider';
+import Chip from '@mui/material/Chip';
 import {LoadingButton } from '@mui/lab';
 import Iconify from '../components/Iconify';
 // components
 import Page from '../components/Page';
 import Scrollbar from '../components/Scrollbar';
 // sections
-import { ProductSearch,TailorListToolbar,ProductInHead ,AlertDialogSlide,Loading, ProductInTable } from '../sections/@dashboard/ProductInList';
+import { ProductSearch,FormLoad,TailorListToolbar,ProductInHead ,AlertDialogSlide,Loading, ProductInTable, TotalTable } from '../sections/@dashboard/ProductInList';
 import ApiPath from '../common/common-api/api-path/ApiPath';
 import {ApiRequest} from '../common/common-api/api-request/ApiRequest';
 import { ChangeDate } from '../common/ChangeDate';
@@ -85,8 +88,17 @@ import { ChangeDate } from '../common/ChangeDate';
 
     const [start, setStart] =useState(()=>ChangeDate(new Date()));
     const [end, setEnd] =useState(()=>ChangeDate(new Date()));
-    const [searchTailorId, setSearchTailorId] = useState();   
-
+    const [searchTailorId, setSearchTailorId] = useState("");  
+    
+    const [productSize,setproductSize]=useState('');
+    const [productName,setproductName]=useState('');
+    const [productQty,setProductQty]=useState('');
+    const [productPrice,setProductPrice]=useState('');
+    const [pName,setpName]=useState('');
+    const [pSize,setpSize]=useState('');
+    const [productNameData,setproductNameData]=useState([]);
+    const [productSizeData,setproductSizeData]=useState([]);
+    const [deletePinTranId, setDeletePinTranId] = useState([]);
 
     const TABLE_HEAD = [
       // { id: 'id', label: 'No', alignRight: false },
@@ -112,6 +124,43 @@ import { ChangeDate } from '../common/ChangeDate';
       } 
   })();
     }, []);
+
+    /* Formload get Products Name */
+    useEffect(() => {(async () => {
+      const data = {}
+      const obj = {url: ApiPath.getProductNames, method: 'get', params:data};
+      const response = await ApiRequest(obj);
+      if (response.flag===true) {
+        setproductNameData(response.response_data.data);
+      }
+      if (response.flag===false) {
+        setErrorMsg(response.message);
+        setSuccessMsg("");
+      } 
+    })();
+    }, []);
+
+       /* change name */
+       const changeproductName = (event, value) =>{
+        (async () => {
+          setproductName(value.props.value);
+          setpName(value.props.name);
+           const data = {product_id:event.target.value}
+           const obj = {url: ApiPath.getProductNameByID, method: 'post', params:data};
+            const response = await ApiRequest(obj);
+            if (response.flag===true) {
+              setproductSizeData(response.response_data.data);
+            }
+            if (response.flag===false) {
+              setproductSizeData("");
+            }  
+        })();
+      }
+  
+      const changeproductsize = (event,  value) => {
+        setproductSize(value.props.value);
+        setpSize(value.props.name);
+      }
   
     const handleRequestSort = (event, property) => {
       const isAsc = orderBy === property && order === 'asc';
@@ -183,33 +232,40 @@ import { ChangeDate } from '../common/ChangeDate';
       setOpen(true);
     }
 
+    /** Delete function Start */
+     /** Clear table */
+     const deletePinTran = (id) => {
+      setDeletePinTranId(id);
+      setOpen(true);
+    };
+
      /** close alert box function */
     const handleClose = () => {
       setOpen(false);
     };
-     /** alert Delete  Agree function */
-     /** to Delete Tailor Data */
-     const Agree = (deleteTailorId) => {
-      setOpen(false);
-      setloadingOpen(true);
-      (async () => {
-        const data = {"tailor_id": deleteTailorId}
-        const obj = {url: ApiPath.deleteTailorData, method: 'post', params:data};
-        const response = await ApiRequest(obj);
-        if (response.flag===true) {
-          setSuccessMsg(response.response_data.message);
-          setPost(post.filter(item => !deleteTailorId.includes(item.id)));
-          setSelected([]);
-          setErrorMsg("");
-          setloadingOpen(false);
-        }
-        if (response.flag===false) {
-          setErrorMsg(response.message);
-          setSuccessMsg("");
-          setloadingOpen(false);
-        } 
-      })();
-    };
+    //  /** alert Delete  Agree function */
+    //  /** to Delete Tailor Data */
+    //  const Agree = (deleteTailorId) => {
+    //   setOpen(false);
+    //   setloadingOpen(true);
+    //   (async () => {
+    //     const data = {"tailor_id": deleteTailorId}
+    //     const obj = {url: ApiPath.deleteTailorData, method: 'post', params:data};
+    //     const response = await ApiRequest(obj);
+    //     if (response.flag===true) {
+    //       setSuccessMsg(response.response_data.message);
+    //       setPost(post.filter(item => !deleteTailorId.includes(item.id)));
+    //       setSelected([]);
+    //       setErrorMsg("");
+    //       setloadingOpen(false);
+    //     }
+    //     if (response.flag===false) {
+    //       setErrorMsg(response.message);
+    //       setSuccessMsg("");
+    //       setloadingOpen(false);
+    //     } 
+    //   })();
+    // };
 
   /** click delete function */
   const selectedFromDate=(date)=>{
@@ -224,9 +280,10 @@ import { ChangeDate } from '../common/ChangeDate';
       setOpen(false);
       setloadingOpen(true);
       (async () => {
-        const data = {tailor_id:searchTailorId,tailor_name:filterName,"start_date":start,"end_date":end, language:"en"};
+        const data = {tailor_id:searchTailorId,tailor_name:filterName,"start_date":start,"end_date":end,"product_name":productName,"product_size":productSize, language:"en"};
         const obj = { url: ApiPath.searchProductIn, method: 'post', params: data };
         const response = await ApiRequest(obj);
+        
         if (response.flag === true) {
           setProductInAPI(response.response_data.data);
           setTotalRow(response.response_data.row_count);
@@ -244,46 +301,57 @@ import { ChangeDate } from '../common/ChangeDate';
         }
       })();
     }
-    
-    const editProductIn = (event, tailorId, EditDate) => {   
-      setOpen(false);
-      setloadingOpen(true);
-      (async () => {
-        const data = {tailor_id:tailorId, start_date:EditDate,end_date:EditDate, language:"en"};
-        const obj = { url: ApiPath.searchProductIn, method: 'post', params: data };
-        const response = await ApiRequest(obj);
-        if (response.flag === true) {
-          setSuccessMsg(response.response_data.message);
-          setErrorMsg("");
-          setloadingOpen(false);
-        }
-        if (response.flag === false) {
-          setErrorMsg(response.message);
-          setSuccessMsg("");
-          setloadingOpen(false);
-        }
-      })();
-    }
 
-    const deleteProductIn = (event, tailorId, deleteDate) => {   
+    // const deleteProductIn = (event, tailorId, deleteDate) => {   
+    //   setOpen(false);
+    //   setloadingOpen(true);
+    //   (async () => {
+    //     const data = {tailor_id:tailorId, start_date:deleteDate,end_date:deleteDate, language:"en"};
+    //     const obj = { url: ApiPath.searchProductIn, method: 'post', params: data };
+    //     const response = await ApiRequest(obj);
+    //     if (response.flag === true) {
+    //       setSuccessMsg(response.response_data.message);
+    //       setErrorMsg("");
+    //       setloadingOpen(false);
+    //     }
+    //     if (response.flag === false) {
+    //       setErrorMsg(response.message);
+    //       setSuccessMsg("");
+    //       setloadingOpen(false);
+    //     }
+    //   })();
+    // }
+
+    /** to Delete Product In Data */
+    const Agree = (deletePinTranId) => {  
+      console.log(deletePinTranId);
       setOpen(false);
       setloadingOpen(true);
       (async () => {
-        const data = {tailor_id:tailorId, start_date:deleteDate,end_date:deleteDate, language:"en"};
-        const obj = { url: ApiPath.searchProductIn, method: 'post', params: data };
+        const data = {"id": deletePinTranId}
+        const obj = {url: ApiPath.destroyProductIn, method: 'post', params:data};
         const response = await ApiRequest(obj);
-        if (response.flag === true) {
+        if (response.flag===true) {
+          
+          const deletedData= ProductInAPI.filter((word) => {
+            // return only not same table id that want to delete 
+            return word.id !== deletePinTranId;
+          })
+          setProductInAPI(deletedData)
+
           setSuccessMsg(response.response_data.message);
+          setPost(post.filter(item => !deletePinTranId.includes(item.id)));
+          setSelected([]);
           setErrorMsg("");
           setloadingOpen(false);
         }
-        if (response.flag === false) {
+        if (response.flag===false) {
           setErrorMsg(response.message);
           setSuccessMsg("");
           setloadingOpen(false);
-        }
+        } 
       })();
-    }
+    };
 
   return (
   <Page title="Product In List">
@@ -301,15 +369,10 @@ import { ChangeDate } from '../common/ChangeDate';
         <Typography variant="h4" sx={{ mb: 5 }}>
           Product In List
         </Typography>
-        <Stack style={{marginBottom: "2%"}}>
-            <ProductSearch 
-            start={start} 
-            end={end} 
-            selectedFromDate={selectedFromDate} 
-            selectedToDate={selectedToDate} 
-            />
-        </Stack>
-        <Stack style={{marginBottom: "2%"}}>
+        <Stack style={{marginBottom: "2%"}} spacing={2}>
+          <Divider textAlign="left">
+            <Chip label="Customer Data" />
+          </Divider>
             <TailorListToolbar  
             handleChange={handleChange}  
             posts={post} 
@@ -320,7 +383,37 @@ import { ChangeDate } from '../common/ChangeDate';
             onFilterName={handleFilterByName}
             />
         </Stack>
-         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>          
+        <Stack style={{marginBottom: "2%"}} spacing={2}>
+            <Divider textAlign="left">
+              <Chip label="Choose Date" />
+            </Divider> 
+            <ProductSearch 
+            start={start} 
+            end={end} 
+            selectedFromDate={selectedFromDate} 
+            selectedToDate={selectedToDate} 
+            />
+        </Stack>
+        <Stack spacing={2}>
+            <Divider textAlign="left">
+              <Chip label="Product Data" />
+            </Divider>
+              <FormLoad 
+                productQty={productQty}
+                changeProductQty={(e) => setProductQty(e.target.value)}
+                productPrice={productPrice}
+                changeProductPrice={(e) => setProductPrice(e.target.value)}
+                productName={productName}
+                handleChangeproductName={changeproductName}
+                productSize={productSize}
+                handleChangeproductSize={changeproductsize}
+                productNameData={productNameData}
+                productSizeData={productSizeData}
+                pName={pName}
+                pSize={pSize}
+              />
+          </Stack>
+         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} style={{marginTop:'2%'}}>        
           <Button style={{marginLeft:"19%",marginBottom:"2%"}}  size="large" variant="contained" onClick={GotoSearch} >
            Search
         </Button>
@@ -329,104 +422,33 @@ import { ChangeDate } from '../common/ChangeDate';
         
       {ProductInAPI.length > 0 && (
         <Card>
-          <Scrollbar>
-              <TableContainer sx={{ minWidth: 800 }}>
-                    {filteredProductIn.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                      const { key , id , Date , tailorId , name , totalQty , totalAmt,allData} = row;
-                      const isItemSelected = selected.indexOf(id) !== -1;
-                      return (
-                        <Table style={{margin: "1%",border: "1px solid #919eab", width: "98%",borderRadius:'10px'}} id="main">
-                          <TableBody>
-                          <TableRow 
-                          key={id}
-                          tabIndex={-1}                          
-                          selected={isItemSelected}
-                          aria-checked={isItemSelected}>
+            <Scrollbar>             
+              {ProductInAPI.map((datas,key) => (
+                  <Grid item xs={12} md={6} lg={10}>
+                  <Card> 
+                      <ProductInTable deletePinTran={deletePinTran} tableDatas={datas}/>
+                  </Card>
+                  </Grid>))}
+                  {ProductInAPI.length>0 && (
+                    <Grid item xs={12} md={6} lg={10}>
+                    <Card>
+                      <TotalTable  filterName={filterName} tableDatas={ProductInAPI} />
+                    </Card>
+                    </Grid>
+                    )}
+            </Scrollbar>
+            {open && (<AlertDialogSlide open={open} Agree={Agree} handleClose={handleClose} deletePinTranId={deletePinTranId}/>)}
 
-                          <TableCell align="left" rowSpan={4} width="2%">{key}</TableCell>
-                          <TableCell align="left" rowSpan={4}  width="10%">{Date}</TableCell>
-                          <TableCell align="left">{tailorId} -  {name}</TableCell>
-                          <TableCell align="right" width="4%">
-                          <Tooltip title="edit">
-                              <IconButton aria-label="edit" onClick={(event) => editProductIn(event, tailorId, Date)}>
-                                <Iconify icon="akar-icons:edit" />
-                              </IconButton>
-                            </Tooltip>
-                          </TableCell>
-                          <TableCell align="right" width="4%">
-                          <Tooltip title="delete">
-                              <IconButton aria-label="delete" onClick={(event) => deleteProductIn(event, tailorId, Date)}>
-                                <Iconify icon="eva:trash-2-outline" />
-                              </IconButton>
-                            </Tooltip>
-                          </TableCell>
-                          </TableRow>
-                          <TableRow>
-                          
-                          <Table id="sub">
-                            <ProductInHead
-                                order={order}
-                                orderBy={orderBy}
-                                headLabel={TABLE_HEAD}
-                                numSelected={selected.length}
-                                onRequestSort={handleRequestSort}
-                                onSelectAllClick={handleSelectAllClick}
-                              />
-                            <TableBody>
-                            {/* filteredProductIn.key.allData */}
-                          {allData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                              const {  productName, size ,  price , qty , totalAmount } = row;
-                              const isItemSelected = selected.indexOf(id) !== -1;
-                              return (
-                                  <TableRow>
-                                    {/* <TableCell align="left">{id}</TableCell> */}
-                                    <TableCell align="left">{productName}</TableCell>
-                                    <TableCell align="left">{size}</TableCell>
-                                    <TableCell align="left">{price}</TableCell>
-                                    <TableCell align="left">{qty}</TableCell>
-                                    <TableCell align="left">{totalAmount}</TableCell>
-                                  </TableRow>
-                              );
-                            })}
-                            <TableRow>
-                                <TableCell align="center">Total</TableCell>
-                                <TableCell align="left">-</TableCell>
-                                <TableCell align="left">-</TableCell>
-                                <TableCell align="left">{totalQty}</TableCell>
-                                <TableCell align="left">{totalAmt}</TableCell>
-                            </TableRow>
-                             </TableBody>
-                            </Table>
-                           </TableRow>
-                                                   
-                          <TableRow>
-                              <TableCell align="center">{key}</TableCell>
-                              <TableCell align="right">
-                                  <Tooltip title="Print">
-                                    <IconButton aria-label="Print" >
-                                      <Iconify icon="oi:print" />
-                                    </IconButton>
-                                </Tooltip>
-                               </TableCell>
-                            </TableRow>
-                          </TableBody>
-                        </Table>
-                      );
-                    })}
-              </TableContainer>
-              </Scrollbar>
-              {open && (<AlertDialogSlide open={open} Agree={Agree} handleClose={handleClose}/>)}
-
-              <TablePagination
-                rowsPerPageOptions={[5, 10, 25]}
-                component="div"
-                count={post.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-              />
-          </Card>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={post.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+        </Card>
       )}
       </stack>
     </Container>

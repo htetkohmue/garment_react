@@ -15,7 +15,7 @@ import { borderBottom } from '@mui/system';
 import Iconify from '../../../components/Iconify';
 
 
-export default function ProductTable(props,editCusTranId) {
+export default function ProductInTable(props) {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const ref                 = useRef(null);
@@ -24,18 +24,18 @@ export default function ProductTable(props,editCusTranId) {
   const [deleteCusTran, setdeleteCusTran] = useState([]);
   const [deleteId, setDeleteId] = useState([]);
   const [Id, setId] = useState([]);
-
+ 
   return (
     <TableContainer component={Paper}>
       <Table>
       <TableRow> 
-          <TableCell align="left" rowSpan={4}>{props.tableDatas.tran_date}</TableCell>
-          <TableCell align="left">{props.tableDatas.customer_id} - {props.tableDatas.name_mm}</TableCell>
+          <TableCell align="left" rowSpan={4}>{props.tableDatas.date}</TableCell>
+          <TableCell align="left">{props.tableDatas.tailor_id} - {props.tableDatas.name_mm}</TableCell>
           <TableCell align="right" width="4%">
             
           <Tooltip title="edit">
             {/* continue */}
-              <IconButton component={RouterLink} to={`/dashboard/customers-transaction/${props.tableDatas.id}`}>
+              <IconButton component={RouterLink} to={`/dashboard/product-in-register/${props.tableDatas.id}`}>
                 <Iconify icon="akar-icons:edit" />
               </IconButton>
             </Tooltip>
@@ -65,13 +65,13 @@ export default function ProductTable(props,editCusTranId) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {props.tableDatas.cus_tran_data.map((row,key) => (
+          {props.tableDatas.product_tran_data.map((row,key) => (
             <TableRow key={key}>
               <TableCell align="right" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>{key+1}</TableCell>
               <TableCell align="right" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>{row.product_id}</TableCell>
               <TableCell align="right" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>{row.product_name}</TableCell>
               <TableCell align="right" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>{row.size_id}</TableCell>
-              <TableCell align="right" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>{row.size}</TableCell>
+              <TableCell align="right" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>{row.size_name}</TableCell>
               <TableCell align="right" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>{row.qty}</TableCell>
               <TableCell align="right" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>{row.price}</TableCell>
               <TableCell align="right" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>=</TableCell>
@@ -108,9 +108,9 @@ export default function ProductTable(props,editCusTranId) {
           ))}
           <TableRow >
             <TableCell align="right" colSpan={5} style={{color:'bold'}}><b>{t('Total')}</b></TableCell>
-            <TableCell align="right" ><b>{props.tableDatas.total_qty}</b></TableCell>
+            <TableCell align="right" ><b>{props.tableDatas.totalQty}</b></TableCell>
             <TableCell colSpan={2} > </TableCell>
-            <TableCell align="right" ><b>{props.tableDatas.total_amt}</b></TableCell>
+            <TableCell align="right" ><b>{props.tableDatas.totalAmt}</b></TableCell>
           </TableRow>
         </TableBody>
       </Table>

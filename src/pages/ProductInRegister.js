@@ -2,6 +2,7 @@
 // @mui
 import { useTheme,createTheme, ThemeProvider,styled} from '@mui/material/styles';
 import React, { useEffect, useState } from 'react'
+import { Link as RouterLink, useParams } from 'react-router-dom';
 import { Grid, Container, Typography ,Alert , Card, Box, Stack, Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 // components
@@ -37,11 +38,13 @@ export default function ProductInRegister() {
   const [successMsg, setSuccessMsg] = useState(''); // for success msg
   const [validatorErrorMsg, setValidatorErrorMsg] = useState([]); // for valid msg
   const [errorMsg, setErrorMsg] = useState(''); // for error msg
-  const [values, setValues] = useState([]); // for values
+  // const [values, setValues] = useState([]); // for values
+  // const [post, setPost] = useState([]); // for values
   const [edit, setEdit] = useState(false); // for values
   const [loadingOpen, setloadingOpen] = useState(false); // for values
 
   const [productNameAll, setProductNameAll]   = useState([]);
+  const [open, setOpen] = useState(false);
   const [fabricName, setFabricName]   = useState('');
   const [sizesAll, setSizesAll]   = useState('');
   const [size, setSize]   = useState('');
@@ -78,6 +81,7 @@ export default function ProductInRegister() {
   const [pSize,setpSize]=useState('');
   const [productNameData,setproductNameData]=useState([]);
   const [productSizeData,setProductSizeData]=useState([]);
+  const [ProductInAPI, setProductInAPI] = useState([]);
 
   const darkTheme = createTheme({ palette: { mode: 'dark' } });
   const lightTheme = createTheme({ palette: { mode: 'light' } });
@@ -119,6 +123,46 @@ export default function ProductInRegister() {
       } 
   })();
     }, []);
+
+    // Edit
+    const { id, setId } = useParams();
+    useEffect(() => {
+      setOpen(false);
+      setloadingOpen(true);
+      (async () => {
+        const data = {language:"en"};
+        const apiPath = ApiPath.editProductIn;
+        const obj = { url: `${apiPath}/${id}`, method: 'get', params: data };
+        const response = await ApiRequest(obj);
+        if (id != null && response.flag === true) {
+          setEdit(true);
+          setDate(response.response_data.data.date);
+       
+          // setValues({
+          //   customerId: response.response_data.data.customer_id,
+          // });
+          // setPost(post.filter(data =>data.customerId === response.response_data.data.customer_id));
+          // setCustomerId(response.response_data.data.customer_id);
+
+          setImageUrl(response.response_data.data.imageUrl);
+          setImageName(response.response_data.data.imageName);
+          setTailor(response.response_data.data.name_mm);
+          setTableData(response.response_data.data.product_tran_data);
+          setTotalTableData(response.response_data.data.product_tran_data);
+          
+          setErrorMsg("");
+          setloadingOpen(false);
+        }
+        if (id != null && response.flag === false) {
+          setErrorMsg(response.message);
+          setSuccessMsg("");
+          setloadingOpen(false);
+        }
+      })();
+    }, []);
+
+    // update
+    
 
     /* change name */
     const changeproductName = (event, value) =>{
@@ -182,7 +226,7 @@ export default function ProductInRegister() {
       })
       setTableData(deletedData)
     };
-
+  
     const groupByName = tableData.reduce((group, product) => {
       const { name } = product;
       group[name] = group[name] ?? [];
@@ -190,6 +234,7 @@ export default function ProductInRegister() {
       return group;
     }, []);
 
+    
     const groupByImage = imageArr.reduce((group, image) => {
       const { name } = image;
       group[name] = group[name] ?? [];
@@ -243,6 +288,30 @@ export default function ProductInRegister() {
       })();
     }
   
+    // update
+    const clickUpdate  = () => {
+      (async () => {
+        const data = {tailor_id:tailor,product_data:tableData,total_qty:qtyTotal,total_amt:invoiceSubtotal,inDate:date}
+        const path = ApiPath.updateProductIn;
+        const obj = { url: `${path}/${id}`, method: 'put', params: data };
+        const response = await ApiRequest(obj);
+        console.log(response);
+        if (response.flag===true) {
+          setSuccessMsg(response.response_data.message);
+          setValidatorErrorMsg([]);
+          setErrorMsg('');
+          setTableData([]);
+          setloadingOpen(false);
+       }
+       if (response.flag===false) {
+        setValidatorErrorMsg(response.message);
+        setErrorMsg(response.response_data.message);
+        setSuccessMsg('');
+        setloadingOpen(false);
+       } 
+      })();
+    }
+
   return (
    
     <Page title="ProductInRegister">
@@ -287,6 +356,8 @@ export default function ProductInRegister() {
               productSizeData={productSizeData}
               pName={pName}
               pSize={pSize}
+              edit={edit}
+              // post={post}
             />
           </Grid>
           <br/>
@@ -302,31 +373,36 @@ export default function ProductInRegister() {
             <Grid item xs={12} md={6} lg={2}>
               <Card>
                 <Box textAlign="center">
-                {groupByImage[key].map((imageData,key) => (
-                  <img src={imageData.imageUrl} alt={imageData.imageName} height="200px" width="100%"/>))}
+                {!edit && (groupByImage[key].map((imageData,key) => (
+                  <img src={imageData.imageUrl} alt={imageData.imageName} height="200px" width="100%"/>)))
+                }
                 </Box>
               </Card>
               <br/>
               </Grid>
             </Grid>))}
             {tableData.length>0 && (
+            <Grid container>
             <Grid item xs={12} md={6} lg={10}>
             <Card>
               <TotalTable  tailor={tailor} date={date} invoiceSubtotal={invoiceSubtotal} qtyTotal={qtyTotal} />
             </Card>
             </Grid>
+            </Grid>
              )}
             <br/>
             {tableData.length>0 && (
+           
             <Stack style={{marginBottom: '10px' ,marginTop: '10px',marginLeft: '10px',marginRight: '10px'}} justifyContent="center" alignItems="center">
                 <Stack direction={{ xs: 'column', sm: 'row' }} >
-                    <Button fullWidth size="large" variant="contained" onClick={clickSave}>
-                        {t('Save')}
-                    </Button>
+                {!edit &&  <Button  type="submit" size="large" variant="contained" onClick={clickSave}>
+                      {t("Save")}           
+                    </Button>}
+                {edit && <Button  type="submit" size="large" variant="contained" onClick={clickUpdate}>
+                  {t("Update")}    
+                </Button>}     
                 </Stack>
-            </Stack>)}
-           
-             
+            </Stack>)} 
       </Container>
     </Page>
    

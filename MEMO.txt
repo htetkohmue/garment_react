@@ -52,6 +52,14 @@ For new Front MenuItem
  3.pages/
  4.section/dashboard
  --------------------------------------------------------------
- 
+ Tomorrow  21/10/2023
+to do total table in productinlist
+add product name and id change design
+
+Tomorrow 22/10/2023
+DB transaction
+validation
+Proplem : product in register is save for first time
+
 
 

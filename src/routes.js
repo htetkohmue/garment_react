@@ -39,6 +39,7 @@ export default function Router(props) {
         { path: 'supplier', element: <Supplier /> },
         { path: 'tailors-register/:id', element: <TailorsRegister /> },
         { path: 'product-in-register', element: <ProductInRegister /> },
+        { path: 'product-in-register/:id', element: <ProductInRegister /> },
         // { path: 'product-list', element: <ProductList /> },
         { path: 'product-in-list', element: <ProductInList /> },
         { path: 'raws', element: <RawMaterial /> },
