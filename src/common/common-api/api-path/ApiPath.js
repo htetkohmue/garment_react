@@ -27,8 +27,8 @@ export default {
   searchTailor: 'api/product-in-list/searchTailor',
   searchTailorByID: 'api/product-in-list/searchTailorByID',
   searchProductIn: 'api/product-in-list/search-product',
-  getProductNames: 'api/product/get-product-names',
-  getProductNameByID: 'api/product/get-product-sizes-by-name',
+  getProductNames: 'api/product-list/get-product-names',
+  getProductNameByID: 'api/product-list/get-product-sizes-by-name',
 
   // Customer
   getTownship:  'api/township/getTownship',
@@ -36,6 +36,9 @@ export default {
 
   // size
   getSizes:  'api/sizes/getsizes',
+
+  // category
+  getCategories:  'api/categories/getCategory',
 
   // Customer
   storeCustomer: 'api/customer/storeCustomer',
@@ -52,13 +55,25 @@ export default {
   updateCustomerTranction: 'api/customer-transaction-register/update',
   deleteCustomerTranction: 'api/customer-transaction-list/destroy',
 
-  // Product
+  // Product list
   getProductAll: 'api/product-in-list/getProductAll',
+
+  // Product
+  createProduct: 'api/product/create',
+  createProductSize: 'api/product/createProductSize',
 
   // Product In 
   storeProductIn: 'api/product-in/store',
   editProductIn: 'api/product-in/edit',
   updateProductIn: 'api/product-in/update',
   destroyProductIn: 'api/product-in/destroy',
+
+  // Tailor Raw
+  createTailorRawTransaction: 'api/tailor-raw/createTailorRawTransaction',
+  searchTailorRaw: 'api/tailor-raw/search',
+  storeTailorRaw: 'api/tailor-raw/store',
+  editTailorRaw: 'api/tailor-raw/edit',
+  updateTailorRaw: 'api/tailor-raw/update',
+  destroyTailorRaw: 'api/tailor-raw/destroy',
 
 };

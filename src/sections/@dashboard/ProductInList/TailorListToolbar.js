@@ -111,6 +111,7 @@ export default function UserListToolbar({ numSelected, filterName, onFilterName,
                     </Typography>
                   ) : (
                     <TextField
+                      disabled
                       sx={{ width: 260 }}
                       value={filterName}
                       onChange={onFilterName}

@@ -15,9 +15,10 @@ import { Stack
         return (
             <>
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-                <FormControl fullWidth >
+                <FormControl halfWidth >
                     <InputLabel id="demo-simple-select-required-label">Product Name *</InputLabel>
                     <Select
+                    sx={{ width: 260 }}
                     value={props.productName}
                     name={props.pName}
                     label={t("Product Name *")}
@@ -32,9 +33,10 @@ import { Stack
                         }
                     </Select>
                 </FormControl>
-                <FormControl fullWidth >
+                <FormControl halfWidth >
                     <InputLabel id="demo-simple-select-required-label">Size *</InputLabel>
                     <Select
+                    sx={{ width: 260 }}
                     labelId="demo-simple-select-required-label"
                     id="demo-simple-select-required"
                     value={props.productSize}

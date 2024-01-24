@@ -104,7 +104,7 @@ const navConfig = [
       // },
       {
         title: "Tailor Raw Transaction",
-        path: "",
+        path: "/dashboard/tailor-raw-transaction",
         icon: getIcon('eva:shopping-bag-fill'),
       },
       {

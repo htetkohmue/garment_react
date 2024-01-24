@@ -369,9 +369,10 @@ import { ChangeDate } from '../common/ChangeDate';
         <Typography variant="h4" sx={{ mb: 5 }}>
           Product In List
         </Typography>
+        
         <Stack style={{marginBottom: "2%"}} spacing={2}>
           <Divider textAlign="left">
-            <Chip label="Customer Data" />
+            <Chip label="Tailor Data" />
           </Divider>
             <TailorListToolbar  
             handleChange={handleChange}  
@@ -381,17 +382,6 @@ import { ChangeDate } from '../common/ChangeDate';
             numSelected={selected.length} 
             filterName={filterName} 
             onFilterName={handleFilterByName}
-            />
-        </Stack>
-        <Stack style={{marginBottom: "2%"}} spacing={2}>
-            <Divider textAlign="left">
-              <Chip label="Choose Date" />
-            </Divider> 
-            <ProductSearch 
-            start={start} 
-            end={end} 
-            selectedFromDate={selectedFromDate} 
-            selectedToDate={selectedToDate} 
             />
         </Stack>
         <Stack spacing={2}>
@@ -418,7 +408,7 @@ import { ChangeDate } from '../common/ChangeDate';
            Search
         </Button>
       </Stack>
-      <stack style={{marginTop: "3%"}}>
+      <Stack style={{marginTop: "3%"}}>
         
       {ProductInAPI.length > 0 && (
         <Card>
@@ -450,7 +440,7 @@ import { ChangeDate } from '../common/ChangeDate';
             />
         </Card>
       )}
-      </stack>
+      </Stack>
     </Container>
   </Page>
   );
