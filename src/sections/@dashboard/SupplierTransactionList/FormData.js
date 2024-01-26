@@ -41,6 +41,7 @@ function FormData(props) {
                     label="Supplier Name *"
                     onChange={props.handleChangeSupplierName}
                     >
+                       <MenuItem key="" value="" name="">--Select--</MenuItem>
                        {
                             props.supplierAPI.length > 0 &&
                             props.supplierAPI.map((item,index)=>{
@@ -61,6 +62,7 @@ function FormData(props) {
                     label={t("Raw Material Name")}
                     onChange={props.handleChangeMaterialName}
                     >
+                    <MenuItem key="" value="" name="">--Select--</MenuItem>
                     {
                         props.materialAPI.length > 0 &&
                         props.materialAPI.map((item,index)=>{

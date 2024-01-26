@@ -1,8 +1,8 @@
 // ----------------------------------------------------------------------
 
 const account = {
-  displayName: 'User',
-  email: 'htetkohmue786@gmail.com',
+  displayName: 'Tin Nwe Aye',
+  email: 'tinnweaye@gmail.com',
   photoURL: '/static/mock-images/avatars/avatar_default.jpg',
 };
 

@@ -6,33 +6,10 @@ import Iconify from '../../components/Iconify';
 const getIcon = (name) => <Iconify icon={name} width={22} height={22} />;
 
 const navConfig = [
-  // {
-  //   title: 'dashboard',
-  //   path: '/dashboard/app',
-  //   icon: getIcon('eva:pie-chart-2-fill'),
-  // },
   {
-    title: 'Suppliers',
-    path: '/dashboard/',
-    icon: getIcon('eva:shopping-bag-fill'),
-    children: [
-      {
-        title: "Supplier",
-        path: "/dashboard/supplier",
-        icon: getIcon('eva:people-fill'),
-      },
-      {
-        title: "Supplier Transaction Register",
-        // path: "/dashboard/supplier_transaction-register",
-        path: "",
-        icon: getIcon('eva:person-add-fill'),
-      },
-      {
-        title: "Supplier Transaction List",
-        path: "/dashboard/supplier-transaction-list",
-        icon: getIcon('eva:people-fill'),
-      },
-    ] 
+    title: 'dashboard',
+    path: '/dashboard/app',
+    icon: getIcon('eva:pie-chart-2-fill'),
   },
   {
     title: 'Raw Materials',
@@ -45,10 +22,32 @@ const navConfig = [
         icon: getIcon('eva:people-fill'),
       }
     ] 
+  },
+  {
+    title: 'Suppliers',
+    path: '/dashboard/',
+    icon: getIcon('eva:people-fill'),
+    children: [
+      {
+        title: "Supplier",
+        path: "/dashboard/supplier",
+        icon: getIcon('eva:people-fill'),
+      },
+      {
+        title: "Supplier Transaction Register",
+        path: "/dashboard/supplier-transaction-register",
+        icon: getIcon('eva:person-add-fill'),
+      },
+      {
+        title: "Supplier Transaction List",
+        path: "/dashboard/supplier-transaction-list",
+        icon: getIcon('eva:people-fill'),
+      },
+    ] 
   }, 
   {
     title: 'Tailor',
-    path : null,
+    path : '/dashboard/',
     icon: getIcon('eva:people-fill'),
     children: [
           {
@@ -65,8 +64,34 @@ const navConfig = [
     ],
   },
   {
+    title: 'Product',
+    path: '/dashboard/',
+    icon: getIcon('eva:shopping-bag-fill'),
+    children: [
+      // {
+      //   title: "Product Register",
+      //   path: "",
+      //   icon: getIcon('eva:shopping-bag-fill'),
+      // },
+      {
+        title: "Tailor Raw Transaction",
+        path: "/dashboard/tailor-raw-transaction",
+        icon: getIcon('eva:shopping-bag-fill'),
+      },
+      {
+        title: "Product In Register",
+        path: "/dashboard/product-in-register",
+        icon: getIcon('eva:shopping-bag-fill'),
+      },
+      {
+        title: "Product In List",
+        path: "/dashboard/product-in-list",
+        icon: getIcon('eva:shopping-bag-fill'),
+      }
+    ],
+  },{
     title: 'Customer',
-    path : null,
+    path : '/dashboard/',
     icon: getIcon('eva:people-fill'),
     children: [
           {
@@ -90,33 +115,6 @@ const navConfig = [
             icon: getIcon('eva:people-fill'),
           },
 
-    ],
-  },
-  {
-    title: 'Product',
-    path: '/dashboard/products',
-    icon: getIcon('eva:shopping-bag-fill'),
-    children: [
-      // {
-      //   title: "Product Register",
-      //   path: "",
-      //   icon: getIcon('eva:shopping-bag-fill'),
-      // },
-      {
-        title: "Tailor Raw Transaction",
-        path: "/dashboard/tailor-raw-transaction",
-        icon: getIcon('eva:shopping-bag-fill'),
-      },
-      {
-        title: "Product In Register",
-        path: "/dashboard/product-in-register",
-        icon: getIcon('eva:shopping-bag-fill'),
-      },
-      {
-        title: "Product In List",
-        path: "/dashboard/product-in-list",
-        icon: getIcon('eva:shopping-bag-fill'),
-      }
     ],
   },
   // {

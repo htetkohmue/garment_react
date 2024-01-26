@@ -99,8 +99,9 @@ function SupplierTransactionList() {
     { id: 'date', label: 'Date', alignRight: false },
     { id: 'supplierNameEN', label: 'Supplier Name', alignRight: false },
     { id: 'rawName', label: 'Raw Material Name', alignRight: false },
-    { id: 'price', label: 'Price', alignRight: false },
-    { id: 'qty', label: 'Qty', alignRight: false },
+    { id: 'qtyPack', label: 'Package', alignRight: false },
+    { id: 'qty', label: 'Qty', alignRight: false },    
+    { id: 'price', label: 'Price', alignRight: false },   
     { id: 'totalAmount', label: 'Total Amount', alignRight: false },
     { id: 'action', label: 'Action', alignRight: false },
   ];
@@ -360,7 +361,7 @@ function SupplierTransactionList() {
                     />
                     <TableBody>
                       {filteredData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                        const { key, id, date, supplierNameEN, rawName, price, qty, totalAmount, action } = row;
+                        const { key, id, date, supplierNameEN, rawName,qtyPack, price, qty, totalAmount, action } = row;
                         const isItemSelected = selected.indexOf(id) !== -1;
 
                         totalQty += row.qty;
@@ -381,9 +382,10 @@ function SupplierTransactionList() {
                               <TableCell align="left">{key}</TableCell>
                               <TableCell align="left">{date}</TableCell>
                               <TableCell align="left">{supplierNameEN}</TableCell>
-                              <TableCell align="left">{rawName}</TableCell>
+                              <TableCell align="left">{rawName}</TableCell>                              
+                              <TableCell align="left">{qtyPack}</TableCell>
+                              <TableCell align="left">{qty}</TableCell>                              
                               <TableCell align="left">{price}</TableCell>
-                              <TableCell align="left">{qty}</TableCell>
                               <TableCell align="right">{totalAmount}</TableCell>
                               <TableCell align="left">
                                 <Tooltip title="edit">

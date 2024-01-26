@@ -28,7 +28,7 @@ import Iconify from '../components/Iconify';
 import Page from '../components/Page';
 import Scrollbar from '../components/Scrollbar';
 // sections
-import { ProductSearch,FormLoad,TailorListToolbar,ProductInHead ,AlertDialogSlide,Loading, ProductInTable, TotalTable } from '../sections/@dashboard/ProductInList';
+import { DateSearch, ProductSearch,FormLoad,TailorListToolbar,ProductInHead ,AlertDialogSlide,Loading, ProductInTable, TotalTable } from '../sections/@dashboard/ProductInList';
 import ApiPath from '../common/common-api/api-path/ApiPath';
 import {ApiRequest} from '../common/common-api/api-request/ApiRequest';
 import { ChangeDate } from '../common/ChangeDate';
@@ -156,7 +156,7 @@ import { ChangeDate } from '../common/ChangeDate';
             }  
         })();
       }
-  
+
       const changeproductsize = (event,  value) => {
         setproductSize(value.props.value);
         setpSize(value.props.name);
@@ -369,6 +369,18 @@ import { ChangeDate } from '../common/ChangeDate';
         <Typography variant="h4" sx={{ mb: 5 }}>
           Product In List
         </Typography>
+
+        <Stack style={{marginBottom: "2%"}} spacing={2}>
+          <Divider textAlign="left">
+            <Chip label="Choose Date" />
+          </Divider>
+          <DateSearch 
+            start={start} 
+            end={end} 
+            selectedFromDate={selectedFromDate} 
+            selectedToDate={selectedToDate} 
+            />
+        </Stack>
         
         <Stack style={{marginBottom: "2%"}} spacing={2}>
           <Divider textAlign="left">

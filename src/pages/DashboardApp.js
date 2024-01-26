@@ -41,20 +41,20 @@ export default function DashboardApp() {
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="New Users" total={1352831} color="info" icon={'ant-design:apple-filled'} />
+            <AppWidgetSummary title="Remaining Item" total={1352831} color="info" icon={'ant-design:apple-filled'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Item Orders" total={1723315} color="warning" icon={'ant-design:windows-filled'} />
+            <AppWidgetSummary title="New Customer" total={1723315} color="warning" icon={'ant-design:windows-filled'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Bug Reports" total={234} color="error" icon={'ant-design:bug-filled'} />
+            <AppWidgetSummary title="New Tailors" total={234} color="error" icon={'ant-design:bug-filled'} />
           </Grid>
 
           <Grid item xs={12} md={6} lg={8}>
             <AppWebsiteVisits
-              title="Website Visits"
+              title="Product Sale"
               subheader="(+43%) than last year"
               chartLabels={[
                 '01/01/2003',
@@ -94,12 +94,12 @@ export default function DashboardApp() {
 
           <Grid item xs={12} md={6} lg={4}>
             <AppCurrentVisits
-              title="Current Visits"
+              title="Current Wears"
               chartData={[
-                { label: 'America', value: 4344 },
-                { label: 'Asia', value: 5435 },
-                { label: 'Europe', value: 1443 },
-                { label: 'Africa', value: 4443 },
+                { label: 'Baby Wears', value: 4344 },
+                { label: 'Woman Wears', value: 5435 },
+                { label: 'Man Wears', value: 1443 },
+                { label: 'Teenager', value: 4443 },
               ]}
               chartColors={[
                 theme.palette.primary.main,
@@ -110,7 +110,7 @@ export default function DashboardApp() {
             />
           </Grid>
 
-          <Grid item xs={12} md={6} lg={8}>
+          {/* <Grid item xs={12} md={6} lg={8}>
             <AppConversionRates
               title="Conversion Rates"
               subheader="(+43%) than last year"
@@ -127,9 +127,9 @@ export default function DashboardApp() {
                 { label: 'United Kingdom', value: 1380 },
               ]}
             />
-          </Grid>
+          </Grid> */}
 
-          <Grid item xs={12} md={6} lg={4}>
+          {/* <Grid item xs={12} md={6} lg={4}>
             <AppCurrentSubject
               title="Current Subject"
               chartLabels={['English', 'History', 'Physics', 'Geography', 'Chinese', 'Math']}
@@ -140,9 +140,9 @@ export default function DashboardApp() {
               ]}
               chartColors={[...Array(6)].map(() => theme.palette.text.secondary)}
             />
-          </Grid>
+          </Grid> */}
 
-          <Grid item xs={12} md={6} lg={8}>
+          {/* <Grid item xs={12} md={6} lg={8}>
             <AppNewsUpdate
               title="News Update"
               list={[...Array(5)].map((_, index) => ({
@@ -153,9 +153,9 @@ export default function DashboardApp() {
                 postedAt: faker.date.recent(),
               }))}
             />
-          </Grid>
+          </Grid> */}
 
-          <Grid item xs={12} md={6} lg={4}>
+          {/* <Grid item xs={12} md={6} lg={4}>
             <AppOrderTimeline
               title="Order Timeline"
               list={[...Array(5)].map((_, index) => ({
@@ -171,9 +171,9 @@ export default function DashboardApp() {
                 time: faker.date.past(),
               }))}
             />
-          </Grid>
+          </Grid> */}
 
-          <Grid item xs={12} md={6} lg={4}>
+          {/* <Grid item xs={12} md={6} lg={4}>
             <AppTrafficBySite
               title="Traffic by Site"
               list={[
@@ -199,9 +199,9 @@ export default function DashboardApp() {
                 },
               ]}
             />
-          </Grid>
+          </Grid> */}
 
-          <Grid item xs={12} md={6} lg={8}>
+          {/* <Grid item xs={12} md={6} lg={8}>
             <AppTasks
               title="Tasks"
               list={[
@@ -212,7 +212,7 @@ export default function DashboardApp() {
                 { id: '5', label: 'Sprint Showcase' },
               ]}
             />
-          </Grid>
+          </Grid> */}
         </Grid>
       </Container>
     </Page>

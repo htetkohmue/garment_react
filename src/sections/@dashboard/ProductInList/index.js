@@ -8,5 +8,6 @@ export { default as Loading } from '../../../common/LoadingPage/Loading';
 export { default as ProductInTable } from './ProductInTable';
 export { default as FormLoad } from './FormLoad';
 export { default as TotalTable } from './TotalTable';
+export { default as DateSearch } from '../TailorRawTransaction/DateSearch';
 
 

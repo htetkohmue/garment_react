@@ -246,7 +246,7 @@ export default function TailorRawTransaction() {
       setOpen(false);
       setloadingOpen(true);
       (async () => {
-         const data = {tailor_id:searchTailorId,tailor_name:filterName,"start_date":start,"end_date":end,"product_id":productId,"size_id":sizeId, language:"en"};
+         const data = {tailor_id:searchTailorId,tailor_name:filterName,startDate:start,endDate:end,"product_id":productId,size_id:sizeId, language:"en"};
          const obj = { url: ApiPath.searchTailorRaw, method: 'post', params: data };
          const response = await ApiRequest(obj);
         
@@ -349,7 +349,7 @@ export default function TailorRawTransaction() {
 
     const addTailorTransaction = () => {
       (async () => {
-      const data = {tailor_id:searchTailorId,date: tranDate,product_id:productId,size_id:productSize,category_id:categoryId,raw1_id:raw1Id,raw2_id:raw2Id,raw_qty:number,product_per_raws:productPerRaw,total_product_qty:totalQty,checkBox:checked,startDate:start,endDate:end,des:description,language:"en"};// out and totalQty are same
+      const data = {tailor_id:searchTailorId,date: tranDate,product_id:productId,productName:pName,size_id:productSize,sizeName:pSize,category_id:categoryId,raw1_id:raw1Id,raw1:raw1Name,raw2_id:raw2Id,raw2:raw2Name,raw_qty:number,product_per_raws:productPerRaw,total_product_qty:totalQty,checkBox:checked,startDate:start,endDate:end,des:description,language:"en"};// out and totalQty are same
       const obj = { url: ApiPath.createTailorRawTransaction, method: 'post', params: data };
          const response = await ApiRequest(obj);
         
@@ -369,6 +369,7 @@ export default function TailorRawTransaction() {
     
     return (
         <Page title="Register">
+          MINUTES FROM RAW TABLE
           <Container>
           {successMsg && (
                 <Alert variant="filled" severity="success">
@@ -614,7 +615,6 @@ export default function TailorRawTransaction() {
                         </Stack>
                         <Stack>
                         <TextField
-                            sx={{ width: 150 }}
                             label={t("Description")}
                             onChange={(e) => {
                               setDescription(e.target.value);

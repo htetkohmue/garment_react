@@ -17,7 +17,7 @@ import { ApiRequest } from '../common/common-api/api-request/ApiRequest';
 // ----------------------------------------------------------------------
 
 const ContentStyle = styled('div')(({ theme }) => ({
-  maxWidth: 600,
+  maxWidth: 700,
   margin: '30px',
   display: 'flex',
   justifyContent: 'center',

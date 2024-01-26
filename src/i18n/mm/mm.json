@@ -77,7 +77,11 @@
           "Supplier Name" : "ပိတ်အုပ်သွင်းသူအမည်",
           "Price" : "စျေးနှုန်း",
           "Qty" : "အရေအတွက်",
-          "Total Amount" : "စုစုပေါင်းပမာဏ"
+          "Total Amount" : "စုစုပေါင်းပမာဏ",
+
+          "Tailor Raw Transaction Register": "အထည်အထွက်စာရင်း",
+          "Product In List": "အထည်ပြန်အပ်စာရင်း",
+          "Supplier Transaction Register": "ပိတ်အုပ်၀င်စာရင်း"
 
 
 }

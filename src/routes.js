@@ -18,6 +18,7 @@ import TailorRawTransaction from './pages/TailorRawTransaction';
 import RawMaterial from './pages/RawMaterial';
 import Supplier from './pages/Supplier';
 import SupplierTransactionList from './pages/SupplierTransactionList';
+import SupplierTransactionRegister from './pages/SupplierTransactionRegister';
 import CustomerRegister from './pages/CustomerRegister';
 import CustomerList from './pages/CustomerList';
 import CustomerTransaction from './pages/CustomerTransaction';
@@ -44,6 +45,7 @@ export default function Router(props) {
         // { path: 'product-list', element: <ProductList /> },
         { path: 'product-in-list', element: <ProductInList /> },
         { path: 'raws', element: <RawMaterial /> },
+        { path: 'supplier-transaction-register', element: <SupplierTransactionRegister /> },
         { path: 'supplier-transaction-list', element: <SupplierTransactionList /> },
         { path: 'customers-register', element: <CustomerRegister /> },
         { path: 'customers-register/:id', element: <CustomerRegister /> },

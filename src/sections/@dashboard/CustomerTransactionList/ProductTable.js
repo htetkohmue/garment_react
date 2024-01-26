@@ -71,7 +71,7 @@ export default function ProductTable(props,editCusTranId) {
               <TableCell align="right" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>{row.product_id}</TableCell>
               <TableCell align="right" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>{row.product_name}</TableCell>
               <TableCell align="right" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>{row.size_id}</TableCell>
-              <TableCell align="right" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>{row.size}</TableCell>
+              <TableCell align="right" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>{row.size_name}</TableCell>
               <TableCell align="right" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>{row.qty}</TableCell>
               <TableCell align="right" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>{row.price}</TableCell>
               <TableCell align="right" sx={key===props.tableDatas.length-1?{borderBottom:1}:{}}>=</TableCell>

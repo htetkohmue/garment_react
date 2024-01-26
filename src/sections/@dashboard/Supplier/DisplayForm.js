@@ -10,15 +10,15 @@ import '../../../css/common.css';
 export default function DisplayForm(props) {
   const { t } = useTranslation();
   return props.supplierData.length > 0 ? (
-    <Table sx={{ minWidth: 650 }} aria-label="simple table">
-      <TableHead>
+    <Table sx={{ minWidth: 700 }} aria-label="simple table">
+      <TableHead style={{backgroundColor:'#80ccff'}}>
         <TableRow>
-          <TableCell align="center">{t('No.')}</TableCell>
-          <TableCell align="left">{t('Name')}</TableCell>
-          <TableCell align="left">{t('Phone No')}</TableCell>
-          <TableCell align="left">{t('Company')}</TableCell>
-          <TableCell align="left">{t('Address')}</TableCell>
-          <TableCell align="left">{t('Description')}</TableCell>
+          <TableCell align="center" sx={{ minWidth: 50 }}>{t('No.')}</TableCell>
+          <TableCell align="left" sx={{ minWidth: 130 }}>{t('Name')}</TableCell>
+          <TableCell align="left" sx={{ minWidth: 130 }}>{t('Phone No')}</TableCell>
+          <TableCell align="left" sx={{ minWidth: 150 }}>{t('Company')}</TableCell>
+          <TableCell align="left" sx={{ minWidth: 130 }}>{t('Address')}</TableCell>
+          <TableCell align="left" sx={{ minWidth: 130 }}>{t('Description')}</TableCell>
           <TableCell align="center" colSpan={2}>
             {t('Action')}
           </TableCell>

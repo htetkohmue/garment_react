@@ -32,7 +32,7 @@ export default function DataTable(props) {
           <TableRow>
             <TableCell align="right" sx={{ borderBottom: 1 }}>{t('No')}</TableCell>
             <TableCell align="right"sx={{ borderBottom: 1 }}>{t('Date')}</TableCell>
-            <TableCell align="right"sx={{ borderBottom: 1 }}>{t('Code')}</TableCell>
+            {/* <TableCell align="right"sx={{ borderBottom: 1 }}>{t('Code')}</TableCell> */}
             <TableCell align="right"sx={{ borderBottom: 1 }}>{t('Name')}</TableCell>
             <TableCell align="right"sx={{ borderBottom: 1 }}>{t('Size')}</TableCell>
             <TableCell align="right"sx={{ borderBottom: 1 }}>{t('Cal Type')}</TableCell>
@@ -50,11 +50,11 @@ export default function DataTable(props) {
             <TableRow key={key}>
                 <TableCell align="center">{row.no}</TableCell>
                 <TableCell align="center">{row.date}</TableCell>
-                <TableCell align="center">{row.code}</TableCell>
+                {/* <TableCell align="center">{row.code}</TableCell> */}
                 <TableCell align="center">{row.name}</TableCell>
                 <TableCell align="center">{row.size}</TableCell>
-                <TableCell align="center">{row.rawQty}{row.rawCombine}x{row.productPerRaw}</TableCell>
-                <TableCell align="center">{row.raw1},{row.raw2}</TableCell>
+                <TableCell align="center">{row.rawQty}{row.rawCombine}{(row.rawCombine) ? 'x' : ''}{row.productPerRaw}</TableCell>
+                <TableCell align="center">{row.rawName}</TableCell>
                 <TableCell align="center">{row.outQty}</TableCell>
                 <TableCell align="center">{row.inQty}</TableCell>
                 <TableCell align="center">{row.leftQty}</TableCell>

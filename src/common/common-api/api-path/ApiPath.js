@@ -19,9 +19,12 @@ export default {
   editSupplierData: 'api/supplier/update',
   removeSupplierData: 'api/supplier/delete',
 
+    // Supplier Transaction
+    storeSupplierTransaction : 'api/supplier-transaction/store-supplier-transaction',
+
   // Supplier Transaction List
   searchSupplierTransaction : 'api/supplier-transaction-list/search-supplier-transaction',
-  deleteSupplierTransaction : 'api/supplier-transaction-list/delete-supplier-transaction',
+  deleteSupplierTransaction : 'api/supplier-transaction-list/delete-supplier-transaction', 
 
   // ProductInList
   searchTailor: 'api/product-in-list/searchTailor',
