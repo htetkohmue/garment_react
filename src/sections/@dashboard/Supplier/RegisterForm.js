@@ -90,7 +90,7 @@ export default function RegisterForm(props) {
             helperText={touched.address && errors.address}
           />
           <TextField fullWidth label={t('Description')} {...getFieldProps('description')} />
-          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} justifyContent="right">
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} justifyContent="center">
             {props.editSupplier ? (
               <Button
                 size="large"

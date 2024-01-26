@@ -94,7 +94,7 @@ export default function DashboardApp() {
 
           <Grid item xs={12} md={6} lg={4}>
             <AppCurrentVisits
-              title="Current Wears"
+              title="In Stock"
               chartData={[
                 { label: 'Baby Wears', value: 4344 },
                 { label: 'Woman Wears', value: 5435 },
